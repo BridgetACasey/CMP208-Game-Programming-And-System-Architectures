@@ -60,6 +60,7 @@ void MainApp::Render()
 
 	// start drawing sprites, but don't clear the frame buffer
 	sprite_renderer_->Begin(false);
+
 	DrawHUD();
 	sprite_renderer_->End();
 }

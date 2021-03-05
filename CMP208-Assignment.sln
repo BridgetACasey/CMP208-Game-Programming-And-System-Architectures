@@ -49,6 +49,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DED06586-8866-4F79-84DC-4D81F4C6E648}.Debug|PSVita.ActiveCfg = Debug|Win32
+		{DED06586-8866-4F79-84DC-4D81F4C6E648}.Debug|PSVita.Build.0 = Debug|Win32
 		{DED06586-8866-4F79-84DC-4D81F4C6E648}.Debug|x64.ActiveCfg = Debug|x64
 		{DED06586-8866-4F79-84DC-4D81F4C6E648}.Debug|x64.Build.0 = Debug|x64
 		{DED06586-8866-4F79-84DC-4D81F4C6E648}.Debug|x86.ActiveCfg = Debug|Win32
