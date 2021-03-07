@@ -27,12 +27,18 @@
     <ClCompile Include="src\main_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\primitive_builder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\main_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
