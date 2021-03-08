@@ -29,6 +29,10 @@ public:
 
 	void BuildTransform();
 
+	gef::Vector4* getPosition();
+	gef::Vector4* getRotation();
+	gef::Vector4* getScale();
+
 protected:
 	gef::Vector4 position;
 	gef::Vector4 rotation;

@@ -22,8 +22,8 @@ void GameObject::BuildTransform()
 	scale_.Scale(scale);
 
 	rotX.RotationX(rotation.x());
-	rotY.RotationX(rotation.y());
-	rotZ.RotationX(rotation.z());
+	rotY.RotationY(rotation.y());
+	rotZ.RotationZ(rotation.z());
 
 	trans.SetIdentity();
 	trans.SetTranslation(position);
@@ -57,4 +57,19 @@ void GameObject::SetScale(float x, float y, float z)
 	scale.set_x(x);
 	scale.set_y(y);
 	scale.set_z(z);
+}
+
+gef::Vector4* GameObject::getPosition()
+{
+	return &position;
+}
+
+gef::Vector4* GameObject::getRotation()
+{
+	return &rotation;
+}
+
+gef::Vector4* GameObject::getScale()
+{
+	return &scale;
 }
