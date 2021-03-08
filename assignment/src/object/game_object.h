@@ -29,11 +29,10 @@ public:
 
 	void BuildTransform();
 
-private:
+protected:
 	gef::Vector4 position;
 	gef::Vector4 rotation;
 	gef::Vector4 scale;
-
 };
 
 #endif // _GAME_OBJECT_H

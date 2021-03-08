@@ -204,7 +204,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\game_object.cpp" />
+    <ClCompile Include="src\object\player.cpp" />
+    <ClCompile Include="src\object\game_object.cpp" />
     <ClCompile Include="src\main_d3d11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">true</ExcludedFromBuild>
@@ -221,7 +222,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game_object.h" />
+    <ClInclude Include="src\object\player.h" />
+    <ClInclude Include="src\object\game_object.h" />
     <ClInclude Include="src\primitive_builder.h" />
     <ClInclude Include="src\main_app.h" />
   </ItemGroup>

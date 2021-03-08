@@ -27,7 +27,10 @@
     <ClCompile Include="src\main_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_object.cpp">
+    <ClCompile Include="src\object\game_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +41,10 @@
     <ClInclude Include="src\main_app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\game_object.h">
+    <ClInclude Include="src\object\game_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
