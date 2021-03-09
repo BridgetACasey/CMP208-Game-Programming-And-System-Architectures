@@ -6,7 +6,7 @@
 
 namespace gef
 {
-	
+	class Vector4;
 }
 
 class PrimitiveBuilder;

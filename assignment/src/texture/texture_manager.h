@@ -24,8 +24,8 @@ public:
 
 	void cleanUpTextures();
 
-	void loadTexture(const std::string& filename, gef::Platform& platform);
-	bool unloadTexture(const std::string& filename);
+	void loadTexture(const std::string& filePath, gef::Platform& platform);
+	bool unloadTexture(const std::string& filePath);
 
 	gef::Texture* getTexture(const std::string& filename, gef::Platform& platform);
 

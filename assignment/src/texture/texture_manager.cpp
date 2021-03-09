@@ -25,21 +25,21 @@ void TextureManager::cleanUpTextures()
 	}
 }
 
-gef::Texture* TextureManager::getTexture(const std::string& filename, gef::Platform& platform)
+gef::Texture* TextureManager::getTexture(const std::string& filePath, gef::Platform& platform)
 {
-	if (gameTextures.find(filename) == gameTextures.end())
+	if (gameTextures.find(filePath) == gameTextures.end())
 	{
-		loadTexture(filename, platform);
+		loadTexture(filePath, platform);
 	}
 
-	return gameTextures[filename];
+	return gameTextures[filePath];
 }
 
-bool TextureManager::unloadTexture(const std::string& filename)
+bool TextureManager::unloadTexture(const std::string& filePath)
 {
-	gef::Texture* texture = gameTextures[filename];
+	gef::Texture* texture = gameTextures[filePath];
 
-	gameTextures.erase(filename);
+	gameTextures.erase(filePath);
 
 	if (!texture)
 	{
@@ -53,12 +53,12 @@ bool TextureManager::unloadTexture(const std::string& filename)
 	return true;
 }
 
-void TextureManager::loadTexture(const std::string& filename, gef::Platform& platform)
+void TextureManager::loadTexture(const std::string& filePath, gef::Platform& platform)
 {
 	gef::ImageData imageData;
 	gef::PNGLoader pngLoader;
 
-	pngLoader.Load(filename.c_str(), platform, imageData);
+	pngLoader.Load(filePath.c_str(), platform, imageData);
 
-	gameTextures[filename] = gef::Texture::Create(platform, imageData);
+	gameTextures[filePath] = gef::Texture::Create(platform, imageData);
 }

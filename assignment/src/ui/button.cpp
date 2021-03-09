@@ -14,11 +14,12 @@ Button::~Button()
 
 Button* Button::create()
 {
-	return nullptr;
+	return new Button();
 }
 
 bool Button::isHovering()
 {
+	/*
 	if (input->getMousePosition().x >= position.x && input->getMousePosition().x <= position.x + scale.x)
 	{
 		if (input->getMousePosition().y >= position.y && input->getMousePosition().y <= position.y + scale.y)
@@ -26,6 +27,7 @@ bool Button::isHovering()
 			return true;
 		}
 	}
+	*/
 
 	return false;
 }

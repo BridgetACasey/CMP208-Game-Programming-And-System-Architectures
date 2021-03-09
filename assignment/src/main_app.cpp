@@ -14,6 +14,7 @@ MainApp::MainApp(gef::Platform& platform) :
 	primitive_builder_(NULL),
 	font_(NULL)
 {
+
 }
 
 void MainApp::Init()
@@ -23,8 +24,20 @@ void MainApp::Init()
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
 
+	input_manager_ = gef::InputManager::Create(platform_);
+
+	// make sure if there is a panel to detect touch input, then activate it
+	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+	{
+		input_manager_->touch_manager()->EnablePanel(0);
+	}
+
 	// initialise primitive builder to make create some 3D geometry easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
+
+	player = Player::create();
+
+	gameInput = GameInput::create(platform_, input_manager_);
 
 	InitFont();
 }
@@ -41,12 +54,16 @@ void MainApp::CleanUp()
 
 	delete sprite_renderer_;
 	sprite_renderer_ = NULL;
+
+	delete input_manager_;
+	input_manager_ = NULL;
 }
 
 bool MainApp::Update(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
 
+	gameInput->update(player);
 
 	return true;
 }

@@ -204,7 +204,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\object\platform.cpp" />
+    <ClCompile Include="src\audio\game_audio.cpp" />
+    <ClCompile Include="src\object\platform_object.cpp" />
     <ClCompile Include="src\input\game_input.cpp" />
     <ClCompile Include="src\ui\button.cpp" />
     <ClCompile Include="src\object\player.cpp" />
@@ -223,15 +224,25 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\state\state.cpp" />
+    <ClCompile Include="src\state\state_machine.cpp" />
+    <ClCompile Include="src\texture\texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\object\platform.h" />
+    <ClInclude Include="src\input\input_command.h" />
+    <ClInclude Include="src\audio\game_audio.h" />
+    <ClInclude Include="src\input\jump_command.h" />
+    <ClInclude Include="src\input\move_command.h" />
+    <ClInclude Include="src\object\platform_object.h" />
     <ClInclude Include="src\input\game_input.h" />
     <ClInclude Include="src\ui\button.h" />
     <ClInclude Include="src\object\player.h" />
     <ClInclude Include="src\object\game_object.h" />
     <ClInclude Include="src\primitive_builder.h" />
     <ClInclude Include="src\main_app.h" />
+    <ClInclude Include="src\state\state.h" />
+    <ClInclude Include="src\state\state_machine.h" />
+    <ClInclude Include="src\texture\texture_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,5 +14,5 @@ Player::~Player()
 
 Player* Player::create()
 {
-	return nullptr;
+	return new Player();
 }

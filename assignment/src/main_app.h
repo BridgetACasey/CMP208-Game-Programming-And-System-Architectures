@@ -1,10 +1,13 @@
-#ifndef _SCENE_APP_H
-#define _SCENE_APP_H
+#ifndef _MAIN_APP_H
+#define _MAIN_APP_H
 
 #include <system/application.h>
 #include <maths/vector2.h>
-#include "primitive_builder.h"
 #include <graphics/mesh_instance.h>
+
+#include "primitive_builder.h"
+#include "input/game_input.h"
+#include "object/player.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -35,6 +38,10 @@ private:
 	gef::Renderer3D* renderer_3d_;
 
 	PrimitiveBuilder* primitive_builder_;
+	gef::InputManager* input_manager_;
+	GameInput* gameInput;
+
+	Player* player;
 
 	float fps_;
 };
