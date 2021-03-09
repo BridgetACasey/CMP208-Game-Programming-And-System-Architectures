@@ -7,7 +7,12 @@ GameInput::GameInput()
 
 }
 
-GameInput* GameInput::Create(gef::InputManager* inputManager_)
+GameInput::~GameInput()
+{
+
+}
+
+GameInput* GameInput::create(gef::InputManager* inputManager_)
 {
 	return nullptr;
 }

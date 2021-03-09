@@ -15,7 +15,9 @@ protected:
 	GameInput();
 
 public:
-	static GameInput* Create(gef::InputManager* inputManager_);
+	~GameInput();
+
+	static GameInput* create(gef::InputManager* inputManager_);
 
 	void update();
 

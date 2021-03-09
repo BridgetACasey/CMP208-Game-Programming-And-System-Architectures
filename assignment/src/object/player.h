@@ -15,7 +15,7 @@ protected:
 public:
 	~Player();
 
-	static Player* Create();
+	static Player* create();
 };
 
 #endif

@@ -7,7 +7,13 @@
 
 class StateMachine
 {
+protected:
+	StateMachine();
 
+public:
+	~StateMachine();
+
+	static StateMachine* create();
 };
 
 #endif

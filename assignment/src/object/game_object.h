@@ -19,7 +19,7 @@ protected:
 public:
 	~GameObject();
 
-	static GameObject* Create();
+	static GameObject* create();
 
 	void SetMeshInstance(PrimitiveBuilder* primitive_builder);
 

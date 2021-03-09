@@ -15,7 +15,7 @@ protected:
 public:
 	~Platform();
 
-	static Platform* Create();
+	static Platform* create();
 };
 
 #endif

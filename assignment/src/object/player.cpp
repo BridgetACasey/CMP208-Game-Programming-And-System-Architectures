@@ -12,7 +12,7 @@ Player::~Player()
 
 }
 
-Player* Player::Create()
+Player* Player::create()
 {
 	return nullptr;
 }

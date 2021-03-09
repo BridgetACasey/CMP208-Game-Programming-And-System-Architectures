@@ -7,7 +7,13 @@
 
 class GameAudio
 {
+protected:
+	GameAudio();
 
+public:
+	~GameAudio();
+
+	static GameAudio* create();
 };
 
 #endif

@@ -10,7 +10,7 @@ GameObject::~GameObject()
 
 }
 
-GameObject* GameObject::Create()
+GameObject* GameObject::create()
 {
 	return nullptr;
 }

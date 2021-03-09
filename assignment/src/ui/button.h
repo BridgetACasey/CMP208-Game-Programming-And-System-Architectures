@@ -14,7 +14,9 @@ protected:
 	Button();
 
 public:
-	static Button* Create();
+	~Button();
+
+	static Button* create();
 
 	bool isHovering();
 	bool isClicked();

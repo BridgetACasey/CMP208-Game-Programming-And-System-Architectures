@@ -7,7 +7,12 @@ Button::Button()
 
 }
 
-Button* Button::Create()
+Button::~Button()
+{
+
+}
+
+Button* Button::create()
 {
 	return nullptr;
 }

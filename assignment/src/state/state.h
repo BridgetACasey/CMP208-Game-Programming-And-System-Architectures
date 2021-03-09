@@ -7,7 +7,13 @@
 
 class State
 {
+protected:
+	State();
 
+public:
+	~State();
+
+	static State* create();
 };
 
 #endif
