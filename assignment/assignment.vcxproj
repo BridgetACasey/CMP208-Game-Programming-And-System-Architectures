@@ -204,6 +204,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\object\platform.cpp" />
+    <ClCompile Include="src\input\game_input.cpp" />
     <ClCompile Include="src\ui\button.cpp" />
     <ClCompile Include="src\object\player.cpp" />
     <ClCompile Include="src\object\game_object.cpp" />
@@ -223,6 +225,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\object\platform.h" />
+    <ClInclude Include="src\input\game_input.h" />
     <ClInclude Include="src\ui\button.h" />
     <ClInclude Include="src\object\player.h" />
     <ClInclude Include="src\object\game_object.h" />
