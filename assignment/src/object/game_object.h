@@ -2,11 +2,15 @@
 #define _GAME_OBJECT_H
 
 #include <graphics/mesh_instance.h>
+#include <graphics/renderer_3d.h>
 #include <box2d/Box2D.h>
+
+#include "primitive_builder.h"
 
 namespace gef
 {
 	class Vector4;
+	class Renderer3D;
 }
 
 class PrimitiveBuilder;
@@ -22,6 +26,7 @@ public:
 	static GameObject* create();
 
 	void SetMeshInstance(PrimitiveBuilder* primitive_builder);
+	void render(gef::Renderer3D* renderer);
 
 	void SetPosition(float x, float y, float z);
 	void SetRotation(float x, float y, float z);

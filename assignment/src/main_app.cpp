@@ -12,9 +12,13 @@ MainApp::MainApp(gef::Platform& platform) :
 	sprite_renderer_(NULL),
 	renderer_3d_(NULL),
 	primitive_builder_(NULL),
-	font_(NULL)
+	font_(NULL),
+	camera_position(gef::Vector4::kZero),
+	camera_target(gef::Vector4::kZero),
+	camera_up(gef::Vector4::kZero)
 {
-
+	projection_matrix.SetIdentity();
+	view_matrix.SetIdentity();
 }
 
 void MainApp::Init()
@@ -35,11 +39,15 @@ void MainApp::Init()
 	// initialise primitive builder to make create some 3D geometry easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
 
-	player = Player::create();
-
 	gameInput = GameInput::create(platform_, input_manager_);
 
+	player = Player::create();
+	player->SetMeshInstance(primitive_builder_);
+
 	InitFont();
+
+	SetupCamera();
+	SetupLights();
 }
 
 void MainApp::CleanUp()
@@ -70,8 +78,13 @@ bool MainApp::Update(float frame_time)
 
 void MainApp::Render()
 {
+	renderer_3d_->set_projection_matrix(projection_matrix);
+	renderer_3d_->set_view_matrix(view_matrix);
+
 	// draw 3d geometry
 	renderer_3d_->Begin();
+
+	player->render(renderer_3d_);
 
 	renderer_3d_->End();
 
@@ -116,6 +129,17 @@ void MainApp::SetupLights()
 	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
 	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
 	default_shader_data.AddPointLight(default_point_light);
+}
+
+void MainApp::SetupCamera()
+{
+	projection_matrix = platform_.PerspectiveProjectionFov(gef::DegToRad(46.8f), (float)platform_.width() / (float)platform_.height(), 0.1f, 10.0f);
+
+	camera_position = gef::Vector4(0.0f, 1.0f, 5.0f);
+	camera_target = gef::Vector4(0.0f, 0.0f, 0.0f);
+	camera_up = gef::Vector4(0.0f, 1.0f, 0.0f);
+
+	view_matrix.LookAt(camera_position, camera_target, camera_up);
 }
 
 /*

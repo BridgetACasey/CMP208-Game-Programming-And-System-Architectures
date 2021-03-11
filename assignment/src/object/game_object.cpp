@@ -35,7 +35,12 @@ void GameObject::BuildTransform()
 
 void GameObject::SetMeshInstance(PrimitiveBuilder* primitive_builder)
 {
+	set_mesh(primitive_builder->GetDefaultCubeMesh());
+}
 
+void GameObject::render(gef::Renderer3D* renderer)
+{
+	renderer->DrawMesh(*this);
 }
 
 void GameObject::SetPosition(float x, float y, float z)

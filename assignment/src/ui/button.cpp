@@ -2,9 +2,9 @@
 
 #include "button.h"
 
-Button::Button()
+Button::Button(GameInput* input_)
 {
-
+	input = input_;
 }
 
 Button::~Button()
@@ -12,9 +12,9 @@ Button::~Button()
 
 }
 
-Button* Button::create()
+Button* Button::create(GameInput* input_)
 {
-	return new Button();
+	return new Button(input_);
 }
 
 bool Button::isHovering()

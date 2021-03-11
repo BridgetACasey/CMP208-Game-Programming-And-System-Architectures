@@ -11,12 +11,12 @@
 class Button
 {
 protected:
-	Button();
+	Button(GameInput* input_);
 
 public:
 	~Button();
 
-	static Button* create();
+	static Button* create(GameInput* input_);
 
 	bool isHovering();
 	bool isClicked();

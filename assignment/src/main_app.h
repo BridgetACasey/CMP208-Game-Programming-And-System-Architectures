@@ -32,6 +32,7 @@ private:
 	void CleanUpFont();
 	void DrawHUD();
 	void SetupLights();
+	void SetupCamera();
 
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Font* font_;
@@ -42,6 +43,13 @@ private:
 	GameInput* gameInput;
 
 	Player* player;
+
+	gef::Matrix44 projection_matrix;
+	gef::Matrix44 view_matrix;
+
+	gef::Vector4 camera_position;
+	gef::Vector4 camera_target;
+	gef::Vector4 camera_up;
 
 	float fps_;
 };
