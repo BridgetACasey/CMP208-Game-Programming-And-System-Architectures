@@ -15,7 +15,7 @@ namespace gef
 
 class PrimitiveBuilder;
 
-enum class GameObjectTag
+enum class CollisionTag
 {
 	NONE = 0,
 	PLAYER,
@@ -39,24 +39,21 @@ public:
 	void setMesh(PrimitiveBuilder* primitive_builder);
 	void setBody(b2World* world);
 
-	void render(gef::Renderer3D* renderer);
-
 	void buildTransform();
-	void updateBodyTransform();
 
 	gef::Vector4* getPosition();
 
 	b2Body* getBody();
 
-	void setGameObjectTag(GameObjectTag& newTag);
-	GameObjectTag& getGameObjectTag();
+	void setGameObjectTag(CollisionTag& newTag);
+	CollisionTag& getGameObjectTag();
 
 protected:
 	gef::Vector4 position;
 
 	b2Body* body;
 
-	GameObjectTag tag;
+	CollisionTag tag;
 };
 
 #endif // _GAME_OBJECT_H

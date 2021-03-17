@@ -51,24 +51,6 @@ void GameObject::buildTransform()
 	//set_transform(final_);
 }
 
-void GameObject::updateBodyTransform()
-{
-	if (body)
-	{
-		// setup object rotation
-		gef::Matrix44 object_rotation;
-		object_rotation.RotationZ(body->GetAngle());
-
-		// setup the object translation
-		gef::Vector4 object_translation(body->GetPosition().x, body->GetPosition().y, 0.0f);
-
-		// build object transformation matrix
-		gef::Matrix44 object_transform = object_rotation;
-		object_transform.SetTranslation(object_translation);
-		set_transform(object_transform);
-	}
-}
-
 void GameObject::setMesh(PrimitiveBuilder* primitive_builder)
 {
 	set_mesh(primitive_builder->GetDefaultCubeMesh());
@@ -95,11 +77,6 @@ void GameObject::setBody(b2World* world)
 	b2Fixture* fixture = body->CreateFixture(&fixtureDef);
 }
 
-void GameObject::render(gef::Renderer3D* renderer)
-{
-	renderer->DrawMesh(*this);
-}
-
 gef::Vector4* GameObject::getPosition()
 {
 	return &position;
@@ -110,12 +87,12 @@ b2Body* GameObject::getBody()
 	return body;
 }
 
-void GameObject::setGameObjectTag(GameObjectTag& newTag)
+void GameObject::setGameObjectTag(CollisionTag& newTag)
 {
 	tag = newTag;
 }
 
-GameObjectTag& GameObject::getGameObjectTag()
+CollisionTag& GameObject::getGameObjectTag()
 {
 	return tag;
 }
