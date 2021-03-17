@@ -35,6 +35,7 @@ public:
 	static GameObject* create();
 
 	void UpdateFromSimulation(const b2Body* body);
+	void updateTransforms();
 
 	void setMesh(PrimitiveBuilder* primitive_builder);
 	void setBody(b2World* world);

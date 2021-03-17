@@ -33,6 +33,22 @@ void GameObject::UpdateFromSimulation(const b2Body* body)
 	}
 }
 
+void GameObject::updateTransforms()
+{
+	if (body)
+	{
+		position.set_x(body->GetPosition().x);
+		position.set_y(body->GetPosition().y);
+		position.set_z(0.0f);
+
+		gef::Matrix44 transform;
+		transform.RotationZ(body->GetAngle());
+
+		transform.SetTranslation(position);
+		set_transform(transform);
+	}
+}
+
 void GameObject::buildTransform()
 {
 	//gef::Matrix44 final_, trans, rotX, rotY, rotZ, scale_;
