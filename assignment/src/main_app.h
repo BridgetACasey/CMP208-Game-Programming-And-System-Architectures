@@ -43,6 +43,11 @@ private:
 	GameInput* gameInput;
 
 	Player* player;
+	b2Body* player_body_;
+
+	gef::Mesh* ground_mesh_;
+	GameObject* ground_;
+	b2Body* ground_body_;
 
 	gef::Matrix44 projection_matrix;
 	gef::Matrix44 view_matrix;
@@ -52,6 +57,9 @@ private:
 	gef::Vector4 camera_up;
 
 	float fps_;
+	float yPosition;
+
+	b2World* world;
 };
 
 #endif // _SCENE_APP_H

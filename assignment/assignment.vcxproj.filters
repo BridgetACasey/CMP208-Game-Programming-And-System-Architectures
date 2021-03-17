@@ -33,25 +33,7 @@
     <ClCompile Include="src\object\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\input\game_input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\game_audio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\state\state.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\state\state_machine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture\texture_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\object\platform_object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,22 +50,7 @@
     <ClInclude Include="src\object\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ui\button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\input\game_input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\game_audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\state\state_machine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\state\state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\texture\texture_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\input\input_command.h">
@@ -93,9 +60,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\input\move_command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\object\platform_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

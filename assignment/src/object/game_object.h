@@ -3,7 +3,7 @@
 
 #include <graphics/mesh_instance.h>
 #include <graphics/renderer_3d.h>
-#include <box2d/Box2D.h>
+#include <box2d/box2d.h>
 
 #include "primitive_builder.h"
 
@@ -15,6 +15,15 @@ namespace gef
 
 class PrimitiveBuilder;
 
+enum class GameObjectTag
+{
+	NONE = 0,
+	PLAYER,
+	FLOOR,
+	WALL,
+	COLLECTIBLE
+};
+
 class GameObject : public gef::MeshInstance
 {
 protected:
@@ -25,23 +34,29 @@ public:
 
 	static GameObject* create();
 
-	void SetMeshInstance(PrimitiveBuilder* primitive_builder);
+	void UpdateFromSimulation(const b2Body* body);
+
+	void setMesh(PrimitiveBuilder* primitive_builder);
+	void setBody(b2World* world);
+
 	void render(gef::Renderer3D* renderer);
 
-	void SetPosition(float x, float y, float z);
-	void SetRotation(float x, float y, float z);
-	void SetScale(float x, float y, float z);
-
-	void BuildTransform();
+	void buildTransform();
+	void updateBodyTransform();
 
 	gef::Vector4* getPosition();
-	gef::Vector4* getRotation();
-	gef::Vector4* getScale();
+
+	b2Body* getBody();
+
+	void setGameObjectTag(GameObjectTag& newTag);
+	GameObjectTag& getGameObjectTag();
 
 protected:
 	gef::Vector4 position;
-	gef::Vector4 rotation;
-	gef::Vector4 scale;
+
+	b2Body* body;
+
+	GameObjectTag tag;
 };
 
 #endif // _GAME_OBJECT_H

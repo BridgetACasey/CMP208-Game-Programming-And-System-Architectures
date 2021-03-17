@@ -119,7 +119,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +134,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -155,7 +155,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -174,7 +174,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;gef.lib;libpng.lib;zlib.lib;gef_d3d11.lib;gef_win32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -204,10 +204,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\audio\game_audio.cpp" />
-    <ClCompile Include="src\object\platform_object.cpp" />
     <ClCompile Include="src\input\game_input.cpp" />
-    <ClCompile Include="src\ui\button.cpp" />
     <ClCompile Include="src\object\player.cpp" />
     <ClCompile Include="src\object\game_object.cpp" />
     <ClCompile Include="src\main_d3d11.cpp">
@@ -224,25 +221,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\state\state.cpp" />
-    <ClCompile Include="src\state\state_machine.cpp" />
-    <ClCompile Include="src\texture\texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\input\input_command.h" />
-    <ClInclude Include="src\audio\game_audio.h" />
     <ClInclude Include="src\input\jump_command.h" />
     <ClInclude Include="src\input\move_command.h" />
-    <ClInclude Include="src\object\platform_object.h" />
     <ClInclude Include="src\input\game_input.h" />
-    <ClInclude Include="src\ui\button.h" />
     <ClInclude Include="src\object\player.h" />
     <ClInclude Include="src\object\game_object.h" />
     <ClInclude Include="src\primitive_builder.h" />
     <ClInclude Include="src\main_app.h" />
-    <ClInclude Include="src\state\state.h" />
-    <ClInclude Include="src\state\state_machine.h" />
-    <ClInclude Include="src\texture\texture_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
