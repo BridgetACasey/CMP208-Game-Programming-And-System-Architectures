@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Additional library folders
+box2d/
+gef_abertay/
+
 # User-specific files
 *.rsuser
 *.suo
