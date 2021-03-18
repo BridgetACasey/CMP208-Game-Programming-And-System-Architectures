@@ -1,3 +1,5 @@
+//@BridgetACasey
+
 #ifndef _GAME_OBJECT_H
 #define _GAME_OBJECT_H
 
@@ -34,14 +36,12 @@ public:
 
 	static GameObject* create();
 
-	void UpdateFromSimulation(const b2Body* body);
 	void updateTransforms();
 
-	void setMesh(PrimitiveBuilder* primitive_builder);
-	void setBody(b2World* world);
+	void setMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions);
+	void setBody(b2World* world, b2BodyType type);
 
-	void buildTransform();
-
+	void setPosition(float x, float y, float z);
 	gef::Vector4* getPosition();
 
 	b2Body* getBody();
@@ -51,6 +51,7 @@ public:
 
 protected:
 	gef::Vector4 position;
+	gef::Vector4 halfDimensions_;
 
 	b2Body* body;
 

@@ -204,6 +204,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\object\collision_manager.cpp" />
     <ClCompile Include="src\input\game_input.cpp" />
     <ClCompile Include="src\object\player.cpp" />
     <ClCompile Include="src\object\game_object.cpp" />
@@ -223,6 +224,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\object\collision_manager.h" />
     <ClInclude Include="src\input\input_command.h" />
     <ClInclude Include="src\input\jump_command.h" />
     <ClInclude Include="src\input\move_command.h" />

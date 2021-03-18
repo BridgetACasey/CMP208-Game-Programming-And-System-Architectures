@@ -4,7 +4,7 @@
 
 Player::Player()
 {
-
+	tag = CollisionTag::PLAYER;
 }
 
 Player::~Player()

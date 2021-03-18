@@ -12,13 +12,9 @@ MainApp::MainApp(gef::Platform& platform) :
 	sprite_renderer_(NULL),
 	renderer_3d_(NULL),
 	primitive_builder_(NULL),
-	font_(NULL),
-	camera_position(gef::Vector4::kZero),
-	camera_target(gef::Vector4::kZero),
-	camera_up(gef::Vector4::kZero)
+	font_(NULL)
 {
-	projection_matrix.SetIdentity();
-	view_matrix.SetIdentity();
+
 }
 
 void MainApp::Init()
@@ -45,68 +41,21 @@ void MainApp::Init()
 	world = new b2World(gravity);
 
 	player = Player::create();
-	//player->setMesh(primitive_builder_);
-	//player->setBody(world);
-	//player->UpdateFromSimulation(player->getBody());
+	player->setPosition(0.0f, 4.0f, 0.0f);
+	player->setMesh(primitive_builder_, gef::Vector4(0.5f, 0.5f, 0.5f));
+	player->setBody(world, b2BodyType::b2_dynamicBody);
+	player->updateTransforms();
 
-	// setup the mesh for the player
-	player->set_mesh(primitive_builder_->GetDefaultCubeMesh());
-
-	// create a physics body for the player
-	b2BodyDef player_body_def;
-	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 4.0f);
-
-	player_body_ = world->CreateBody(&player_body_def);
-
-	// create the shape for the player
-	b2PolygonShape player_shape;
-	player_shape.SetAsBox(0.5f, 0.5f);
-
-	// create the fixture
-	b2FixtureDef player_fixture_def;
-	player_fixture_def.shape = &player_shape;
-	player_fixture_def.density = 1.0f;
-
-	// create the fixture on the rigid body
-	player_body_->CreateFixture(&player_fixture_def);
-
-	// update visuals from simulation data
-	player->UpdateFromSimulation(player_body_);
+	ground = GameObject::create();
+	ground->setPosition(0.0f, 0.0f, 0.0f);
+	ground->setMesh(primitive_builder_, gef::Vector4(5.0f, 0.5f, 0.5f));
+	ground->setBody(world, b2BodyType::b2_staticBody);
+	ground->updateTransforms();
 
 	InitFont();
 
 	SetupCamera();
 	SetupLights();
-
-	ground_ = GameObject::create();
-
-	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
-
-	// setup the mesh for the ground
-	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);
-	ground_->set_mesh(ground_mesh_);
-
-	// create a physics body
-	b2BodyDef body_def;
-	body_def.type = b2_staticBody;
-	body_def.position = b2Vec2(0.0f, 0.0f);
-
-	ground_body_ = world->CreateBody(&body_def);
-
-	// create the shape
-	b2PolygonShape shape;
-	shape.SetAsBox(ground_half_dimensions.x(), ground_half_dimensions.y());
-
-	// create the fixture
-	b2FixtureDef fixture_def;
-	fixture_def.shape = &shape;
-
-	// create the fixture on the rigid body
-	ground_body_->CreateFixture(&fixture_def);
-
-	// update visuals from simulation data
-	ground_->UpdateFromSimulation(ground_body_);
 }
 
 void MainApp::CleanUp()
@@ -138,61 +87,22 @@ bool MainApp::Update(float frame_time)
 	world->Step(frame_time, velocityIterations, positionIterations);
 
 	// update object visuals from simulation data
-	player->UpdateFromSimulation(player_body_);
+	// don't have to update the ground visuals as it is static
+	player->updateTransforms();
 
 	gameInput->update(player);
 
-	yPosition = player_body_->GetTransform().p.y;
-
-	// don't have to update the ground visuals as it is static
-
-	// collision detection
-	// get the head of the contact list
-	b2Contact* contact = world->GetContactList();
-	// get contact count
-	int contact_count = world->GetContactCount();
-
-	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
-	{
-		if (contact->IsTouching())
-		{
-			// get the colliding bodies
-			b2Body* bodyA = contact->GetFixtureA()->GetBody();
-			b2Body* bodyB = contact->GetFixtureB()->GetBody();
-
-			// DO COLLISION RESPONSE HERE
-		}
-
-		// Get next contact point
-		contact = contact->GetNext();
-	}
+	yPosition = player->getBody()->GetTransform().p.y;
 
 	return true;
 }
 
 void MainApp::Render()
 {
-	// setup camera
-
-	// projection
-	float fov = gef::DegToRad(45.0f);
-	float aspect_ratio = (float)platform_.width() / (float)platform_.height();
-	gef::Matrix44 projection_matrix;
-	projection_matrix = platform_.PerspectiveProjectionFov(fov, aspect_ratio, 0.1f, 100.0f);
-	renderer_3d_->set_projection_matrix(projection_matrix);
-
-	// view
-	gef::Vector4 camera_eye(0.0f, 4.0f, 12.0f);
-	gef::Vector4 camera_lookat(0.0f, 0.0f, 0.0f);
-	gef::Vector4 camera_up(0.0f, 1.0f, 0.0f);
-	gef::Matrix44 view_matrix;
-	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
-	renderer_3d_->set_view_matrix(view_matrix);
-
 	// draw 3d geometry
 	renderer_3d_->Begin();
 
-	renderer_3d_->DrawMesh(*ground_);
+	renderer_3d_->DrawMesh(*ground);
 
 	// draw player
 	renderer_3d_->set_override_material(&primitive_builder_->red_material());
@@ -224,7 +134,7 @@ void MainApp::DrawHUD()
 	if(font_)
 	{
 		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "Y: %.1f FPS: %.1f", yPosition, fps_);
+		font_->RenderText(sprite_renderer_, gef::Vector4(720.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "Y: %.1f FPS: %.1f", yPosition, fps_);
 	}
 }
 
@@ -246,13 +156,20 @@ void MainApp::SetupLights()
 
 void MainApp::SetupCamera()
 {
-	projection_matrix = platform_.PerspectiveProjectionFov(gef::DegToRad(46.8f), (float)platform_.width() / (float)platform_.height(), 0.1f, 10.0f);
+	// projection
+	float fov = gef::DegToRad(45.0f);
+	float aspect_ratio = (float)platform_.width() / (float)platform_.height();
+	gef::Matrix44 projection_matrix;
+	projection_matrix = platform_.PerspectiveProjectionFov(fov, aspect_ratio, 0.1f, 100.0f);
+	renderer_3d_->set_projection_matrix(projection_matrix);
 
-	camera_position = gef::Vector4(0.0f, 1.0f, 5.0f);
-	camera_target = gef::Vector4(0.0f, 0.0f, 0.0f);
-	camera_up = gef::Vector4(0.0f, 1.0f, 0.0f);
-
-	view_matrix.LookAt(camera_position, camera_target, camera_up);
+	// view
+	gef::Vector4 camera_eye(0.0f, 4.0f, 12.0f);
+	gef::Vector4 camera_lookat(0.0f, 0.0f, 0.0f);
+	gef::Vector4 camera_up(0.0f, 1.0f, 0.0f);
+	gef::Matrix44 view_matrix;
+	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
+	renderer_3d_->set_view_matrix(view_matrix);
 }
 
 /*

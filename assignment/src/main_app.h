@@ -43,18 +43,7 @@ private:
 	GameInput* gameInput;
 
 	Player* player;
-	b2Body* player_body_;
-
-	gef::Mesh* ground_mesh_;
-	GameObject* ground_;
-	b2Body* ground_body_;
-
-	gef::Matrix44 projection_matrix;
-	gef::Matrix44 view_matrix;
-
-	gef::Vector4 camera_position;
-	gef::Vector4 camera_target;
-	gef::Vector4 camera_up;
+	GameObject* ground;
 
 	float fps_;
 	float yPosition;

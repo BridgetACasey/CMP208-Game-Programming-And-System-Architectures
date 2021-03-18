@@ -15,82 +15,55 @@ GameObject* GameObject::create()
 	return new GameObject();
 }
 
-void GameObject::UpdateFromSimulation(const b2Body* body)
-{
-	if (body)
-	{
-		// setup object rotation
-		gef::Matrix44 object_rotation;
-		object_rotation.RotationZ(body->GetAngle());
-
-		// setup the object translation
-		gef::Vector4 object_translation(body->GetPosition().x, body->GetPosition().y, 0.0f);
-
-		// build object transformation matrix
-		gef::Matrix44 object_transform = object_rotation;
-		object_transform.SetTranslation(object_translation);
-		set_transform(object_transform);
-	}
-}
-
 void GameObject::updateTransforms()
 {
 	if (body)
 	{
-		position.set_x(body->GetPosition().x);
+		position.set_x(body->GetPosition().x);	//set object position
 		position.set_y(body->GetPosition().y);
 		position.set_z(0.0f);
 
 		gef::Matrix44 transform;
-		transform.RotationZ(body->GetAngle());
+		transform.RotationZ(body->GetAngle());	//set object rotation
 
-		transform.SetTranslation(position);
+		transform.SetTranslation(position);	//build transform matrix
 		set_transform(transform);
 	}
 }
 
-void GameObject::buildTransform()
+void GameObject::setMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions)
 {
-	//gef::Matrix44 final_, trans, rotX, rotY, rotZ, scale_;
+	halfDimensions_ = halfDimensions;
 
-	//scale_.Scale(scale);
-
-	//rotX.RotationX(rotation.x());
-	//rotY.RotationY(rotation.y());
-	//rotZ.RotationZ(rotation.z());
-
-	//trans.SetIdentity();
-	//trans.SetTranslation(position);
-
-	//final_ = scale_ * rotX * rotY * rotZ * trans;
-
-	//set_transform(final_);
+	gef::Mesh* mesh = primitive_builder->CreateBoxMesh(halfDimensions);
+	set_mesh(mesh);
 }
 
-void GameObject::setMesh(PrimitiveBuilder* primitive_builder)
-{
-	set_mesh(primitive_builder->GetDefaultCubeMesh());
-}
-
-void GameObject::setBody(b2World* world)
+void GameObject::setBody(b2World* world, b2BodyType type)
 {
 	// create a physics body
 	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position = b2Vec2(170.0f, 25.0f);
-	//bodyDef.linearDamping = 10.0f;
+	bodyDef.type = type;
+	bodyDef.position = b2Vec2(position.x(), position.y());
 
 	body = world->CreateBody(&bodyDef);
 
 	// create the shape
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(0.5f, 0.5f);
+	b2PolygonShape shape;
+	shape.SetAsBox(halfDimensions_.x(), halfDimensions_.y());
 
 	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
+	fixtureDef.shape = &shape;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
 	b2Fixture* fixture = body->CreateFixture(&fixtureDef);
+}
+
+void GameObject::setPosition(float x, float y, float z)
+{
+	position.set_x(x);
+	position.set_y(y);
+	position.set_z(z);
 }
 
 gef::Vector4* GameObject::getPosition()
