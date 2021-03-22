@@ -28,6 +28,8 @@ void LevelState::init()
 	// initialise primitive builder to make create some 3D geometry easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
 
+	gameInput = GameInput::create(platform_, input_manager_);
+
 	// load the assets in from the .scn
 	const char* scene_asset_filename = "world.scn";
 	scene_assets_ = LoadSceneAssets(platform_, scene_asset_filename);
@@ -39,8 +41,6 @@ void LevelState::init()
 	{
 		gef::DebugOut("Scene file %s failed to load\n", scene_asset_filename);
 	}
-
-	gameInput = GameInput::create(platform_, input_manager_);
 
 	b2Vec2 gravity(0.0f, -9.8f);
 	world = new b2World(gravity);

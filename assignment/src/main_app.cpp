@@ -20,8 +20,6 @@ void MainApp::CleanUp()
 
 bool MainApp::Update(float frame_time)
 {
-	fps_ = 1.0f / frame_time;
-
 	context->getActiveState()->handleInput();
 	context->getActiveState()->update(frame_time);
 

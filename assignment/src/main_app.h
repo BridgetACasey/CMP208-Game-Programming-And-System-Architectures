@@ -17,7 +17,6 @@ public:
 	void Render();
 
 private:
-	float fps_;
 	Context* context;
 };
 

@@ -1,10 +1,11 @@
 #pragma once
 
 #include <map>
-#include <string>
 
-#include "state.h"
 #include "level_state.h"
+#include "menu_state.h"
+#include "pause_state.h"
+#include "splash_state.h"
 
 namespace gef
 {

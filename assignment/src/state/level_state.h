@@ -4,6 +4,13 @@
 
 #include "state.h"
 
+#include "object/player.h"
+#include "object/obstacle.h"
+
+#include <graphics/mesh_instance.h>
+#include <graphics/scene.h>
+#include <object/collision_listener.h>
+
 class LevelState : public State
 {
 protected:
@@ -31,6 +38,9 @@ private:
 	void SetupCamera();
 	gef::Scene* LoadSceneAssets(gef::Platform& platform, const char* filename);
 	gef::Mesh* GetMeshFromSceneAssets(gef::Scene* scene);
+
+	b2World* world;
+	CollisionListener collision;
 
 	gef::MeshInstance world_mesh_instance_;
 	gef::Scene* scene_assets_;

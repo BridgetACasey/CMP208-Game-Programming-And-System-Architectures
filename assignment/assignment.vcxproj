@@ -204,6 +204,9 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\state\splash_state.cpp" />
+    <ClCompile Include="src\state\pause_state.cpp" />
+    <ClCompile Include="src\state\menu_state.cpp" />
     <ClCompile Include="src\object\obstacle.cpp" />
     <ClCompile Include="src\input\game_input.cpp" />
     <ClCompile Include="src\object\player.cpp" />
@@ -226,6 +229,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\state\splash_state.h" />
+    <ClInclude Include="src\state\pause_state.h" />
+    <ClInclude Include="src\state\menu_state.h" />
     <ClInclude Include="src\object\obstacle.h" />
     <ClInclude Include="src\object\collision_listener.h" />
     <ClInclude Include="src\input\input_command.h" />
