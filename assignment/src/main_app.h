@@ -4,6 +4,7 @@
 #include <system/application.h>
 #include <maths/vector2.h>
 #include <graphics/mesh_instance.h>
+#include <graphics/scene.h>
 
 #include "primitive_builder.h"
 #include "input/game_input.h"
@@ -35,6 +36,8 @@ private:
 	void DrawHUD();
 	void SetupLights();
 	void SetupCamera();
+	gef::Scene* LoadSceneAssets(gef::Platform& platform, const char* filename);
+	gef::Mesh* GetMeshFromSceneAssets(gef::Scene* scene);
 
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Font* font_;
@@ -42,6 +45,10 @@ private:
 
 	PrimitiveBuilder* primitive_builder_;
 	gef::InputManager* input_manager_;
+
+	gef::MeshInstance world_mesh_instance_;
+	gef::Scene* scene_assets_;
+
 	GameInput* gameInput;
 
 	Player* player;
@@ -54,4 +61,4 @@ private:
 	CollisionListener collision;
 };
 
-#endif // _SCENE_APP_H
+#endif // _MAIN_APP_H

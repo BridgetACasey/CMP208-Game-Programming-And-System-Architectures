@@ -43,7 +43,7 @@ class CollisionListener : public b2ContactListener
 		{
 			if (objectB)
 			{
-				objectA->onCollisionBeginWith(objectB->getCollisionTag());
+				objectA->onCollisionEndWith(objectB->getCollisionTag());
 			}
 		}
 
@@ -51,7 +51,7 @@ class CollisionListener : public b2ContactListener
 		{
 			if (objectA)
 			{
-				objectB->onCollisionBeginWith(objectA->getCollisionTag());
+				objectB->onCollisionEndWith(objectA->getCollisionTag());
 			}
 		}
 	}

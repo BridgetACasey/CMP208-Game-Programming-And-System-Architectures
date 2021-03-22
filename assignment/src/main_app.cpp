@@ -12,7 +12,8 @@ MainApp::MainApp(gef::Platform& platform) :
 	sprite_renderer_(NULL),
 	renderer_3d_(NULL),
 	primitive_builder_(NULL),
-	font_(NULL)
+	font_(NULL),
+	scene_assets_(NULL)
 {
 
 }
@@ -34,6 +35,18 @@ void MainApp::Init()
 
 	// initialise primitive builder to make create some 3D geometry easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
+
+	// load the assets in from the .scn
+	const char* scene_asset_filename = "world.scn";
+	scene_assets_ = LoadSceneAssets(platform_, scene_asset_filename);
+	if (scene_assets_)
+	{
+		world_mesh_instance_.set_mesh(GetMeshFromSceneAssets(scene_assets_));
+	}
+	else
+	{
+		gef::DebugOut("Scene file %s failed to load\n", scene_asset_filename);
+	}
 
 	gameInput = GameInput::create(platform_, input_manager_);
 
@@ -104,6 +117,7 @@ void MainApp::Render()
 	renderer_3d_->Begin();
 
 	renderer_3d_->DrawMesh(*ground);
+	renderer_3d_->DrawMesh(world_mesh_instance_);
 
 	// draw player
 	renderer_3d_->set_override_material(&primitive_builder_->red_material());
@@ -171,6 +185,38 @@ void MainApp::SetupCamera()
 	gef::Matrix44 view_matrix;
 	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
 	renderer_3d_->set_view_matrix(view_matrix);
+}
+
+gef::Scene* MainApp::LoadSceneAssets(gef::Platform& platform, const char* filename)
+{
+	gef::Scene* scene = new gef::Scene();
+
+	if (scene->ReadSceneFromFile(platform, filename))
+	{
+		// if scene file loads successful
+		// create material and mesh resources from the scene data
+		scene->CreateMaterials(platform);
+		scene->CreateMeshes(platform);
+	}
+	else
+	{
+		delete scene;
+		scene = NULL;
+	}
+
+	return scene;
+}
+
+gef::Mesh* MainApp::GetMeshFromSceneAssets(gef::Scene* scene)
+{
+	gef::Mesh* mesh = NULL;
+
+	// if the scene data contains at least one mesh
+	// return the first mesh
+	if (scene && scene->meshes.size() > 0)
+		mesh = scene->meshes.front();
+
+	return mesh;
 }
 
 /*
