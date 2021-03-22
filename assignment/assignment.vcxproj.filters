@@ -21,9 +21,6 @@
     <ClCompile Include="src\main_vita.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitive_builder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,11 +36,17 @@
     <ClCompile Include="src\object\obstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\util\primitive_builder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\state\level_state.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\state\context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\primitive_builder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\main_app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,6 +72,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\object\obstacle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\primitive_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\state\state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\state\level_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\state\context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

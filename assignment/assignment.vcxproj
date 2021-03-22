@@ -212,7 +212,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\primitive_builder.cpp" />
+    <ClCompile Include="src\state\context.cpp" />
+    <ClCompile Include="src\state\level_state.cpp" />
+    <ClCompile Include="src\util\primitive_builder.cpp" />
     <ClCompile Include="src\main_app.cpp" />
     <ClCompile Include="src\main_vita.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -232,8 +234,11 @@
     <ClInclude Include="src\input\game_input.h" />
     <ClInclude Include="src\object\player.h" />
     <ClInclude Include="src\object\game_object.h" />
-    <ClInclude Include="src\primitive_builder.h" />
+    <ClInclude Include="src\state\context.h" />
+    <ClInclude Include="src\state\level_state.h" />
+    <ClInclude Include="src\util\primitive_builder.h" />
     <ClInclude Include="src\main_app.h" />
+    <ClInclude Include="src\state\state.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

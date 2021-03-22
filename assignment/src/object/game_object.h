@@ -8,7 +8,7 @@
 #include <box2d/box2d.h>
 #include <system/debug_log.h>
 
-#include "primitive_builder.h"
+#include "util/primitive_builder.h"
 
 namespace gef
 {
