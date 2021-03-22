@@ -39,6 +39,7 @@ void MainApp::Init()
 
 	b2Vec2 gravity(0.0f, -9.8f);
 	world = new b2World(gravity);
+	world->SetContactListener(&collision);
 
 	player = Player::create();
 	player->setPosition(0.0f, 4.0f, 0.0f);
@@ -46,7 +47,7 @@ void MainApp::Init()
 	player->setBody(world, b2BodyType::b2_dynamicBody);
 	player->updateTransforms();
 
-	ground = GameObject::create();
+	ground = Obstacle::create();
 	ground->setPosition(0.0f, 0.0f, 0.0f);
 	ground->setMesh(primitive_builder_, gef::Vector4(5.0f, 0.5f, 0.5f));
 	ground->setBody(world, b2BodyType::b2_staticBody);

@@ -8,6 +8,8 @@
 #include "primitive_builder.h"
 #include "input/game_input.h"
 #include "object/player.h"
+#include "object/obstacle.h"
+#include <object/collision_listener.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -43,12 +45,13 @@ private:
 	GameInput* gameInput;
 
 	Player* player;
-	GameObject* ground;
+	Obstacle* ground;
 
 	float fps_;
 	float yPosition;
 
 	b2World* world;
+	CollisionListener collision;
 };
 
 #endif // _SCENE_APP_H

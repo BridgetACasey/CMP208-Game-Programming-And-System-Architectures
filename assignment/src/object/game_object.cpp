@@ -2,7 +2,8 @@
 
 GameObject::GameObject()
 {
-
+	body = nullptr;
+	tag_ = CollisionTag::NONE;
 }
 
 GameObject::~GameObject()
@@ -31,6 +32,16 @@ void GameObject::updateTransforms()
 	}
 }
 
+void GameObject::onCollisionBeginWith(CollisionTag tag)
+{
+	//To be populated in child classes
+}
+
+void GameObject::onCollisionEndWith(CollisionTag tag)
+{
+	//To be populated in child classes
+}
+
 void GameObject::setMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions)
 {
 	halfDimensions_ = halfDimensions;
@@ -45,6 +56,7 @@ void GameObject::setBody(b2World* world, b2BodyType type)
 	b2BodyDef bodyDef;
 	bodyDef.type = type;
 	bodyDef.position = b2Vec2(position.x(), position.y());
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
 	body = world->CreateBody(&bodyDef);
 
@@ -76,12 +88,12 @@ b2Body* GameObject::getBody()
 	return body;
 }
 
-void GameObject::setGameObjectTag(CollisionTag& newTag)
+void GameObject::setCollisionTag(CollisionTag tag)
 {
-	tag = newTag;
+	tag_ = tag;
 }
 
-CollisionTag& GameObject::getGameObjectTag()
+CollisionTag& GameObject::getCollisionTag()
 {
-	return tag;
+	return tag_;
 }

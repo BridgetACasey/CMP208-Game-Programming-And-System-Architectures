@@ -36,7 +36,7 @@
     <ClCompile Include="src\input\game_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\object\collision_manager.cpp">
+    <ClCompile Include="src\object\obstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +65,10 @@
     <ClInclude Include="src\input\move_command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\object\collision_manager.h">
+    <ClInclude Include="src\object\collision_listener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\obstacle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

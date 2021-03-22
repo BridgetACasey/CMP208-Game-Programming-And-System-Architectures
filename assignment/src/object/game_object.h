@@ -6,6 +6,7 @@
 #include <graphics/mesh_instance.h>
 #include <graphics/renderer_3d.h>
 #include <box2d/box2d.h>
+#include <system/debug_log.h>
 
 #include "primitive_builder.h"
 
@@ -21,9 +22,8 @@ enum class CollisionTag
 {
 	NONE = 0,
 	PLAYER,
-	FLOOR,
-	WALL,
-	COLLECTIBLE
+	OBSTACLE,
+	COIN
 };
 
 class GameObject : public gef::MeshInstance
@@ -38,6 +38,13 @@ public:
 
 	void updateTransforms();
 
+	/*For collision events
+	 Does not actually check if collisions have occurred (handled by CollisionListener),
+	 only handles what happens to this GameObject after a valid collision with another GameObject
+	 as determined by its CollisionTag*/
+	virtual void onCollisionBeginWith(CollisionTag tag);
+	virtual void onCollisionEndWith(CollisionTag tag);
+
 	void setMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions);
 	void setBody(b2World* world, b2BodyType type);
 
@@ -46,8 +53,8 @@ public:
 
 	b2Body* getBody();
 
-	void setGameObjectTag(CollisionTag& newTag);
-	CollisionTag& getGameObjectTag();
+	void setCollisionTag(CollisionTag newTag);
+	CollisionTag& getCollisionTag();
 
 protected:
 	gef::Vector4 position;
@@ -55,7 +62,7 @@ protected:
 
 	b2Body* body;
 
-	CollisionTag tag;
+	CollisionTag tag_;
 };
 
 #endif // _GAME_OBJECT_H

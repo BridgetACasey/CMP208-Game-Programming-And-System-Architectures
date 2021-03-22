@@ -1,21 +1,21 @@
 //@BridgetACasey
 
-#ifndef _PLAYER_H
-#define _PLAYER_H
+#ifndef _OBSTACLE_H
+#define _OBSTACLE_H
 
 #pragma once
 
 #include "object/game_object.h"
 
-class Player : public GameObject
+class Obstacle : public GameObject
 {
 protected:
-	Player();
+	Obstacle();
 
 public:
-	~Player();
+	~Obstacle();
 
-	static Player* create();
+	static Obstacle* create();
 
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
