@@ -113,7 +113,7 @@ void LevelState::render()
 
 void LevelState::onEnter()
 {
-
+	gef::DebugOut("Entering level\n");
 }
 
 void LevelState::onExit()

@@ -32,7 +32,7 @@ void SplashState::render()
 
 void SplashState::onEnter()
 {
-
+	gef::DebugOut("Entering splash screen\n");
 }
 
 void SplashState::onExit()

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <system/platform.h>
+#include <system/debug_log.h>
 #include <graphics/sprite_renderer.h>
 #include <graphics/font.h>
 #include <graphics/renderer_3d.h>

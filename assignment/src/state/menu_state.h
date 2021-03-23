@@ -3,6 +3,7 @@
 #pragma once
 
 #include "state.h"
+#include "ui/button.h"
 
 class MenuState : public State
 {
@@ -22,4 +23,8 @@ public:
 	void onExit() override;
 
 private:
+	Button* playButton;
+	Button* settingsButton;
+	Button* helpButton;
+	Button* exitButton;
 };

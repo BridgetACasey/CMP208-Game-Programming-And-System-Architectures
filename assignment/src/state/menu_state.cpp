@@ -4,7 +4,10 @@
 
 MenuState::MenuState(gef::Platform& platform) : State(platform)
 {
-
+	playButton = Button::create(gameInput);
+	settingsButton = Button::create(gameInput);
+	helpButton = Button::create(gameInput);
+	exitButton = Button::create(gameInput);
 }
 
 MenuState* MenuState::create(gef::Platform& platform)
@@ -34,7 +37,7 @@ void MenuState::render()
 
 void MenuState::onEnter()
 {
-
+	gef::DebugOut("Entering the main menu\n");
 }
 
 void MenuState::onExit()
