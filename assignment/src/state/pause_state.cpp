@@ -1,6 +1,7 @@
 //@BridgetACasey
 
 #include "pause_state.h"
+#include "context.h"
 
 PauseState::PauseState(gef::Platform& platform) : State(platform)
 {
@@ -12,7 +13,17 @@ PauseState* PauseState::create(gef::Platform& platform)
 	return new PauseState(platform);
 }
 
-void PauseState::init()
+void PauseState::setup()
+{
+
+}
+
+void PauseState::onEnter()
+{
+
+}
+
+void PauseState::onExit()
 {
 
 }
@@ -28,16 +39,6 @@ void PauseState::update(float deltaTime)
 }
 
 void PauseState::render()
-{
-
-}
-
-void PauseState::onEnter()
-{
-
-}
-
-void PauseState::onExit()
 {
 
 }

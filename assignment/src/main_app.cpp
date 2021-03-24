@@ -7,9 +7,7 @@ MainApp::MainApp(gef::Platform& platform) : Application(platform)
 
 void MainApp::Init()
 {
-	context->setActiveState(StateLabel::LEVEL);
-
-	context->getActiveState()->init();
+	//context->setActiveState(StateLabel::SPLASH_SCREEN);
 }
 
 void MainApp::CleanUp()

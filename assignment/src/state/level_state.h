@@ -19,20 +19,16 @@ protected:
 public:
 	static LevelState* create(gef::Platform& platform);
 
-	void CleanUp();
+	void setup() override;
 
-	void init() override;
+	void onEnter() override;
+	void onExit() override;
 
 	void handleInput() override;
 	void update(float deltaTime) override;
 	void render() override;
 
-	void onEnter() override;
-	void onExit() override;
-
 private:
-	void InitFont();
-	void CleanUpFont();
 	void DrawHUD();
 	void SetupLights();
 	void SetupCamera();

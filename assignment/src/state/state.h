@@ -25,19 +25,19 @@ enum class StateLabel
 class State
 {
 protected:
-	State(gef::Platform& platform) : platform_(platform) {}
+	State(gef::Platform& platform) : platform_(platform) { context_ = nullptr; }
 
 public:
 	virtual ~State() = default;
 
-	virtual void init() = 0;
+	virtual void setup() = 0;
+
+	virtual void onEnter() = 0;
+	virtual void onExit() = 0;
 
 	virtual void handleInput() = 0;
 	virtual void update(float deltaTime) = 0;
 	virtual void render() = 0;
-
-	virtual void onEnter() = 0;
-	virtual void onExit() = 0;
 
 	void setContext(Context* context) { this->context_ = context; }
 
@@ -46,11 +46,5 @@ protected:
 
 	gef::Platform& platform_;
 
-	gef::SpriteRenderer* sprite_renderer_;
-	gef::Renderer3D* renderer_3d_;
-	gef::InputManager* input_manager_;
-	gef::Font* font_;
-
-	PrimitiveBuilder* primitive_builder_;
-	GameInput* gameInput;
+	bool firstSetup = true;
 };

@@ -12,14 +12,14 @@ protected:
 public:
 	static PauseState* create(gef::Platform& platform);
 
-	void init() override;
+	void setup() override;
+
+	void onEnter() override;
+	void onExit() override;
 
 	void handleInput() override;
 	void update(float deltaTime) override;
 	void render() override;
-
-	void onEnter() override;
-	void onExit() override;
 
 private:
 };

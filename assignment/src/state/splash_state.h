@@ -12,14 +12,15 @@ protected:
 public:
 	static SplashState* create(gef::Platform& platform);
 
-	void init() override;
+	void setup() override;
+
+	void onEnter() override;
+	void onExit() override;
 
 	void handleInput() override;
 	void update(float deltaTime) override;
 	void render() override;
 
-	void onEnter() override;
-	void onExit() override;
-
 private:
+	float transitionTime = 0.0f;
 };

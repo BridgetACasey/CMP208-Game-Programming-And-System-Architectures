@@ -38,7 +38,9 @@ public:
 	void bindKeys();
 	void processKeyCommands(GameObject* gameObject);
 
-	inline const gef::Vector2& getMousePosition();
+	void processTouchInput();
+
+	gef::Vector2& getMousePosition();
 
 private:
 	Key* assignKeys();
@@ -52,6 +54,11 @@ private:
 	JumpCommand jump;
 	MoveCommand left;
 	MoveCommand right;
+
+	Int32 active_touch_id_;
+	gef::Vector2 touch_position_;
+
+	gef::Vector2 mousePosition;
 };
 
 #endif
