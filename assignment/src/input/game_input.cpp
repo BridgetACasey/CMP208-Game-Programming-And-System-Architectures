@@ -8,6 +8,8 @@ GameInput::GameInput(gef::Platform& platform, gef::InputManager* inputManager_)
 	inputManager = inputManager_;
 
 	active_touch_id_ = -1;
+
+	mouse = new Mouse();
 	
 	key_space = new Key();
 	key_a = new Key();
@@ -34,7 +36,10 @@ void GameInput::update(GameObject* gameObject)
 
 		processTouchInput();
 
-		mousePosition = inputManager->touch_manager()->mouse_position();
+		if (mouse)
+		{
+			mouse->position = inputManager->touch_manager()->mouse_position();
+		}
 	}
 
 	processKeyCommands(gameObject);
@@ -59,6 +64,39 @@ void GameInput::processKeyCommands(GameObject* gameObject)
 	if (key)
 	{
 		key->command->executeCommand(gameObject);
+	}
+}
+
+void GameInput::processMouseButton(Int32 touchID, gef::TouchType type)
+{
+	MouseCode button;
+
+	switch (type)
+	{
+		case gef::TouchType::TT_NEW:
+			button = MouseCode::PRESSED;
+			break;
+
+		case gef::TouchType::TT_ACTIVE:
+			button = MouseCode::HELD;
+			break;
+
+		case gef::TouchType::TT_RELEASED:
+			button = MouseCode::RELEASED;
+			break;
+
+		default:
+			button = MouseCode::NONE;
+	}
+
+	if (touchID == 0)
+	{
+		mouse->left = button;
+	}
+
+	if (touchID == 1)
+	{
+		mouse->right = button;
 	}
 }
 
@@ -106,6 +144,8 @@ void GameInput::processTouchInput()
 
 					// do any processing for a new touch here
 					// we're just going to record the position of the touch
+					processMouseButton(touch->id, touch->type);
+
 					touch_position_ = touch->position;
 				}
 			}
@@ -116,6 +156,8 @@ void GameInput::processTouchInput()
 				{
 					// update an active touch here
 					// we're just going to record the position of the touch
+					processMouseButton(touch->id, touch->type);
+
 					touch_position_ = touch->position;
 				}
 				else if (touch->type == gef::TT_RELEASED)
@@ -123,6 +165,8 @@ void GameInput::processTouchInput()
 					// the touch we are tracking has been released
 					// perform any actions that need to happen when a touch is released here
 					// we're not doing anything here apart from resetting the active touch id
+					processMouseButton(touch->id, touch->type);
+
 					active_touch_id_ = -1;
 				}
 			}
@@ -130,7 +174,12 @@ void GameInput::processTouchInput()
 	}
 }
 
+Mouse* GameInput::getMouse()
+{
+	return mouse;
+}
+
 gef::Vector2& GameInput::getMousePosition()
 {
-	return mousePosition;
+	return mouse->position;
 }

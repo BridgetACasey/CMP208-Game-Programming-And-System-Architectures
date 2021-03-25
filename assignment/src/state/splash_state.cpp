@@ -60,6 +60,10 @@ void SplashState::render()
 	context_->getSpriteRenderer()->Begin(false);
 
 	//Render UI elements
+	if (context_->getFont())
+	{
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "SPLASH SCREEN");
+	}
 
 	context_->getSpriteRenderer()->End();
 }

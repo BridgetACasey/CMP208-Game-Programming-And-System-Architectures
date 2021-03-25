@@ -6,6 +6,7 @@
 
 #include "object/player.h"
 #include "object/obstacle.h"
+#include "ui/button.h"
 
 #include <graphics/mesh_instance.h>
 #include <graphics/scene.h>
@@ -43,6 +44,7 @@ private:
 
 	Player* player;
 	Obstacle* ground;
+	Button* backButton;
 
 	float fps_;
 	float yPosition;

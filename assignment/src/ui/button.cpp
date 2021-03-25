@@ -5,6 +5,10 @@
 Button::Button(GameInput* input_)
 {
 	input = input_;
+
+	setInactiveColour(0xfffffff);
+	setHoveringColour(0xffffffff);
+	setClickedColour(0xffffffff);
 }
 
 Button* Button::create(GameInput* input_)
@@ -32,8 +36,11 @@ bool Button::isClicked()
 	if (isHovering())
 	{
 		set_colour(clickedColour);
-		//Check if left mouse button has been clicked
-		//return true
+
+		if (input->getMouse()->left == MouseCode::PRESSED)
+		{
+			return true;
+		}
 	}
 
 	return false;

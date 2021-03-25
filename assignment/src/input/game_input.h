@@ -17,6 +17,21 @@
 class InputCommand;
 class GameObject;
 
+enum class MouseCode
+{
+	NONE = 0,
+	PRESSED,
+	HELD,
+	RELEASED
+};
+
+struct Mouse
+{
+	MouseCode left = MouseCode::NONE;
+	MouseCode right = MouseCode::NONE;
+	gef::Vector2 position;
+};
+
 struct Key
 {
 	InputCommand* command;
@@ -37,8 +52,11 @@ public:
 
 	void bindKeys();
 	void processKeyCommands(GameObject* gameObject);
+	void processMouseButton(Int32 touchID, gef::TouchType type);
 
 	void processTouchInput();
+
+	Mouse* getMouse();
 
 	gef::Vector2& getMousePosition();
 
@@ -46,6 +64,8 @@ private:
 	Key* assignKeys();
 
 	gef::InputManager* inputManager;
+
+	Mouse* mouse;
 
 	Key* key_a;
 	Key* key_d;
@@ -57,8 +77,6 @@ private:
 
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
-
-	gef::Vector2 mousePosition;
 };
 
 #endif

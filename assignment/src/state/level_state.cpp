@@ -45,6 +45,14 @@ void LevelState::setup()
 		ground->setBody(world, b2BodyType::b2_staticBody);
 		ground->updateTransforms();
 
+		backButton = Button::create(context_->getGameInput());
+		backButton->set_width(150.0f);
+		backButton->set_height(75.0f);
+		backButton->setInactiveColour(0xfffffff);
+		backButton->setHoveringColour(0xffffffff);
+		backButton->setClickedColour(0xffffffff);
+		backButton->set_position(gef::Vector4(150.0f, 100.0f, 0.0f));
+
 		SetupCamera();
 		SetupLights();
 	}
@@ -66,7 +74,10 @@ void LevelState::onExit()
 
 void LevelState::handleInput()
 {
-
+	if (backButton->isClicked())
+	{
+		context_->setActiveState(StateLabel::MAIN_MENU);
+	}
 }
 
 void LevelState::update(float deltaTime)
@@ -108,6 +119,8 @@ void LevelState::render()
 	context_->getSpriteRenderer()->Begin(false);
 
 	DrawHUD();
+	context_->getSpriteRenderer()->DrawSprite(*backButton);
+
 	context_->getSpriteRenderer()->End();
 }
 

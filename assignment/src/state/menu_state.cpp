@@ -26,30 +26,18 @@ void MenuState::setup()
 
 		playButton->set_width(150.0f);
 		playButton->set_height(75.0f);
-		playButton->setInactiveColour(0xfffffff);
-		playButton->setHoveringColour(0xffffffff);
-		playButton->setClickedColour(0xffffffff);
 		playButton->set_position(gef::Vector4(platform_.width() / 2.0f, (platform_.height() / 2.0f) - 50.0f, 0.0f));
 
 		settingsButton->set_width(150.0f);
 		settingsButton->set_height(75.0f);
-		settingsButton->setInactiveColour(0xfffffff);
-		settingsButton->setHoveringColour(0xffffffff);
-		settingsButton->setClickedColour(0xffffffff);
 		settingsButton->set_position(gef::Vector4(playButton->position().x(), playButton->position().y() + 75.0f, 0.0f));
 
 		helpButton->set_width(150.0f);
 		helpButton->set_height(75.0f);
-		helpButton->setInactiveColour(0xfffffff);
-		helpButton->setHoveringColour(0xffffffff);
-		helpButton->setClickedColour(0xffffffff);
 		helpButton->set_position(gef::Vector4(settingsButton->position().x(), settingsButton->position().y() + 75.0f, 0.0f));
 
 		exitButton->set_width(150.0f);
 		exitButton->set_height(75.0f);
-		exitButton->setInactiveColour(0xfffffff);
-		exitButton->setHoveringColour(0xffffffff);
-		exitButton->setClickedColour(0xffffffff);
 		exitButton->set_position(gef::Vector4(helpButton->position().x(), helpButton->position().y() + 75.0f, 0.0f));
 	}
 
@@ -70,32 +58,33 @@ void MenuState::onExit()
 
 void MenuState::handleInput()
 {
+	context_->getGameInput()->update(NULL);
 
+	if (playButton->isClicked())
+	{
+		gef::DebugOut("PLAY BUTTON CLICKED!\n");
+		context_->setActiveState(StateLabel::LEVEL);
+	}
+
+	if (settingsButton->isClicked())
+	{
+
+	}
+
+	if (helpButton->isClicked())
+	{
+
+	}
+
+	if (exitButton->isClicked())
+	{
+
+	}
 }
 
 void MenuState::update(float deltaTime)
 {
-	context_->getGameInput()->update(NULL);
 
-	if (playButton->isHovering())
-	{
-		gef::DebugOut("Hovering over PLAY\n");
-	}
-
-	if (settingsButton->isHovering())
-	{
-		gef::DebugOut("Hovering over SETTINGS\n");
-	}
-
-	if (helpButton->isHovering())
-	{
-		gef::DebugOut("Hovering over HELP\n");
-	}
-
-	if (exitButton->isHovering())
-	{
-		gef::DebugOut("Hovering over EXIT\n");
-	}
 }
 
 void MenuState::render()
