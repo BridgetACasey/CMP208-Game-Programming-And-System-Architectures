@@ -18,9 +18,9 @@ Button* Button::create(GameInput* input_)
 
 bool Button::isHovering()
 {
-	if (input->getMousePosition().x > position_.x() - (width() / 2.0f) && input->getMousePosition().x < position_.x() + (width() / 2.0f))
+	if (input->getMouse()->position.x > position_.x() - (width() / 2.0f) && input->getMouse()->position.x < position_.x() + (width() / 2.0f))
 	{
-		if (input->getMousePosition().y > position_.y() - (height() / 2.0f) && input->getMousePosition().y < position_.y() + (height() / 2.0f))
+		if (input->getMouse()->position.y > position_.y() - (height() / 2.0f) && input->getMouse()->position.y < position_.y() + (height() / 2.0f))
 		{
 			set_colour(hoveringColour);
 			return true;

@@ -5,7 +5,10 @@
 
 MenuState::MenuState(gef::Platform& platform) : State(platform)
 {
-
+	playButton = nullptr;
+	settingsButton = nullptr;
+	helpButton = nullptr;
+	exitButton = nullptr;
 }
 
 MenuState* MenuState::create(gef::Platform& platform)
@@ -58,7 +61,7 @@ void MenuState::onExit()
 
 void MenuState::handleInput()
 {
-	context_->getGameInput()->update(NULL);
+	context_->getGameInput()->update();
 
 	if (playButton->isClicked())
 	{
@@ -105,8 +108,8 @@ void MenuState::render()
 
 	if (context_->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(500.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "X: %.1f Y: %.1f",
-			context_->getGameInput()->getMousePosition().x, context_->getGameInput()->getMousePosition().y);
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(700.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "X: %.1f Y: %.1f",
+			context_->getGameInput()->getMouse()->position.x, context_->getGameInput()->getMouse()->position.y);
 	}
 
 	context_->getSpriteRenderer()->End();

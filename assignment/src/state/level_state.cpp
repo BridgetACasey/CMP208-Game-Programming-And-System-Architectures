@@ -3,7 +3,14 @@
 
 LevelState::LevelState(gef::Platform& platform) : State(platform)
 {
+	backButton = nullptr;
+	ground = nullptr;
+	player = nullptr;
+	scene_assets_ = nullptr;
+	world = nullptr;
 
+	fps_ = 0.0f;
+	yPosition = 0.0f;
 }
 
 LevelState* LevelState::create(gef::Platform& platform)
@@ -74,6 +81,13 @@ void LevelState::onExit()
 
 void LevelState::handleInput()
 {
+	context_->getGameInput()->update();
+
+	if (context_->getGameInput()->getKeyboard()->IsKeyPressed(context_->getGameInput()->getKeyboard()->KC_ESCAPE))
+	{
+		context_->setActiveState(StateLabel::PAUSE_MENU);
+	}
+
 	if (backButton->isClicked())
 	{
 		context_->setActiveState(StateLabel::MAIN_MENU);
@@ -95,7 +109,7 @@ void LevelState::update(float deltaTime)
 	// don't have to update the ground visuals as it is static
 	player->updateTransforms();
 
-	context_->getGameInput()->update(player);
+	context_->getGameInput()->updateObjectInput(player);
 
 	yPosition = player->getBody()->GetTransform().p.y;
 }

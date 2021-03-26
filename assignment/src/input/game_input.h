@@ -48,17 +48,17 @@ public:
 
 	static GameInput* create(gef::Platform& platform, gef::InputManager* inputManager_);
 
-	void update(GameObject* gameObject);
+	void update();
+	void updateObjectInput(GameObject* gameObject);
 
 	void bindKeys();
 	void processKeyCommands(GameObject* gameObject);
-	void processMouseButton(Int32 touchID, gef::TouchType type);
 
+	void processMouseButton(Int32 touchID, gef::TouchType type);
 	void processTouchInput();
 
 	Mouse* getMouse();
-
-	gef::Vector2& getMousePosition();
+	gef::Keyboard* getKeyboard();
 
 private:
 	Key* assignKeys();
@@ -67,16 +67,15 @@ private:
 
 	Mouse* mouse;
 
-	Key* key_a;
-	Key* key_d;
-	Key* key_space;
-
 	JumpCommand jump;
 	MoveCommand left;
 	MoveCommand right;
 
+	Key* key_a;
+	Key* key_d;
+	Key* key_space;
+
 	Int32 active_touch_id_;
-	gef::Vector2 touch_position_;
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 SplashState::SplashState(gef::Platform& platform) : State(platform)
 {
-
+	transitionTime = 0.0f;
 }
 
 SplashState* SplashState::create(gef::Platform& platform)

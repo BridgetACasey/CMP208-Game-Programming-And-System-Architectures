@@ -28,20 +28,23 @@ GameInput* GameInput::create(gef::Platform& platform, gef::InputManager* inputMa
 	return new GameInput(platform, inputManager_);
 }
 
-void GameInput::update(GameObject* gameObject)
+void GameInput::update()
 {
 	if (inputManager)
 	{
 		inputManager->Update();
 
-		processTouchInput();
-
 		if (mouse)
 		{
 			mouse->position = inputManager->touch_manager()->mouse_position();
 		}
-	}
 
+		processTouchInput();
+	}
+}
+
+void GameInput::updateObjectInput(GameObject* gameObject)
+{
 	processKeyCommands(gameObject);
 }
 
@@ -63,7 +66,7 @@ void GameInput::processKeyCommands(GameObject* gameObject)
 
 	if (key)
 	{
-		key->command->executeCommand(gameObject);
+		key->command->executeObjectCommand(gameObject);
 	}
 }
 
@@ -145,8 +148,6 @@ void GameInput::processTouchInput()
 					// do any processing for a new touch here
 					// we're just going to record the position of the touch
 					processMouseButton(touch->id, touch->type);
-
-					touch_position_ = touch->position;
 				}
 			}
 			else if (active_touch_id_ == touch->id)
@@ -157,8 +158,6 @@ void GameInput::processTouchInput()
 					// update an active touch here
 					// we're just going to record the position of the touch
 					processMouseButton(touch->id, touch->type);
-
-					touch_position_ = touch->position;
 				}
 				else if (touch->type == gef::TT_RELEASED)
 				{
@@ -179,7 +178,7 @@ Mouse* GameInput::getMouse()
 	return mouse;
 }
 
-gef::Vector2& GameInput::getMousePosition()
+gef::Keyboard* GameInput::getKeyboard()
 {
-	return mouse->position;
+	return inputManager->keyboard();
 }

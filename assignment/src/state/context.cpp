@@ -15,8 +15,6 @@ Context::Context(gef::Platform& platform)
 	states[StateLabel::MAIN_MENU] = mainMenu;
 	states[StateLabel::PAUSE_MENU] = pauseMenu;
 	states[StateLabel::SPLASH_SCREEN] = splashScreen;
-
-	setActiveState(StateLabel::SPLASH_SCREEN);
 }
 
 Context::~Context()

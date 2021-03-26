@@ -22,5 +22,5 @@ public:
 	void render() override;
 
 private:
-	float transitionTime = 0.0f;
+	float transitionTime;
 };

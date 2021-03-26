@@ -2,12 +2,14 @@
 
 #pragma once
 
+#include <system/debug_log.h>
+
 class GameObject;
 
 class InputCommand
 {
 public:
-	virtual ~InputCommand(){}
+	virtual ~InputCommand() = default;
 
-	virtual void executeCommand(GameObject* gameObject) = 0;
+	virtual void executeObjectCommand(GameObject* gameObject) = 0;
 };
