@@ -4,6 +4,13 @@ GameObject::GameObject()
 {
 	body = nullptr;
 	tag_ = CollisionTag::NONE;
+
+	moveSpeed = 1.0f;
+	jumpForce = 1.0f;
+
+	canJump = true;
+
+	activeDirection = 1;
 }
 
 GameObject::~GameObject()
@@ -96,4 +103,44 @@ void GameObject::setCollisionTag(CollisionTag tag)
 CollisionTag& GameObject::getCollisionTag()
 {
 	return tag_;
+}
+
+void GameObject::setMoveSpeed(float moveSpeed_)
+{
+	moveSpeed = moveSpeed_;
+}
+
+void GameObject::setJumpForce(float jumpForce_)
+{
+	jumpForce = jumpForce_;
+}
+
+float GameObject::getMoveSpeed()
+{
+	return moveSpeed;
+}
+
+float GameObject::getJumpForce()
+{
+	return jumpForce;
+}
+
+void GameObject::setCanJump(bool canJump_)
+{
+	canJump = canJump_;
+}
+
+bool GameObject::getCanJump()
+{
+	return canJump;
+}
+
+void GameObject::setActiveDirection(int activeDirection_)
+{
+	activeDirection = activeDirection_;
+}
+
+int GameObject::getActiveDirection()
+{
+	return activeDirection;
 }

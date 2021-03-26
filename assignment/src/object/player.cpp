@@ -22,6 +22,7 @@ void Player::onCollisionBeginWith(CollisionTag tag)
 	if (tag == CollisionTag::OBSTACLE)
 	{
 		gef::DebugOut("Player has contacted with obstacle!\n");
+		canJump = true;
 	}
 
 	if (tag == CollisionTag::COIN)

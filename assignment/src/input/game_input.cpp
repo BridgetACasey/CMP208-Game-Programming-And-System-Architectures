@@ -14,6 +14,7 @@ GameInput::GameInput(gef::Platform& platform, gef::InputManager* inputManager_)
 	key_space = new Key();
 	key_a = new Key();
 	key_d = new Key();
+	key_l_shift = new Key();
 
 	bindKeys();
 }
@@ -45,28 +46,29 @@ void GameInput::update()
 
 void GameInput::updateObjectInput(GameObject* gameObject)
 {
-	processKeyCommands(gameObject);
+	processPlayerCommands(gameObject);
 }
 
 void GameInput::bindKeys()
 {
-	key_space->keyText = "SPACE";
 	key_space->command = &jump;
-
-	key_a->keyText = "A";
 	key_a->command = &left;
-
-	key_d->keyText = "D";
 	key_d->command = &right;
+	key_l_shift->command = &sprint;
 }
 
-void GameInput::processKeyCommands(GameObject* gameObject)
+void GameInput::processPlayerCommands(GameObject* gameObject)
 {
 	Key* key = assignKeys();
 
 	if (key)
 	{
 		key->command->executeObjectCommand(gameObject);
+	}
+
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_SPACE))
+	{
+		gameObject->setCanJump(false);
 	}
 }
 
@@ -105,21 +107,24 @@ void GameInput::processMouseButton(Int32 touchID, gef::TouchType type)
 
 Key* GameInput::assignKeys()
 {
-	const gef::Keyboard* keyboard = inputManager->keyboard();
-
-	if (keyboard->IsKeyDown(gef::Keyboard::KeyCode::KC_SPACE))
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_SPACE))
 	{
 		return key_space;
 	}
 
-	if (keyboard->IsKeyDown(gef::Keyboard::KeyCode::KC_A))
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_A))
 	{
 		return key_a;
 	}
 
-	if (keyboard->IsKeyDown(gef::Keyboard::KeyCode::KC_D))
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_D))
 	{
 		return key_d;
+	}
+
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_LSHIFT))
+	{
+		return key_l_shift;
 	}
 
 	return nullptr;

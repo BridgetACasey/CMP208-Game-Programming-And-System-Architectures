@@ -237,7 +237,6 @@
     <ClInclude Include="src\object\obstacle.h" />
     <ClInclude Include="src\object\collision_listener.h" />
     <ClInclude Include="src\input\input_command.h" />
-    <ClInclude Include="src\input\jump_command.h" />
     <ClInclude Include="src\input\move_command.h" />
     <ClInclude Include="src\input\game_input.h" />
     <ClInclude Include="src\object\player.h" />

@@ -10,12 +10,6 @@
 
 #include "util/primitive_builder.h"
 
-namespace gef
-{
-	class Vector4;
-	class Renderer3D;
-}
-
 class PrimitiveBuilder;
 
 enum class CollisionTag
@@ -56,6 +50,18 @@ public:
 	void setCollisionTag(CollisionTag newTag);
 	CollisionTag& getCollisionTag();
 
+	void setMoveSpeed(float moveSpeed_);
+	float getMoveSpeed();
+
+	void setJumpForce(float jumpForce_);
+	float getJumpForce();
+
+	void setCanJump(bool canJump_);
+	bool getCanJump();
+
+	void setActiveDirection(int activeDirection_);
+	int getActiveDirection();
+
 protected:
 	gef::Vector4 position;
 	gef::Vector4 halfDimensions_;
@@ -63,6 +69,13 @@ protected:
 	b2Body* body;
 
 	CollisionTag tag_;
+
+	float moveSpeed;
+	float jumpForce;
+
+	bool canJump;
+
+	int activeDirection;
 };
 
 #endif // _GAME_OBJECT_H

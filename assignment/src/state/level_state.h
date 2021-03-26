@@ -26,6 +26,7 @@ struct Camera
 
 	void updateFollow(GameObject* object)
 	{
+		eye = gef::Vector4(object->getPosition()->x(), eye.y(), eye.z());
 		lookAt = gef::Vector4(object->getPosition()->x(), object->getPosition()->y(), lookAt.z());
 		view_matrix.LookAt(eye, lookAt, up);
 	}

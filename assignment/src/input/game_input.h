@@ -11,7 +11,6 @@
 #include <input/keyboard.h>
 #include <system/platform.h>
 
-#include "jump_command.h"
 #include "move_command.h"
 
 class InputCommand;
@@ -35,7 +34,6 @@ struct Mouse
 struct Key
 {
 	InputCommand* command;
-	std::string keyText;
 };
 
 class GameInput
@@ -52,7 +50,7 @@ public:
 	void updateObjectInput(GameObject* gameObject);
 
 	void bindKeys();
-	void processKeyCommands(GameObject* gameObject);
+	void processPlayerCommands(GameObject* gameObject);
 
 	void processMouseButton(Int32 touchID, gef::TouchType type);
 	void processTouchInput();
@@ -68,12 +66,14 @@ private:
 	Mouse* mouse;
 
 	JumpCommand jump;
-	MoveCommand left;
-	MoveCommand right;
+	MoveLeftCommand left;
+	MoveRightCommand right;
+	SprintCommand sprint;
 
 	Key* key_a;
 	Key* key_d;
 	Key* key_space;
+	Key* key_l_shift;
 
 	Int32 active_touch_id_;
 };

@@ -44,6 +44,8 @@ void LevelState::setup()
 		player->setPosition(0.0f, 4.0f, 0.0f);
 		player->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
 		player->setBody(world, b2BodyType::b2_dynamicBody);
+		player->setMoveSpeed(25.0f);
+		player->setJumpForce(1200.0f);
 		player->updateTransforms();
 
 		ground = Obstacle::create();
