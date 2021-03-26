@@ -5,6 +5,7 @@
 #include "state.h"
 
 #include "object/player.h"
+#include "object/collectible.h"
 #include "object/obstacle.h"
 #include "ui/button.h"
 
@@ -65,6 +66,7 @@ private:
 	Camera camera;
 
 	Player* player;
+	Collectible* coin;
 	Obstacle* ground;
 	Button* backButton;
 

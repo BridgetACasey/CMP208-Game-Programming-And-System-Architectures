@@ -48,6 +48,12 @@ void LevelState::setup()
 		player->setJumpForce(1200.0f);
 		player->updateTransforms();
 
+		coin = Collectible::create();
+		coin->setPosition(2.0f, 1.0f, 0.0f);
+		coin->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
+		coin->setBody(world, b2BodyType::b2_staticBody);
+		coin->updateTransforms();
+
 		ground = Obstacle::create();
 		ground->setPosition(0.0f, 0.0f, 0.0f);
 		ground->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(5.0f, 0.5f, 0.5f));
@@ -108,8 +114,6 @@ void LevelState::update(float deltaTime)
 
 	float timeStep = 1.0f / 60.0f;
 
-	world->Step(deltaTime, velocityIterations, positionIterations);
-
 	// update object visuals from simulation data
 	// don't have to update the ground visuals as it is static
 	player->updateTransforms();
@@ -117,6 +121,8 @@ void LevelState::update(float deltaTime)
 	context_->getGameInput()->updateObjectInput(player);
 
 	yPosition = player->getBody()->GetTransform().p.y;
+
+	world->Step(deltaTime, velocityIterations, positionIterations);
 }
 
 void LevelState::render()
@@ -131,6 +137,11 @@ void LevelState::render()
 	context_->getRenderer3D()->set_override_material(&context_->getPrimitiveBuilder()->red_material());
 	context_->getRenderer3D()->DrawMesh(*player);
 	context_->getRenderer3D()->set_override_material(NULL);
+
+	if (coin->getCollectible())
+	{
+		context_->getRenderer3D()->DrawMesh(*coin);
+	}
 
 	context_->getRenderer3D()->End();
 
@@ -148,7 +159,8 @@ void LevelState::DrawHUD()
 	if (context_->getFont())
 	{
 		// display frame rate
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(720.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "Y: %.1f FPS: %.1f", yPosition, fps_);
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(650.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT,
+			"Y: %.1f FPS: %.1f Coins: %.1i", yPosition, fps_, player->getCoins());
 	}
 }
 

@@ -21,7 +21,7 @@ void Obstacle::onCollisionBeginWith(CollisionTag tag)
 {
 	if (tag == CollisionTag::PLAYER)
 	{
-		gef::DebugOut("Obstacle has contacted with player!");
+		gef::DebugOut("Obstacle has contacted with player!\n");
 	}
 }
 

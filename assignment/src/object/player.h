@@ -19,6 +19,11 @@ public:
 
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
+
+	int getCoins();
+
+private:
+	int coins;
 };
 
 #endif

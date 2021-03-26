@@ -5,6 +5,7 @@
 Player::Player()
 {
 	tag_ = CollisionTag::PLAYER;
+	coins = 0;
 }
 
 Player::~Player()
@@ -19,19 +20,24 @@ Player* Player::create()
 
 void Player::onCollisionBeginWith(CollisionTag tag)
 {
+	if (tag == CollisionTag::COLLECTIBLE)
+	{
+		coins += 1;
+	}
+
 	if (tag == CollisionTag::OBSTACLE)
 	{
 		gef::DebugOut("Player has contacted with obstacle!\n");
 		canJump = true;
-	}
-
-	if (tag == CollisionTag::COIN)
-	{
-		//Add to total coins
 	}
 }
 
 void Player::onCollisionEndWith(CollisionTag tag)
 {
 
+}
+
+int Player::getCoins()
+{
+	return coins;
 }
