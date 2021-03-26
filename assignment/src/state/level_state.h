@@ -12,6 +12,25 @@
 #include <graphics/scene.h>
 #include <object/collision_listener.h>
 
+struct Camera
+{
+	float fov;
+	float aspect_ratio;
+
+	gef::Matrix44 projection_matrix;
+	gef::Matrix44 view_matrix;
+
+	gef::Vector4 eye;
+	gef::Vector4 lookAt;
+	gef::Vector4 up;
+
+	void updateFollow(GameObject* object)
+	{
+		lookAt = gef::Vector4(object->getPosition()->x(), object->getPosition()->y(), lookAt.z());
+		view_matrix.LookAt(eye, lookAt, up);
+	}
+};
+
 class LevelState : public State
 {
 protected:
@@ -41,6 +60,8 @@ private:
 
 	gef::MeshInstance world_mesh_instance_;
 	gef::Scene* scene_assets_;
+
+	Camera camera;
 
 	Player* player;
 	Obstacle* ground;

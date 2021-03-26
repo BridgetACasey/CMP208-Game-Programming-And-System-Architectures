@@ -96,6 +96,9 @@ void LevelState::handleInput()
 
 void LevelState::update(float deltaTime)
 {
+	camera.updateFollow(player);
+	context_->getRenderer3D()->set_view_matrix(camera.view_matrix);
+
 	fps_ = 1.0f / deltaTime;
 
 	int32 velocityIterations = 6;
@@ -166,19 +169,18 @@ void LevelState::SetupLights()
 void LevelState::SetupCamera()
 {
 	// projection
-	float fov = gef::DegToRad(45.0f);
-	float aspect_ratio = (float)platform_.width() / (float)platform_.height();
-	gef::Matrix44 projection_matrix;
-	projection_matrix = platform_.PerspectiveProjectionFov(fov, aspect_ratio, 0.1f, 100.0f);
-	context_->getRenderer3D()->set_projection_matrix(projection_matrix);
+	camera.fov = gef::DegToRad(45.0f);
+	camera.aspect_ratio = (float)platform_.width() / (float)platform_.height();
+	camera.projection_matrix = platform_.PerspectiveProjectionFov(camera.fov, camera.aspect_ratio, 0.1f, 100.0f);
+	context_->getRenderer3D()->set_projection_matrix(camera.projection_matrix);
 
 	// view
-	gef::Vector4 camera_eye(0.0f, 4.0f, 12.0f);
-	gef::Vector4 camera_lookat(0.0f, 0.0f, 0.0f);
-	gef::Vector4 camera_up(0.0f, 1.0f, 0.0f);
-	gef::Matrix44 view_matrix;
-	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
-	context_->getRenderer3D()->set_view_matrix(view_matrix);
+	camera.eye = gef::Vector4(0.0f, 4.0f, 12.0f);
+	camera.lookAt = gef::Vector4(0.0f, 0.0f, 0.0f);
+	camera.up = gef::Vector4(0.0f, 1.0f, 0.0f);
+
+	camera.view_matrix.LookAt(camera.eye, camera.lookAt, camera.up);
+	context_->getRenderer3D()->set_view_matrix(camera.view_matrix);
 }
 
 gef::Scene* LevelState::LoadSceneAssets(gef::Platform& platform, const char* filename)
