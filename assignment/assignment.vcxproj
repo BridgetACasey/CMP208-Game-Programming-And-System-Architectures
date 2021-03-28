@@ -97,12 +97,12 @@
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">
-   <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">
-   <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
@@ -204,6 +204,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\state\end_state.cpp" />
     <ClCompile Include="src\object\collectible.cpp" />
     <ClCompile Include="src\ui\button.cpp" />
     <ClCompile Include="src\state\splash_state.cpp" />
@@ -231,6 +232,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\state\end_state.h" />
     <ClInclude Include="src\object\collectible.h" />
     <ClInclude Include="src\ui\button.h" />
     <ClInclude Include="src\state\splash_state.h" />

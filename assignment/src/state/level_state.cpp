@@ -20,6 +20,35 @@ LevelState* LevelState::create(gef::Platform& platform)
 
 void LevelState::setup()
 {
+	if (context_->getGameComplete())
+	{
+		delete world;
+		world = NULL;
+
+		delete player;
+		player = NULL;
+
+		delete coin;
+		coin = NULL;
+		delete ground;
+		ground = NULL;
+		
+		delete backButton;
+		backButton = NULL;
+
+		delete scene_assets_;
+		scene_assets_ = NULL;
+
+		delete camera;
+		camera = NULL;
+
+		gef::Default3DShaderData& default_shader_data = context_->getRenderer3D()->default_shader_data();
+		default_shader_data.CleanUp();
+
+		context_->setGameComplete(false);
+		firstSetup = true;
+	}
+
 	if (firstSetup)
 	{
 		gef::DebugOut("Level: Performing first time setup!\n");
@@ -105,8 +134,8 @@ void LevelState::handleInput()
 
 void LevelState::update(float deltaTime)
 {
-	camera.updateFollow(player);
-	context_->getRenderer3D()->set_view_matrix(camera.view_matrix);
+	camera->updateFollow(player);
+	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
 
 	fps_ = 1.0f / deltaTime;
 
@@ -119,6 +148,13 @@ void LevelState::update(float deltaTime)
 	// don't have to update the ground visuals as it is static
 	player->update(deltaTime);
 	coin->update(deltaTime);
+
+	if (!player->getIsAlive())
+	{
+		context_->setPlayerScore(player->getCoins());
+		context_->setGameComplete(true);
+		context_->setActiveState(StateLabel::END_SCREEN);
+	}
 
 	context_->getGameInput()->updateObjectInput(player);
 
@@ -185,18 +221,20 @@ void LevelState::SetupLights()
 void LevelState::SetupCamera()
 {
 	// projection
-	camera.fov = gef::DegToRad(45.0f);
-	camera.aspect_ratio = (float)platform_.width() / (float)platform_.height();
-	camera.projection_matrix = platform_.PerspectiveProjectionFov(camera.fov, camera.aspect_ratio, 0.1f, 100.0f);
-	context_->getRenderer3D()->set_projection_matrix(camera.projection_matrix);
+	camera = new Camera();
+
+	camera->fov = gef::DegToRad(45.0f);
+	camera->aspect_ratio = (float)platform_.width() / (float)platform_.height();
+	camera->projection_matrix = platform_.PerspectiveProjectionFov(camera->fov, camera->aspect_ratio, 0.1f, 100.0f);
+	context_->getRenderer3D()->set_projection_matrix(camera->projection_matrix);
 
 	// view
-	camera.eye = gef::Vector4(0.0f, 4.0f, 12.0f);
-	camera.lookAt = gef::Vector4(0.0f, 0.0f, 0.0f);
-	camera.up = gef::Vector4(0.0f, 1.0f, 0.0f);
+	camera->eye = gef::Vector4(0.0f, 4.0f, 12.0f);
+	camera->lookAt = gef::Vector4(0.0f, 0.0f, 0.0f);
+	camera->up = gef::Vector4(0.0f, 1.0f, 0.0f);
 
-	camera.view_matrix.LookAt(camera.eye, camera.lookAt, camera.up);
-	context_->getRenderer3D()->set_view_matrix(camera.view_matrix);
+	camera->view_matrix.LookAt(camera->eye, camera->lookAt, camera->up);
+	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
 }
 
 gef::Scene* LevelState::LoadSceneAssets(gef::Platform& platform, const char* filename)

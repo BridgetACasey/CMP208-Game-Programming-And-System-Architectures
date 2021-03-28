@@ -6,6 +6,7 @@
 #include "menu_state.h"
 #include "pause_state.h"
 #include "splash_state.h"
+#include "end_state.h"
 
 namespace gef
 {
@@ -32,6 +33,12 @@ public:
 	PrimitiveBuilder* getPrimitiveBuilder();
 	GameInput* getGameInput();
 
+	void setPlayerScore(int playerScore_);
+	int getPlayerScore();
+
+	void setGameComplete(bool gameComplete_);
+	bool getGameComplete();
+
 private:
 	State* activeState;
 
@@ -44,4 +51,7 @@ private:
 
 	PrimitiveBuilder* primitive_builder_;
 	GameInput* gameInput;
+
+	int playerScore;
+	bool gameComplete;
 };

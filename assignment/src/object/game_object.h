@@ -62,8 +62,11 @@ public:
 	void setActiveDirection(int activeDirection_);
 	int getActiveDirection();
 
+	bool getIsAlive();
+
 protected:
 	void updateTransforms();
+	void checkDeath();
 
 	gef::Vector4 position;
 	gef::Vector4 halfDimensions_;
@@ -78,6 +81,8 @@ protected:
 	bool canJump;
 
 	int activeDirection;
+
+	bool isAlive;
 };
 
 #endif // _GAME_OBJECT_H

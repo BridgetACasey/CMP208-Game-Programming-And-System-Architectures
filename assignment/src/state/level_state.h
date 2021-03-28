@@ -63,7 +63,7 @@ private:
 	gef::MeshInstance world_mesh_instance_;
 	gef::Scene* scene_assets_;
 
-	Camera camera;
+	Camera* camera;
 
 	Player* player;
 	Collectible* coin;

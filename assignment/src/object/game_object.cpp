@@ -11,6 +11,8 @@ GameObject::GameObject()
 	canJump = true;
 
 	activeDirection = 1;
+
+	isAlive = true;
 }
 
 GameObject::~GameObject()
@@ -39,9 +41,18 @@ void GameObject::updateTransforms()
 	}
 }
 
+void GameObject::checkDeath()
+{
+	if (position.y() < 0.0f)
+	{
+		isAlive = false;
+	}
+}
+
 void GameObject::update(float deltaTime)
 {
 	updateTransforms();
+	checkDeath();
 }
 
 void GameObject::onCollisionBeginWith(CollisionTag tag)
@@ -148,4 +159,9 @@ void GameObject::setActiveDirection(int activeDirection_)
 int GameObject::getActiveDirection()
 {
 	return activeDirection;
+}
+
+bool GameObject::getIsAlive()
+{
+	return isAlive;
 }

@@ -21,6 +21,7 @@ Player* Player::create()
 void Player::update(float deltaTime)
 {
 	updateTransforms();
+	checkDeath();
 }
 
 void Player::onCollisionBeginWith(CollisionTag tag)

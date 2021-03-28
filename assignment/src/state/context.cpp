@@ -2,6 +2,9 @@
 
 Context::Context(gef::Platform& platform)
 {
+	playerScore = 0;
+	gameComplete = false;
+
 	activeState = nullptr;
 
 	setupStateComponents(platform);
@@ -10,11 +13,13 @@ Context::Context(gef::Platform& platform)
 	MenuState* mainMenu = MenuState::create(platform);
 	PauseState* pauseMenu = PauseState::create(platform);
 	SplashState* splashScreen = SplashState::create(platform);
+	EndState* endScreen = EndState::create(platform);
 
 	states[StateLabel::LEVEL] = level;
 	states[StateLabel::MAIN_MENU] = mainMenu;
 	states[StateLabel::PAUSE_MENU] = pauseMenu;
 	states[StateLabel::SPLASH_SCREEN] = splashScreen;
+	states[StateLabel::END_SCREEN] = endScreen;
 }
 
 Context::~Context()
@@ -23,6 +28,7 @@ Context::~Context()
 	delete states[StateLabel::MAIN_MENU];
 	delete states[StateLabel::PAUSE_MENU];
 	delete states[StateLabel::SPLASH_SCREEN];
+	delete states[StateLabel::END_SCREEN];
 }
 
 void Context::setupStateComponents(gef::Platform& platform)
@@ -86,4 +92,24 @@ PrimitiveBuilder* Context::getPrimitiveBuilder()
 GameInput* Context::getGameInput()
 {
 	return gameInput;
+}
+
+void Context::setPlayerScore(int playerScore_)
+{
+	playerScore = playerScore_;
+}
+
+int Context::getPlayerScore()
+{
+	return playerScore;
+}
+
+void Context::setGameComplete(bool gameComplete_)
+{
+	gameComplete = gameComplete_;
+}
+
+bool Context::getGameComplete()
+{
+	return gameComplete;
 }

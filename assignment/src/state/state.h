@@ -19,7 +19,8 @@ enum class StateLabel
 	SPLASH_SCREEN = 0,
 	MAIN_MENU,
 	PAUSE_MENU,
-	LEVEL
+	LEVEL,
+	END_SCREEN
 };
 
 class State
