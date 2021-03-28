@@ -65,18 +65,17 @@ void MenuState::handleInput()
 
 	if (playButton->isClicked())
 	{
-		gef::DebugOut("PLAY BUTTON CLICKED!\n");
 		context_->setActiveState(StateLabel::LEVEL);
 	}
 
 	if (settingsButton->isClicked())
 	{
-
+		context_->setActiveState(StateLabel::SETTINGS);
 	}
 
 	if (helpButton->isClicked())
 	{
-
+		context_->setActiveState(StateLabel::HELP);
 	}
 
 	if (exitButton->isClicked())

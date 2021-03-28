@@ -14,12 +14,16 @@ Context::Context(gef::Platform& platform)
 	PauseState* pauseMenu = PauseState::create(platform);
 	SplashState* splashScreen = SplashState::create(platform);
 	EndState* endScreen = EndState::create(platform);
+	SettingsState* settings = SettingsState::create(platform);
+	HelpState* help = HelpState::create(platform);
 
 	states[StateLabel::LEVEL] = level;
 	states[StateLabel::MAIN_MENU] = mainMenu;
 	states[StateLabel::PAUSE_MENU] = pauseMenu;
 	states[StateLabel::SPLASH_SCREEN] = splashScreen;
 	states[StateLabel::END_SCREEN] = endScreen;
+	states[StateLabel::SETTINGS] = settings;
+	states[StateLabel::HELP] = help;
 }
 
 Context::~Context()
@@ -29,6 +33,8 @@ Context::~Context()
 	delete states[StateLabel::PAUSE_MENU];
 	delete states[StateLabel::SPLASH_SCREEN];
 	delete states[StateLabel::END_SCREEN];
+	delete states[StateLabel::SETTINGS];
+	delete states[StateLabel::HELP];
 }
 
 void Context::setupStateComponents(gef::Platform& platform)

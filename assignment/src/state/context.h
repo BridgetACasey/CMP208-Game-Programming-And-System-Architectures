@@ -7,6 +7,8 @@
 #include "pause_state.h"
 #include "splash_state.h"
 #include "end_state.h"
+#include "settings_state.h"
+#include "help_state.h"
 
 namespace gef
 {

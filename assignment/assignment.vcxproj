@@ -204,6 +204,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\state\help_state.cpp" />
+    <ClCompile Include="src\state\settings_state.cpp" />
     <ClCompile Include="src\state\end_state.cpp" />
     <ClCompile Include="src\object\collectible.cpp" />
     <ClCompile Include="src\ui\button.cpp" />
@@ -232,6 +234,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\state\help_state.h" />
+    <ClInclude Include="src\state\settings_state.h" />
     <ClInclude Include="src\state\end_state.h" />
     <ClInclude Include="src\object\collectible.h" />
     <ClInclude Include="src\ui\button.h" />

@@ -20,7 +20,9 @@ enum class StateLabel
 	MAIN_MENU,
 	PAUSE_MENU,
 	LEVEL,
-	END_SCREEN
+	END_SCREEN,
+	SETTINGS,
+	HELP
 };
 
 class State
