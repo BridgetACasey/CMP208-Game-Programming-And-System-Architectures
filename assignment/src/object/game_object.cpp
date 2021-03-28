@@ -39,6 +39,11 @@ void GameObject::updateTransforms()
 	}
 }
 
+void GameObject::update(float deltaTime)
+{
+	updateTransforms();
+}
+
 void GameObject::onCollisionBeginWith(CollisionTag tag)
 {
 	//To be populated in child classes

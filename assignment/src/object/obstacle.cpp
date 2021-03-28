@@ -17,6 +17,11 @@ Obstacle* Obstacle::create()
 	return new Obstacle();
 }
 
+void Obstacle::update(float deltaTime)
+{
+	updateTransforms();
+}
+
 void Obstacle::onCollisionBeginWith(CollisionTag tag)
 {
 	if (tag == CollisionTag::PLAYER)

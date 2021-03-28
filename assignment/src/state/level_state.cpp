@@ -46,19 +46,20 @@ void LevelState::setup()
 		player->setBody(world, b2BodyType::b2_dynamicBody);
 		player->setMoveSpeed(25.0f);
 		player->setJumpForce(1200.0f);
-		player->updateTransforms();
+		player->update(0.0f);
 
 		coin = Collectible::create();
 		coin->setPosition(2.0f, 1.0f, 0.0f);
 		coin->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
 		coin->setBody(world, b2BodyType::b2_staticBody);
-		coin->updateTransforms();
+		coin->update(0.0f);
+
 
 		ground = Obstacle::create();
 		ground->setPosition(0.0f, 0.0f, 0.0f);
 		ground->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(5.0f, 0.5f, 0.5f));
 		ground->setBody(world, b2BodyType::b2_staticBody);
-		ground->updateTransforms();
+		ground->update(0.0f);
 
 		backButton = Button::create(context_->getGameInput());
 		backButton->set_width(150.0f);
@@ -116,7 +117,8 @@ void LevelState::update(float deltaTime)
 
 	// update object visuals from simulation data
 	// don't have to update the ground visuals as it is static
-	player->updateTransforms();
+	player->update(deltaTime);
+	coin->update(deltaTime);
 
 	context_->getGameInput()->updateObjectInput(player);
 

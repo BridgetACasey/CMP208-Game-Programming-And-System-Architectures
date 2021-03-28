@@ -30,7 +30,7 @@ public:
 
 	static GameObject* create();
 
-	void updateTransforms();
+	virtual void update(float deltaTime);
 
 	/*For collision events
 	 Does not actually check if collisions have occurred (handled by CollisionListener),
@@ -63,6 +63,8 @@ public:
 	int getActiveDirection();
 
 protected:
+	void updateTransforms();
+
 	gef::Vector4 position;
 	gef::Vector4 halfDimensions_;
 

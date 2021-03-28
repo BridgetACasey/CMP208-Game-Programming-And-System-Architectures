@@ -18,6 +18,11 @@ Player* Player::create()
 	return new Player();
 }
 
+void Player::update(float deltaTime)
+{
+	updateTransforms();
+}
+
 void Player::onCollisionBeginWith(CollisionTag tag)
 {
 	if (tag == CollisionTag::COLLECTIBLE)

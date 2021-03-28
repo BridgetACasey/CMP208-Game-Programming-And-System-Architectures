@@ -17,6 +17,8 @@ public:
 
 	static Player* create();
 
+	void update(float deltaTime) override;
+
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
 
