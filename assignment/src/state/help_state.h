@@ -24,4 +24,6 @@ public:
 
 private:
 	Button* backButton;
+
+	gef::Sprite background;
 };

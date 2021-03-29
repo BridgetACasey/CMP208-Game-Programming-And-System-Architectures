@@ -33,6 +33,13 @@ void EndState::setup()
 		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/New Gamecol_Button.png", platform_, image_);
 		texture = gef::Texture::Create(platform_, image_);
 		restartButton->setHoveringTexture(texture);
+
+		background.set_height(platform_.height());
+		background.set_width(platform_.width());
+		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
+		context_->getPNGLoader()->Load("potato_lizard.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+		background.set_texture(texture);
 	}
 
 	firstSetup = false;
@@ -81,6 +88,8 @@ void EndState::render()
 	context_->getRenderer3D()->End();
 
 	context_->getSpriteRenderer()->Begin(false);
+
+	context_->getSpriteRenderer()->DrawSprite(background);
 
 	//Render UI elements
 	if (context_->getFont())

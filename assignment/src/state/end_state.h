@@ -29,4 +29,6 @@ private:
 	int highestScore;
 
 	Button* restartButton;
+
+	gef::Sprite background;
 };
