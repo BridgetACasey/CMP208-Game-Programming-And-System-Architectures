@@ -3,6 +3,7 @@
 #pragma once
 
 #include "state.h"
+#include "ui/button.h"
 
 class PauseState : public State
 {
@@ -20,4 +21,7 @@ public:
 	void handleInput() override;
 	bool update(float deltaTime) override;
 	void render() override;
+
+private:
+	Button* resumeButton;
 };

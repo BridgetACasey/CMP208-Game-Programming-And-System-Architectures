@@ -90,6 +90,11 @@ gef::Font* Context::getFont()
 	return font_;
 }
 
+gef::PNGLoader* Context::getPNGLoader()
+{
+	return &pngLoader;
+}
+
 PrimitiveBuilder* Context::getPrimitiveBuilder()
 {
 	return primitive_builder_;

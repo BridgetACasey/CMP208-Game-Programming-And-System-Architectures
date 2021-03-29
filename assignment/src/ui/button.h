@@ -16,14 +16,12 @@ public:
 	bool isHovering();
 	bool isClicked();
 
-	void setInactiveColour(UInt32 inactiveColour_);
-	void setHoveringColour(UInt32 hoveringColour_);
-	void setClickedColour(UInt32 clickedColour_);
+	void setInactiveTexture(gef::Texture* texture);
+	void setHoveringTexture(gef::Texture* texture);
 
 private:
 	GameInput* input;
 
-	UInt32 inactiveColour;
-	UInt32 hoveringColour;
-	UInt32 clickedColour;
+	gef::Texture* inactive;
+	gef::Texture* hovering;
 };

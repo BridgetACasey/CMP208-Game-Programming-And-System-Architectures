@@ -8,6 +8,9 @@
 #include <graphics/font.h>
 #include <graphics/renderer_3d.h>
 #include <maths/math_utils.h>
+#include <assets/png_loader.h>
+#include <graphics/image_data.h>
+#include <graphics/texture.h>
 
 #include "util/primitive_builder.h"
 #include "input/game_input.h"

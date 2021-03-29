@@ -31,6 +31,7 @@ public:
 	gef::SpriteRenderer* getSpriteRenderer();
 	gef::Renderer3D* getRenderer3D();
 	gef::Font* getFont();
+	gef::PNGLoader* getPNGLoader();
 
 	PrimitiveBuilder* getPrimitiveBuilder();
 	GameInput* getGameInput();
@@ -50,6 +51,8 @@ private:
 	gef::Renderer3D* renderer_3d_;
 	gef::InputManager* input_manager_;
 	gef::Font* font_;
+
+	gef::PNGLoader pngLoader;
 
 	PrimitiveBuilder* primitive_builder_;
 	GameInput* gameInput;

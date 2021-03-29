@@ -4,6 +4,8 @@
 
 #include "state.h"
 
+#include "graphics/sprite.h"
+
 class SplashState : public State
 {
 protected:
@@ -23,4 +25,6 @@ public:
 
 private:
 	float transitionTime;
+	
+	gef::Sprite splashImage;
 };

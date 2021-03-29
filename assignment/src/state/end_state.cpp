@@ -21,10 +21,18 @@ void EndState::setup()
 		restartButton = Button::create(context_->getGameInput());
 		restartButton->set_width(150.0f);
 		restartButton->set_height(75.0f);
-		restartButton->setInactiveColour(0xfffffff);
-		restartButton->setHoveringColour(0xffffffff);
-		restartButton->setClickedColour(0xffffffff);
 		restartButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f + 100.0f, 0.0f));
+
+		gef::ImageData image_;
+		gef::Texture* texture;
+
+		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/New Game Button.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+		restartButton->setInactiveTexture(texture);
+
+		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/New Gamecol_Button.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+		restartButton->setHoveringTexture(texture);
 	}
 
 	firstSetup = false;

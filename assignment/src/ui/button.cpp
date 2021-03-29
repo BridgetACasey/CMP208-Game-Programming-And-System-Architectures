@@ -6,9 +6,8 @@ Button::Button(GameInput* input_)
 {
 	input = input_;
 
-	setInactiveColour(0xfffffff);
-	setHoveringColour(0xffffffff);
-	setClickedColour(0xffffffff);
+	inactive = nullptr;
+	hovering = nullptr;
 }
 
 Button* Button::create(GameInput* input_)
@@ -22,12 +21,13 @@ bool Button::isHovering()
 	{
 		if (input->getMouse()->position.y > position_.y() - (height() / 2.0f) && input->getMouse()->position.y < position_.y() + (height() / 2.0f))
 		{
-			set_colour(hoveringColour);
+			set_texture(hovering);
 			return true;
 		}
 	}
 
-	set_colour(inactiveColour);
+	set_texture(inactive);
+
 	return false;
 }
 
@@ -35,8 +35,6 @@ bool Button::isClicked()
 {
 	if (isHovering())
 	{
-		set_colour(clickedColour);
-
 		if (input->getMouse()->left == MouseCode::PRESSED)
 		{
 			return true;
@@ -46,17 +44,12 @@ bool Button::isClicked()
 	return false;
 }
 
-void Button::setInactiveColour(UInt32 inactiveColour_)
+void Button::setInactiveTexture(gef::Texture* texture)
 {
-	inactiveColour = inactiveColour_;
+	inactive = texture;
 }
 
-void Button::setHoveringColour(UInt32 hoveringColour_)
+void Button::setHoveringTexture(gef::Texture* texture)
 {
-	hoveringColour = hoveringColour_;
-}
-
-void Button::setClickedColour(UInt32 clickedColour_)
-{
-	clickedColour = clickedColour_;
+	hovering = texture;
 }

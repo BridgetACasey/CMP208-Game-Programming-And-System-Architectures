@@ -93,10 +93,18 @@ void LevelState::setup()
 		backButton = Button::create(context_->getGameInput());
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
-		backButton->setInactiveColour(0xfffffff);
-		backButton->setHoveringColour(0xffffffff);
-		backButton->setClickedColour(0xffffffff);
 		backButton->set_position(gef::Vector4(150.0f, 100.0f, 0.0f));
+
+		gef::ImageData image_;
+		gef::Texture* texture;
+
+		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Back Button.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+		backButton->setInactiveTexture(texture);
+
+		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Backcol_Button.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+		backButton->setHoveringTexture(texture);
 
 		SetupCamera();
 		SetupLights();

@@ -22,11 +22,16 @@ public:
 	bool update(float deltaTime) override;
 	void render() override;
 
+	void updateBackground(float deltaTime);
+
 private:
 	Button* playButton;
 	Button* settingsButton;
 	Button* helpButton;
 	Button* exitButton;
+
+	gef::Sprite background;
+	gef::Sprite backgroundCopy;
 
 	bool play;
 };
