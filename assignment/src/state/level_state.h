@@ -7,7 +7,6 @@
 #include "object/player.h"
 #include "object/collectible.h"
 #include "object/obstacle.h"
-#include "ui/button.h"
 
 #include <graphics/mesh_instance.h>
 #include <graphics/scene.h>
@@ -68,7 +67,6 @@ private:
 	Player* player;
 	Collectible* coin;
 	Obstacle* ground;
-	Button* backButton;
 
 	float fps_;
 	float yPosition;

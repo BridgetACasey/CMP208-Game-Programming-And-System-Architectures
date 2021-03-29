@@ -3,7 +3,6 @@
 
 LevelState::LevelState(gef::Platform& platform) : State(platform)
 {
-	backButton = nullptr;
 	ground = nullptr;
 	player = nullptr;
 	scene_assets_ = nullptr;
@@ -32,9 +31,6 @@ void LevelState::setup()
 		coin = NULL;
 		delete ground;
 		ground = NULL;
-		
-		delete backButton;
-		backButton = NULL;
 
 		delete scene_assets_;
 		scene_assets_ = NULL;
@@ -90,22 +86,6 @@ void LevelState::setup()
 		ground->setBody(world, b2BodyType::b2_staticBody);
 		ground->update(0.0f);
 
-		backButton = Button::create(context_->getGameInput());
-		backButton->set_width(150.0f);
-		backButton->set_height(75.0f);
-		backButton->set_position(gef::Vector4(150.0f, 100.0f, 0.0f));
-
-		gef::ImageData image_;
-		gef::Texture* texture;
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Back Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		backButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Backcol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		backButton->setHoveringTexture(texture);
-
 		SetupCamera();
 		SetupLights();
 	}
@@ -132,11 +112,6 @@ void LevelState::handleInput()
 	if (context_->getGameInput()->getKeyboard()->IsKeyPressed(context_->getGameInput()->getKeyboard()->KC_ESCAPE))
 	{
 		context_->setActiveState(StateLabel::PAUSE_MENU);
-	}
-
-	if (backButton->isClicked())
-	{
-		context_->setActiveState(StateLabel::MAIN_MENU);
 	}
 }
 
@@ -197,7 +172,6 @@ void LevelState::render()
 	context_->getSpriteRenderer()->Begin(false);
 
 	DrawHUD();
-	context_->getSpriteRenderer()->DrawSprite(*backButton);
 
 	context_->getSpriteRenderer()->End();
 }

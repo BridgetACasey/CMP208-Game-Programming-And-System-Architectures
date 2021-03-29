@@ -6,6 +6,7 @@
 PauseState::PauseState(gef::Platform& platform) : State(platform)
 {
 	resumeButton = nullptr;
+	backButton = nullptr;
 }
 
 PauseState* PauseState::create(gef::Platform& platform)
@@ -18,6 +19,8 @@ void PauseState::setup()
 	if (firstSetup)
 	{
 		resumeButton = Button::create(context_->getGameInput());
+		backButton = Button::create(context_->getGameInput());
+
 		resumeButton->set_width(150.0f);
 		resumeButton->set_height(75.0f);
 		resumeButton->set_position(gef::Vector4((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f));
@@ -32,6 +35,18 @@ void PauseState::setup()
 		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Resumecol_Button.png", platform_, image_);
 		texture = gef::Texture::Create(platform_, image_);
 		resumeButton->setHoveringTexture(texture);
+
+		backButton->set_width(150.0f);
+		backButton->set_height(75.0f);
+		backButton->set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f + 100.0f, 0.0f);
+
+		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Back Button.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+		backButton->setInactiveTexture(texture);
+
+		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Backcol_Button.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+		backButton->setHoveringTexture(texture);
 	}
 
 	firstSetup = false;
@@ -52,6 +67,11 @@ void PauseState::onExit()
 void PauseState::handleInput()
 {
 	context_->getGameInput()->update();
+
+	if (backButton->isClicked())
+	{
+		context_->setActiveState(StateLabel::MAIN_MENU);
+	}
 
 	if (resumeButton->isClicked())
 	{
@@ -81,6 +101,7 @@ void PauseState::render()
 
 	//Render UI elements
 	context_->getSpriteRenderer()->DrawSprite(*resumeButton);
+	context_->getSpriteRenderer()->DrawSprite(*backButton);
 
 	if (context_->getFont())
 	{

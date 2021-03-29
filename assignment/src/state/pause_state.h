@@ -24,4 +24,5 @@ public:
 
 private:
 	Button* resumeButton;
+	Button* backButton;
 };
