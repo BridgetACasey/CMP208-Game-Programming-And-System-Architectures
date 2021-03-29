@@ -59,9 +59,9 @@ void EndState::handleInput()
 	}
 }
 
-void EndState::update(float deltaTime)
+bool EndState::update(float deltaTime)
 {
-
+	return true;
 }
 
 void EndState::render()

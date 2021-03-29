@@ -38,9 +38,9 @@ void PauseState::handleInput()
 	}
 }
 
-void PauseState::update(float deltaTime)
+bool PauseState::update(float deltaTime)
 {
-
+	return true;
 }
 
 void PauseState::render()

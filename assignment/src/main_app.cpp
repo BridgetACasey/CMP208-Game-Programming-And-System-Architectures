@@ -19,9 +19,8 @@ void MainApp::CleanUp()
 bool MainApp::Update(float frame_time)
 {
 	context->getActiveState()->handleInput();
-	context->getActiveState()->update(frame_time);
 
-	return true;
+	return context->getActiveState()->update(frame_time);
 }
 
 void MainApp::Render()

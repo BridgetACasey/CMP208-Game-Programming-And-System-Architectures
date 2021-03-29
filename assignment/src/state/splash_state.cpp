@@ -38,7 +38,7 @@ void SplashState::handleInput()
 
 }
 
-void SplashState::update(float deltaTime)
+bool SplashState::update(float deltaTime)
 {
 	if (transitionTime > 3.0f)
 	{
@@ -47,6 +47,8 @@ void SplashState::update(float deltaTime)
 	}
 
 	transitionTime += 1.0f * deltaTime;
+
+	return true;
 }
 
 void SplashState::render()

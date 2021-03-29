@@ -9,6 +9,8 @@ MenuState::MenuState(gef::Platform& platform) : State(platform)
 	settingsButton = nullptr;
 	helpButton = nullptr;
 	exitButton = nullptr;
+
+	play = true;
 }
 
 MenuState* MenuState::create(gef::Platform& platform)
@@ -80,13 +82,13 @@ void MenuState::handleInput()
 
 	if (exitButton->isClicked())
 	{
-
+		play = false;
 	}
 }
 
-void MenuState::update(float deltaTime)
+bool MenuState::update(float deltaTime)
 {
-
+	return play;
 }
 
 void MenuState::render()

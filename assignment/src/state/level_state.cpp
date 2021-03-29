@@ -132,7 +132,7 @@ void LevelState::handleInput()
 	}
 }
 
-void LevelState::update(float deltaTime)
+bool LevelState::update(float deltaTime)
 {
 	camera->updateFollow(player);
 	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
@@ -161,6 +161,8 @@ void LevelState::update(float deltaTime)
 	yPosition = player->getBody()->GetTransform().p.y;
 
 	world->Step(deltaTime, velocityIterations, positionIterations);
+
+	return true;
 }
 
 void LevelState::render()

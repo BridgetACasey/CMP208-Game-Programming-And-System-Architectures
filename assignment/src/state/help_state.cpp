@@ -50,9 +50,9 @@ void HelpState::handleInput()
 	}
 }
 
-void HelpState::update(float deltaTime)
+bool HelpState::update(float deltaTime)
 {
-
+	return true;
 }
 
 void HelpState::render()

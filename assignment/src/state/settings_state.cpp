@@ -50,9 +50,9 @@ void SettingsState::handleInput()
 	}
 }
 
-void SettingsState::update(float deltaTime)
+bool SettingsState::update(float deltaTime)
 {
-
+	return true;
 }
 
 void SettingsState::render()

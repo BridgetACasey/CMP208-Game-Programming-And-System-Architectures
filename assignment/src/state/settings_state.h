@@ -19,7 +19,7 @@ public:
 	void onExit() override;
 
 	void handleInput() override;
-	void update(float deltaTime) override;
+	bool update(float deltaTime) override;
 	void render() override;
 
 private:
