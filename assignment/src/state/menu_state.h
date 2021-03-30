@@ -33,5 +33,7 @@ private:
 	gef::Sprite background;
 	gef::Sprite backgroundCopy;
 
+	Int32 click;
+
 	bool play;
 };

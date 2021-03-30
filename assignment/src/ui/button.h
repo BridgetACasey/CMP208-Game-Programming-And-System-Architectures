@@ -15,11 +15,12 @@ public:
 
 	bool isHovering();
 	bool isClicked();
+	bool isHeld();
 
 	void setInactiveTexture(gef::Texture* texture);
 	void setHoveringTexture(gef::Texture* texture);
 
-private:
+protected:
 	GameInput* input;
 
 	gef::Texture* inactive;

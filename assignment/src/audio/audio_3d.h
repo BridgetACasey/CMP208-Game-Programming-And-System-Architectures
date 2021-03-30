@@ -19,6 +19,10 @@ public:
 	void setMusicVolume(float musicVolume_);
 	void setSFXVolume(float sfxVolume_);
 
+	float getMasterVolume();
+	float getMusicVolume();
+	float getSFXVolume();
+
 	inline AudioListener& listener() { return listener_; }
 
 	gef::AudioManager* manager() { return audio_manager_; }

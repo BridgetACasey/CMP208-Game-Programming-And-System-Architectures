@@ -204,6 +204,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ui\slider.cpp" />
     <ClCompile Include="src\audio\audio_3d.cpp" />
     <ClCompile Include="src\audio\audio_emitter.cpp" />
     <ClCompile Include="src\audio\audio_listener.cpp" />
@@ -237,6 +238,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ui\slider.h" />
     <ClInclude Include="src\audio\audio_3d.h" />
     <ClInclude Include="src\audio\audio_emitter.h" />
     <ClInclude Include="src\audio\audio_listener.h" />

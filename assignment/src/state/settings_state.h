@@ -3,7 +3,7 @@
 #pragma once
 
 #include "state.h"
-#include "ui/button.h"
+#include "ui/slider.h"
 
 class SettingsState : public State
 {
@@ -24,6 +24,10 @@ public:
 
 private:
 	Button* backButton;
+
+	Slider* masterVolumeSlider;
+	Slider* musicVolumeSlider;
+	Slider* sfxVolumeSlider;
 
 	gef::Sprite background;
 };

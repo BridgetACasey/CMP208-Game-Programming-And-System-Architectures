@@ -90,8 +90,10 @@ void MenuState::setup()
 		texture = gef::Texture::Create(platform_, image_);
 		exitButton->setHoveringTexture(texture);
 
-		//context_->getAudio()->manager()->LoadMusic("music.wav", platform_);
-		//context_->getAudio()->manager()->PlayMusic();
+		context_->getAudio()->manager()->LoadMusic("Blazer_Rail.wav", platform_);
+		context_->getAudio()->manager()->PlayMusic();
+
+		click = context_->getAudio()->manager()->LoadSample("mixkit-video-game-retro-click-237.wav", platform_);
 	}
 
 	firstSetup = false;
@@ -115,16 +117,19 @@ void MenuState::handleInput()
 
 	if (playButton->isClicked())
 	{
+		context_->getAudio()->manager()->PlaySample(click, false);
 		context_->setActiveState(StateLabel::LEVEL);
 	}
 
 	if (settingsButton->isClicked())
 	{
+		context_->getAudio()->manager()->PlaySample(click, false);
 		context_->setActiveState(StateLabel::SETTINGS);
 	}
 
 	if (helpButton->isClicked())
 	{
+		context_->getAudio()->manager()->PlaySample(click, false);
 		context_->setActiveState(StateLabel::HELP);
 	}
 

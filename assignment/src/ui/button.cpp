@@ -44,6 +44,19 @@ bool Button::isClicked()
 	return false;
 }
 
+bool Button::isHeld()
+{
+	if (isHovering())
+	{
+		if (input->getMouse()->left == MouseCode::HELD)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void Button::setInactiveTexture(gef::Texture* texture)
 {
 	inactive = texture;

@@ -81,8 +81,8 @@ void LevelState::setup()
 
 		context_->getAudio()->listener().SetTransform(player->transform());
 
-		context_->getAudio()->manager()->LoadSample("box_collected.wav", platform_);
-		coinCollection.Init(0, false);
+		coinCollectionID = context_->getAudio()->manager()->LoadSample("box_collected.wav", platform_);
+		coinCollection.Init(coinCollectionID, false);
 		coinCollection.set_position(*coin->getPosition());
 		coinCollection.set_radius(1.5f);
 		context_->getAudio()->AddEmitter(coinCollection);
@@ -96,9 +96,9 @@ void LevelState::setup()
 		SetupCamera();
 		SetupLights();
 
-		//context_->getAudio()->manager()->StopMusic();
-		//context_->getAudio()->manager()->LoadMusic("music.wav", platform_);
-		//context_->getAudio()->manager()->PlayMusic();
+		context_->getAudio()->manager()->StopMusic();
+		context_->getAudio()->manager()->LoadMusic("Blazer_Rail_2.wav", platform_);
+		context_->getAudio()->manager()->PlayMusic();
 	}
 
 	firstSetup = false;

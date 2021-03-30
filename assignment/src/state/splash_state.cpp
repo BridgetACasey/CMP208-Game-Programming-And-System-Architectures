@@ -36,9 +36,10 @@ void SplashState::onEnter()
 {
 	gef::DebugOut("Entering splash screen\n");
 
-	context_->getAudio()->manager()->PlayMusic();
-
 	setup();
+
+	sfxID = context_->getAudio()->manager()->LoadSample("mixkit-player-recharging-in-video-game-2041.wav", platform_);
+	context_->getAudio()->manager()->PlaySample(sfxID, false);
 }
 
 void SplashState::onExit()

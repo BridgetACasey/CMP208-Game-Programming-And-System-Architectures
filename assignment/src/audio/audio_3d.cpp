@@ -4,8 +4,8 @@ Audio3D::Audio3D(gef::AudioManager* audio_manager) :
 	audio_manager_(audio_manager)
 {
 	setMasterVolume(100.0f);
-	setMusicVolume(50.0f);
-	setSFXVolume(50.0f);
+	setMusicVolume(100.0f);
+	setSFXVolume(100.0f);
 }
 
 void Audio3D::AddEmitter(const AudioEmitter& emitter)
@@ -23,11 +23,33 @@ void Audio3D::setMasterVolume(float masterVolume_)
 void Audio3D::setMusicVolume(float musicVolume_)
 {
 	musicVolume = musicVolume_;
+
+	gef::VolumeInfo info;
+
+	info.pan = 0.0f;
+	info.volume = musicVolume;
+
+	audio_manager_->SetMusicVolumeInfo(info);
 }
 
 void Audio3D::setSFXVolume(float sfxVolume_)
 {
 	sfxVolume = sfxVolume_;
+}
+
+float Audio3D::getMasterVolume()
+{
+	return masterVolume;
+}
+
+float Audio3D::getMusicVolume()
+{
+	return musicVolume;
+}
+
+float Audio3D::getSFXVolume()
+{
+	return sfxVolume;
 }
 
 
