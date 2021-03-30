@@ -36,6 +36,8 @@ void SplashState::onEnter()
 {
 	gef::DebugOut("Entering splash screen\n");
 
+	context_->getAudio()->manager()->PlayMusic();
+
 	setup();
 }
 
@@ -51,6 +53,8 @@ void SplashState::handleInput()
 
 bool SplashState::update(float deltaTime)
 {
+	context_->getAudio()->Update();
+
 	if (transitionTime > 3.0f)
 	{
 		transitionTime = 0.0f;

@@ -24,10 +24,7 @@ void Obstacle::update(float deltaTime)
 
 void Obstacle::onCollisionBeginWith(CollisionTag tag)
 {
-	if (tag == CollisionTag::PLAYER)
-	{
-		gef::DebugOut("Obstacle has contacted with player!\n");
-	}
+
 }
 
 void Obstacle::onCollisionEndWith(CollisionTag tag)

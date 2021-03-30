@@ -89,6 +89,9 @@ void MenuState::setup()
 		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Exitcol_Button.png", platform_, image_);
 		texture = gef::Texture::Create(platform_, image_);
 		exitButton->setHoveringTexture(texture);
+
+		//context_->getAudio()->manager()->LoadMusic("music.wav", platform_);
+		//context_->getAudio()->manager()->PlayMusic();
 	}
 
 	firstSetup = false;

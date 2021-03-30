@@ -68,6 +68,8 @@ private:
 	Collectible* coin;
 	Obstacle* ground;
 
+	AudioEmitter coinCollection;
+
 	float fps_;
 	float yPosition;
 };

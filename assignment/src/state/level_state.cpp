@@ -79,6 +79,13 @@ void LevelState::setup()
 		coin->setBody(world, b2BodyType::b2_staticBody);
 		coin->update(0.0f);
 
+		context_->getAudio()->listener().SetTransform(player->transform());
+
+		context_->getAudio()->manager()->LoadSample("box_collected.wav", platform_);
+		coinCollection.Init(0, false);
+		coinCollection.set_position(*coin->getPosition());
+		coinCollection.set_radius(1.5f);
+		context_->getAudio()->AddEmitter(coinCollection);
 
 		ground = Obstacle::create();
 		ground->setPosition(0.0f, 0.0f, 0.0f);
@@ -88,6 +95,10 @@ void LevelState::setup()
 
 		SetupCamera();
 		SetupLights();
+
+		//context_->getAudio()->manager()->StopMusic();
+		//context_->getAudio()->manager()->LoadMusic("music.wav", platform_);
+		//context_->getAudio()->manager()->PlayMusic();
 	}
 
 	firstSetup = false;
@@ -117,6 +128,9 @@ void LevelState::handleInput()
 
 bool LevelState::update(float deltaTime)
 {
+	context_->getAudio()->listener().SetTransform(player->transform());
+	context_->getAudio()->Update();
+
 	camera->updateFollow(player);
 	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
 

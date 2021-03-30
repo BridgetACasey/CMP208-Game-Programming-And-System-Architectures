@@ -14,6 +14,7 @@
 
 #include "util/primitive_builder.h"
 #include "input/game_input.h"
+#include "audio/audio_3d.h"
 
 class Context;
 

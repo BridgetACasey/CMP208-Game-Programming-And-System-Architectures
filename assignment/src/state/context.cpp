@@ -43,6 +43,10 @@ void Context::setupStateComponents(gef::Platform& platform)
 	renderer_3d_ = gef::Renderer3D::Create(platform);
 	input_manager_ = gef::InputManager::Create(platform);
 
+	audioManager = gef::AudioManager::Create();
+
+	audio = new Audio3D(audioManager);
+
 	// make sure if there is a panel to detect touch input, then activate it
 	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
 	{
@@ -103,6 +107,11 @@ PrimitiveBuilder* Context::getPrimitiveBuilder()
 GameInput* Context::getGameInput()
 {
 	return gameInput;
+}
+
+Audio3D* Context::getAudio()
+{
+	return audio;
 }
 
 void Context::setPlayerScore(int playerScore_)

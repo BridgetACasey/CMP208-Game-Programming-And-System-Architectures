@@ -35,6 +35,7 @@ public:
 
 	PrimitiveBuilder* getPrimitiveBuilder();
 	GameInput* getGameInput();
+	Audio3D* getAudio();
 
 	void setPlayerScore(int playerScore_);
 	int getPlayerScore();
@@ -56,6 +57,9 @@ private:
 
 	PrimitiveBuilder* primitive_builder_;
 	GameInput* gameInput;
+
+	gef::AudioManager* audioManager;
+	Audio3D* audio;
 
 	int playerScore;
 	bool gameComplete;

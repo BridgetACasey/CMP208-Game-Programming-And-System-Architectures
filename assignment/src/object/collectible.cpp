@@ -34,7 +34,6 @@ void Collectible::onCollisionBeginWith(CollisionTag tag)
 	{
 		if (tag == CollisionTag::PLAYER)
 		{
-			gef::DebugOut("COLLECTIBLE has contacted with PLAYER!\n");
 			collectible = false;
 		}
 	}

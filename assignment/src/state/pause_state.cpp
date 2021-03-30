@@ -40,11 +40,11 @@ void PauseState::setup()
 		backButton->set_height(75.0f);
 		backButton->set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f + 100.0f, 0.0f);
 
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Back Button.png", platform_, image_);
+		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Menu Button.png", platform_, image_);
 		texture = gef::Texture::Create(platform_, image_);
 		backButton->setInactiveTexture(texture);
 
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Backcol_Button.png", platform_, image_);
+		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Menucol_Button.png", platform_, image_);
 		texture = gef::Texture::Create(platform_, image_);
 		backButton->setHoveringTexture(texture);
 
