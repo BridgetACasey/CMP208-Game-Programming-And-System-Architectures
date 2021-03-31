@@ -57,11 +57,15 @@ void EndState::onEnter()
 	{
 		highestScore = lastScore;
 	}
+
+	context_->getAudio()->manager()->StopMusic();
+	lose = context_->getAudio()->manager()->LoadSample("lose.wav", platform_);
+	context_->getAudio()->manager()->PlaySample(lose, false);
 }
 
 void EndState::onExit()
 {
-
+	context_->getAudio()->manager()->UnloadSample(lose);
 }
 
 void EndState::handleInput()
@@ -70,6 +74,7 @@ void EndState::handleInput()
 
 	if (restartButton->isClicked())
 	{
+		context_->getAudio()->manager()->PlaySample(1, false);
 		context_->setActiveState(StateLabel::LEVEL);
 	}
 }

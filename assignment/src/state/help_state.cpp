@@ -61,6 +61,7 @@ void HelpState::handleInput()
 
 	if (backButton->isClicked())
 	{
+		context_->getAudio()->manager()->PlaySample(1, false);
 		context_->setActiveState(StateLabel::MAIN_MENU);
 	}
 }

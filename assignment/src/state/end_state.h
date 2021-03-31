@@ -28,6 +28,8 @@ private:
 	int lastScore;
 	int highestScore;
 
+	Int32 lose;
+
 	Button* restartButton;
 
 	gef::Sprite background;

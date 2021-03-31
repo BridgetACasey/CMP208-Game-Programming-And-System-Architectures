@@ -30,4 +30,12 @@ private:
 	Slider* sfxVolumeSlider;
 
 	gef::Sprite background;
+
+	gef::Sprite masterBottomLayer;
+	gef::Sprite musicBottomLayer;
+	gef::Sprite sfxBottomLayer;
+
+	gef::Sprite masterTopLayer;
+	gef::Sprite musicTopLayer;
+	gef::Sprite sfxTopLayer;
 };

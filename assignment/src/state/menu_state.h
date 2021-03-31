@@ -30,10 +30,10 @@ private:
 	Button* helpButton;
 	Button* exitButton;
 
+	Int32 music;
+
 	gef::Sprite background;
 	gef::Sprite backgroundCopy;
-
-	Int32 click;
 
 	bool play;
 };

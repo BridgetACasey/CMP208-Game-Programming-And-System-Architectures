@@ -19,53 +19,50 @@ Slider* Slider::create(GameInput* input_)
 
 void Slider::updatePosition()
 {
-	if (isHeld())
+	if (horizontal)
 	{
-		if (horizontal)
+		if (position_.x() > maxAnchorPoint - (width_ / 2.0f))
 		{
-			if (position_.x() > maxAnchorPoint - (width_ / 2.0f))
-			{
-				set_position(maxAnchorPoint - (width_ / 2.0f), position_.y(), position_.z());
-			}
+			set_position(maxAnchorPoint - (width_ / 2.0f), position_.y(), position_.z());
+		}
 
-			else if (position_.x() < minAnchorPoint + (width_ / 2.0f))
-			{
-				set_position(minAnchorPoint + (width_ / 2.0f), position_.y(), position_.z());
-			}
-
-			else
-			{
-				set_position(gef::Vector4(input->getMouse()->position.x, position_.y(), position_.z()));
-			}
-
-			float left = minAnchorPoint + (width_ / 2.0f);
-			float right = maxAnchorPoint - (width_ / 2.0f);
-
-			percentageValue = (position_.x() - left) / (right - left) * 100.0f;
+		else if (position_.x() < minAnchorPoint + (width_ / 2.0f))
+		{
+			set_position(minAnchorPoint + (width_ / 2.0f), position_.y(), position_.z());
 		}
 
 		else
 		{
-			if (position_.y() > maxAnchorPoint - (height_ / 2.0f))
-			{
-				set_position(position_.x(), maxAnchorPoint - 1.0f, position_.z());
-			}
-
-			else if (position_.y() < minAnchorPoint + (height_ / 2.0f))
-			{
-				set_position(position_.x(), minAnchorPoint + 1.0f, position_.z());
-			}
-
-			else
-			{
-				set_position(gef::Vector4(position_.x(), input->getMouse()->position.x, position_.z()));
-			}
-
-			float left = minAnchorPoint + (height_ / 2.0f);
-			float right = maxAnchorPoint - (height_ / 2.0f);
-
-			percentageValue = (position_.y() - left) / (right - left) * 100.0f;
+			set_position(gef::Vector4(input->getMouse()->position.x, position_.y(), position_.z()));
 		}
+
+		float left = minAnchorPoint + (width_ / 2.0f);
+		float right = maxAnchorPoint - (width_ / 2.0f);
+
+		percentageValue = (position_.x() - left) / (right - left) * 100.0f;
+	}
+
+	else
+	{
+		if (position_.y() > maxAnchorPoint - (height_ / 2.0f))
+		{
+			set_position(position_.x(), maxAnchorPoint - 1.0f, position_.z());
+		}
+
+		else if (position_.y() < minAnchorPoint + (height_ / 2.0f))
+		{
+			set_position(position_.x(), minAnchorPoint + 1.0f, position_.z());
+		}
+
+		else
+		{
+			set_position(gef::Vector4(position_.x(), input->getMouse()->position.x, position_.z()));
+		}
+
+		float left = minAnchorPoint + (height_ / 2.0f);
+		float right = maxAnchorPoint - (height_ / 2.0f);
+
+		percentageValue = (position_.y() - left) / (right - left) * 100.0f;
 	}
 }
 
@@ -83,4 +80,14 @@ void Slider::setHorizontal(bool horizontal_)
 float Slider::getPercentageValue()
 {
 	return percentageValue;
+}
+
+float Slider::getMinAnchorPoint()
+{
+	return minAnchorPoint;
+}
+
+float Slider::getMaxAnchorPoint()
+{
+	return maxAnchorPoint;
 }

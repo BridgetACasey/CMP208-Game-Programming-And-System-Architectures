@@ -19,6 +19,9 @@ public:
 
 	float getPercentageValue();
 
+	float getMinAnchorPoint();
+	float getMaxAnchorPoint();
+
 private:
 	float minAnchorPoint;
 	float maxAnchorPoint;

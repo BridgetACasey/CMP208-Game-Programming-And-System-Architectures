@@ -63,6 +63,51 @@ void SettingsState::setup()
 		texture = gef::Texture::Create(platform_, image_);
 		sfxVolumeSlider->setHoveringTexture(texture);
 
+		//Bottom layers
+		context_->getPNGLoader()->Load("slider_bar_bottom.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+
+		masterBottomLayer.set_position(gef::Vector4((masterVolumeSlider->getMaxAnchorPoint() + masterVolumeSlider->getMinAnchorPoint()) / 2.0f,
+			masterVolumeSlider->position().y(), masterVolumeSlider->position().z()));
+		masterBottomLayer.set_height(masterVolumeSlider->height());
+		masterBottomLayer.set_width(masterVolumeSlider->getMaxAnchorPoint() - masterVolumeSlider->getMinAnchorPoint());
+		masterBottomLayer.set_texture(texture);
+
+		musicBottomLayer.set_position(gef::Vector4((musicVolumeSlider->getMaxAnchorPoint() + musicVolumeSlider->getMinAnchorPoint()) / 2.0f,
+			musicVolumeSlider->position().y(), musicVolumeSlider->position().z()));
+		musicBottomLayer.set_height(musicVolumeSlider->height());
+		musicBottomLayer.set_width(musicVolumeSlider->getMaxAnchorPoint() - musicVolumeSlider->getMinAnchorPoint());
+		musicBottomLayer.set_texture(texture);
+
+		sfxBottomLayer.set_position(gef::Vector4((sfxVolumeSlider->getMaxAnchorPoint() + sfxVolumeSlider->getMinAnchorPoint()) / 2.0f,
+			sfxVolumeSlider->position().y(), sfxVolumeSlider->position().z()));
+		sfxBottomLayer.set_height(sfxVolumeSlider->height());
+		sfxBottomLayer.set_width(sfxVolumeSlider->getMaxAnchorPoint() - sfxVolumeSlider->getMinAnchorPoint());
+		sfxBottomLayer.set_texture(texture);
+
+		//Top layers
+		context_->getPNGLoader()->Load("slider_bar_top.png", platform_, image_);
+		texture = gef::Texture::Create(platform_, image_);
+
+		masterTopLayer.set_position(gef::Vector4((masterVolumeSlider->getMaxAnchorPoint() + masterVolumeSlider->getMinAnchorPoint()) / 2.0f,
+			masterVolumeSlider->position().y(), masterVolumeSlider->position().z()));
+		masterTopLayer.set_height(masterVolumeSlider->height());
+		masterTopLayer.set_width(masterVolumeSlider->getMaxAnchorPoint() - masterVolumeSlider->getMinAnchorPoint());
+		masterTopLayer.set_texture(texture);
+
+		musicTopLayer.set_position(gef::Vector4((musicVolumeSlider->getMaxAnchorPoint() + musicVolumeSlider->getMinAnchorPoint()) / 2.0f,
+			musicVolumeSlider->position().y(), musicVolumeSlider->position().z()));
+		musicTopLayer.set_height(musicVolumeSlider->height());
+		musicTopLayer.set_width(musicVolumeSlider->getMaxAnchorPoint() - musicVolumeSlider->getMinAnchorPoint());
+		musicTopLayer.set_texture(texture);
+
+		sfxTopLayer.set_position(gef::Vector4((sfxVolumeSlider->getMaxAnchorPoint() + sfxVolumeSlider->getMinAnchorPoint()) / 2.0f,
+			sfxVolumeSlider->position().y(), sfxVolumeSlider->position().z()));
+		sfxTopLayer.set_height(sfxVolumeSlider->height());
+		sfxTopLayer.set_width(sfxVolumeSlider->getMaxAnchorPoint() - sfxVolumeSlider->getMinAnchorPoint());
+		sfxTopLayer.set_texture(texture);
+
+		//Back to main menu button
 		backButton = Button::create(context_->getGameInput());
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
@@ -97,19 +142,48 @@ void SettingsState::handleInput()
 
 	if (backButton->isClicked())
 	{
+		context_->getAudio()->manager()->PlaySample(1, false);
 		context_->setActiveState(StateLabel::MAIN_MENU);
 	}
 }
 
 bool SettingsState::update(float deltaTime)
 {
-	masterVolumeSlider->updatePosition();
-	musicVolumeSlider->updatePosition();
-	sfxVolumeSlider->updatePosition();
+	if (masterVolumeSlider->isHeld())
+	{
+		masterVolumeSlider->updatePosition();
 
-	context_->getAudio()->setMasterVolume(masterVolumeSlider->getPercentageValue());
-	context_->getAudio()->setMusicVolume(musicVolumeSlider->getPercentageValue());
-	context_->getAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue());
+		masterTopLayer.set_width((masterVolumeSlider->getMaxAnchorPoint() - masterVolumeSlider->getMinAnchorPoint()) * (masterVolumeSlider->getPercentageValue() / 100.0f));
+
+		masterTopLayer.set_position(gef::Vector4((masterVolumeSlider->getMinAnchorPoint() + masterVolumeSlider->position().x()) / 2.0f + ((masterVolumeSlider->width() / 4.0f) * (masterVolumeSlider->getPercentageValue() / 100.0f)),
+			masterTopLayer.position().y(), masterTopLayer.position().z()));
+
+		context_->getAudio()->setMasterVolume(masterVolumeSlider->getPercentageValue());
+	}
+
+	if (musicVolumeSlider->isHeld())
+	{
+		musicVolumeSlider->updatePosition();
+
+		musicTopLayer.set_width((musicVolumeSlider->getMaxAnchorPoint() - musicVolumeSlider->getMinAnchorPoint()) * (musicVolumeSlider->getPercentageValue() / 100.0f));
+
+		musicTopLayer.set_position(gef::Vector4((musicVolumeSlider->getMinAnchorPoint() + musicVolumeSlider->position().x()) / 2.0f + ((musicVolumeSlider->width() / 4.0f) * (musicVolumeSlider->getPercentageValue() / 100.0f)),
+			musicTopLayer.position().y(), musicTopLayer.position().z()));
+
+		context_->getAudio()->setMusicVolume(musicVolumeSlider->getPercentageValue());
+	}
+
+	if (sfxVolumeSlider->isHeld())
+	{
+		sfxVolumeSlider->updatePosition();
+
+		sfxTopLayer.set_width((sfxVolumeSlider->getMaxAnchorPoint() - sfxVolumeSlider->getMinAnchorPoint()) * (sfxVolumeSlider->getPercentageValue() / 100.0f));
+
+		sfxTopLayer.set_position(gef::Vector4((sfxVolumeSlider->getMinAnchorPoint() + sfxVolumeSlider->position().x()) / 2.0f + ((sfxVolumeSlider->width() / 4.0f) * (sfxVolumeSlider->getPercentageValue() / 100.0f)),
+			sfxTopLayer.position().y(), sfxTopLayer.position().z()));
+
+		context_->getAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue(), 1);
+	}
 
 	return true;
 }
@@ -126,10 +200,19 @@ void SettingsState::render()
 
 	context_->getSpriteRenderer()->DrawSprite(background);
 
-	context_->getSpriteRenderer()->DrawSprite(*backButton);
+	context_->getSpriteRenderer()->DrawSprite(masterBottomLayer);
+	context_->getSpriteRenderer()->DrawSprite(musicBottomLayer);
+	context_->getSpriteRenderer()->DrawSprite(sfxBottomLayer);
+
+	context_->getSpriteRenderer()->DrawSprite(masterTopLayer);
+	context_->getSpriteRenderer()->DrawSprite(musicTopLayer);
+	context_->getSpriteRenderer()->DrawSprite(sfxTopLayer);
+
 	context_->getSpriteRenderer()->DrawSprite(*masterVolumeSlider);
 	context_->getSpriteRenderer()->DrawSprite(*musicVolumeSlider);
 	context_->getSpriteRenderer()->DrawSprite(*sfxVolumeSlider);
+
+	context_->getSpriteRenderer()->DrawSprite(*backButton);
 
 	//Render UI elements
 	if (context_->getFont())
@@ -137,8 +220,11 @@ void SettingsState::render()
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(700.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "X: %.1f Y: %.1f",
 			context_->getGameInput()->getMouse()->position.x, context_->getGameInput()->getMouse()->position.y);
 
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(400.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "MSC: %.1f SFX: %.1f",
-			context_->getAudio()->getMusicVolume(), context_->getAudio()->getSFXVolume());
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(400.0f, 480.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "SWDTH: %.1f SPOS: %.1f",
+			masterVolumeSlider->width(), masterVolumeSlider->position().x());
+
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(400.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "BWDTH: %.1f BPOS: %.1f",
+			masterTopLayer.width(), masterTopLayer.position().x());
 
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "SETTINGS");
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MASTER: %.1f", masterVolumeSlider->getPercentageValue());

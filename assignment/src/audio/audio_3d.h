@@ -17,7 +17,7 @@ public:
 
 	void setMasterVolume(float masterVolume_);
 	void setMusicVolume(float musicVolume_);
-	void setSFXVolume(float sfxVolume_);
+	void setSFXVolume(float sfxVolume_, Int32 sfxID);
 
 	float getMasterVolume();
 	float getMusicVolume();
