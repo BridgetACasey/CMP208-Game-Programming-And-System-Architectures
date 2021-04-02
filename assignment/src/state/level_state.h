@@ -69,7 +69,6 @@ private:
 	Obstacle* ground;
 
 	AudioEmitter coinCollection;
-	Int32 coinCollectionID;
 
 	float fps_;
 	float yPosition;

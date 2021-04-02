@@ -3,9 +3,6 @@
 Audio3D::Audio3D(gef::AudioManager* audio_manager) :
 	audio_manager_(audio_manager)
 {
-	setMasterVolume(100.0f);
-	setMusicVolume(100.0f);
-	sfxVolume = 100.0f;
 }
 
 void Audio3D::AddEmitter(const AudioEmitter& emitter)
@@ -13,72 +10,22 @@ void Audio3D::AddEmitter(const AudioEmitter& emitter)
 	emitters_.push_back(emitter);
 }
 
-void Audio3D::setMasterVolume(float masterVolume_)
-{
-	masterVolume = masterVolume_;
-
-	audio_manager_->SetMasterVolume(masterVolume);
-}
-
-void Audio3D::setMusicVolume(float musicVolume_)
-{
-	musicVolume = musicVolume_;
-
-	gef::VolumeInfo info;
-
-	info.volume = musicVolume;
-	info.pan = 0.0f;
-
-	audio_manager_->SetMusicVolumeInfo(info);
-}
-
-void Audio3D::setSFXVolume(float sfxVolume_, Int32 sfxID)
-{
-	sfxVolume = sfxVolume_;
-
-	gef::VolumeInfo info;
-
-	if (audio_manager_->GetSampleVoiceVolumeInfo(sfxID, info) > -1)
-	{
-		info.volume = sfxVolume;
-		info.pan = 0.0f;
-
-		audio_manager_->SetSampleVoiceVolumeInfo(sfxID, info);
-	}
-}
-
-float Audio3D::getMasterVolume()
-{
-	return masterVolume;
-}
-
-float Audio3D::getMusicVolume()
-{
-	return musicVolume;
-}
-
-float Audio3D::getSFXVolume()
-{
-	return sfxVolume;
-}
-
-
 void Audio3D::Update()
 {
 	// make sure audio manager is valid before proceeding
 	if (!audio_manager_)
 		return;
 
-//	For each emitter
+	//	For each emitter
 	for (std::vector<AudioEmitter>::iterator emitter = emitters_.begin(); emitter != emitters_.end();)
 	{
-//		Calculate emitter position in listener local coordinate space
+		//		Calculate emitter position in listener local coordinate space
 		gef::Vector4 emitter_local_position = listener_.TransformWorld2Local(emitter->position());
 
 		bool delete_emitter = false;
 
 
-//		If distance is less than emitter range
+		//		If distance is less than emitter range
 		float distance = emitter_local_position.Length();
 		if (distance < emitter->radius())
 		{
@@ -113,7 +60,7 @@ void Audio3D::Update()
 				if (emitter->playing())
 				{
 					// Set the sound volume based on the distance from the emitter
-					float volume = sfxVolume * (1.0f - (distance / emitter->radius())) * (masterVolume / 100.0f);
+					float volume = 1.0f - (distance / emitter->radius());
 
 					//		    Set the sound pan based on angle between x-axis and listener->emitter vector
 					const gef::Vector4 x_axis(1.0f, 0.0, 0.0f);

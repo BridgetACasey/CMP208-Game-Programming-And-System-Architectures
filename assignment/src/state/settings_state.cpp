@@ -142,7 +142,7 @@ void SettingsState::handleInput()
 
 	if (backButton->isClicked())
 	{
-		context_->getAudio()->manager()->PlaySample(1, false);
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::MAIN_MENU);
 	}
 }
@@ -158,7 +158,7 @@ bool SettingsState::update(float deltaTime)
 		masterTopLayer.set_position(gef::Vector4((masterVolumeSlider->getMinAnchorPoint() + masterVolumeSlider->position().x()) / 2.0f + ((masterVolumeSlider->width() / 4.0f) * (masterVolumeSlider->getPercentageValue() / 100.0f)),
 			masterTopLayer.position().y(), masterTopLayer.position().z()));
 
-		context_->getAudio()->setMasterVolume(masterVolumeSlider->getPercentageValue());
+		context_->getGameAudio()->setMasterVolume(masterVolumeSlider->getPercentageValue());
 	}
 
 	if (musicVolumeSlider->isHeld())
@@ -170,7 +170,7 @@ bool SettingsState::update(float deltaTime)
 		musicTopLayer.set_position(gef::Vector4((musicVolumeSlider->getMinAnchorPoint() + musicVolumeSlider->position().x()) / 2.0f + ((musicVolumeSlider->width() / 4.0f) * (musicVolumeSlider->getPercentageValue() / 100.0f)),
 			musicTopLayer.position().y(), musicTopLayer.position().z()));
 
-		context_->getAudio()->setMusicVolume(musicVolumeSlider->getPercentageValue());
+		context_->getGameAudio()->setMusicVolume(musicVolumeSlider->getPercentageValue());
 	}
 
 	if (sfxVolumeSlider->isHeld())
@@ -182,7 +182,7 @@ bool SettingsState::update(float deltaTime)
 		sfxTopLayer.set_position(gef::Vector4((sfxVolumeSlider->getMinAnchorPoint() + sfxVolumeSlider->position().x()) / 2.0f + ((sfxVolumeSlider->width() / 4.0f) * (sfxVolumeSlider->getPercentageValue() / 100.0f)),
 			sfxTopLayer.position().y(), sfxTopLayer.position().z()));
 
-		context_->getAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue(), 1);
+		//context_->getGameAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue(), SoundEffectID::CLICK);
 	}
 
 	return true;
@@ -220,16 +220,10 @@ void SettingsState::render()
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(700.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "X: %.1f Y: %.1f",
 			context_->getGameInput()->getMouse()->position.x, context_->getGameInput()->getMouse()->position.y);
 
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(400.0f, 480.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "SWDTH: %.1f SPOS: %.1f",
-			masterVolumeSlider->width(), masterVolumeSlider->position().x());
-
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(400.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "BWDTH: %.1f BPOS: %.1f",
-			masterTopLayer.width(), masterTopLayer.position().x());
-
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "SETTINGS");
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MASTER: %.1f", masterVolumeSlider->getPercentageValue());
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 210.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MUSIC %.1f", musicVolumeSlider->getPercentageValue());
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 300.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "SFX %.1f", sfxVolumeSlider->getPercentageValue());
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 50.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "SETTINGS");
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MASTER:   %.1f", masterVolumeSlider->getPercentageValue());
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 210.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MUSIC:   %.1f", musicVolumeSlider->getPercentageValue());
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 300.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "SFX:   %.1f", sfxVolumeSlider->getPercentageValue());
 	}
 
 	context_->getSpriteRenderer()->End();

@@ -5,6 +5,8 @@ LevelState::LevelState(gef::Platform& platform) : State(platform)
 {
 	ground = nullptr;
 	player = nullptr;
+	coin = nullptr;
+	camera = nullptr;
 	scene_assets_ = nullptr;
 	world = nullptr;
 
@@ -29,6 +31,7 @@ void LevelState::setup()
 
 		delete coin;
 		coin = NULL;
+
 		delete ground;
 		ground = NULL;
 
@@ -79,14 +82,6 @@ void LevelState::setup()
 		coin->setBody(world, b2BodyType::b2_staticBody);
 		coin->update(0.0f);
 
-		context_->getAudio()->listener().SetTransform(player->transform());
-
-		coinCollectionID = context_->getAudio()->manager()->LoadSample("box_collected.wav", platform_);
-		coinCollection.Init(coinCollectionID, false);
-		coinCollection.set_position(*coin->getPosition());
-		coinCollection.set_radius(1.5f);
-		context_->getAudio()->AddEmitter(coinCollection);
-
 		ground = Obstacle::create();
 		ground->setPosition(0.0f, 0.0f, 0.0f);
 		ground->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(5.0f, 0.5f, 0.5f));
@@ -96,9 +91,15 @@ void LevelState::setup()
 		SetupCamera();
 		SetupLights();
 
-		context_->getAudio()->manager()->StopMusic();
-		context_->getAudio()->manager()->LoadMusic("Blazer_Rail_2.wav", platform_);
-		context_->getAudio()->manager()->PlayMusic();
+		context_->getGameAudio()->loadSoundEffect(SoundEffectID::COLLECTED);
+
+		context_->getGameAudio()->getListener().SetTransform(player->transform());
+		coinCollection.Init((int)SoundEffectID::COLLECTED, false);
+		coinCollection.set_position(*coin->getPosition());
+		coinCollection.set_radius(2.0f);
+		context_->getGameAudio()->get3D()->AddEmitter(coinCollection);
+
+		context_->getGameAudio()->playMusic(MusicID::LEVEL);
 	}
 
 	firstSetup = false;
@@ -128,8 +129,8 @@ void LevelState::handleInput()
 
 bool LevelState::update(float deltaTime)
 {
-	context_->getAudio()->listener().SetTransform(player->transform());
-	context_->getAudio()->Update();
+	context_->getGameAudio()->getListener().SetTransform(player->transform());
+	context_->getGameAudio()->update();
 
 	camera->updateFollow(player);
 	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
@@ -148,9 +149,9 @@ bool LevelState::update(float deltaTime)
 
 	if (!player->getIsAlive())
 	{
-		context_->setPlayerScore(player->getCoins());
-		context_->setGameComplete(true);
-		context_->setActiveState(StateLabel::END_SCREEN);
+		//context_->setPlayerScore(player->getCoins());
+		//context_->setGameComplete(true);
+		//context_->setActiveState(StateLabel::END_SCREEN);
 	}
 
 	context_->getGameInput()->updateObjectInput(player);

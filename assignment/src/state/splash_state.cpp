@@ -38,8 +38,8 @@ void SplashState::onEnter()
 
 	setup();
 
-	sfxID = context_->getAudio()->manager()->LoadSample("mixkit-player-recharging-in-video-game-2041.wav", platform_);
-	context_->getAudio()->manager()->PlaySample(sfxID, false);
+	context_->getGameAudio()->loadSoundEffect(SoundEffectID::INTRO);
+	context_->getGameAudio()->playSoundEffect(SoundEffectID::INTRO, false);
 }
 
 void SplashState::onExit()
@@ -54,8 +54,6 @@ void SplashState::handleInput()
 
 bool SplashState::update(float deltaTime)
 {
-	context_->getAudio()->Update();
-
 	if (transitionTime > 3.0f)
 	{
 		transitionTime = 0.0f;

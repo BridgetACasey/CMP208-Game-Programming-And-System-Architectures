@@ -90,10 +90,13 @@ void MenuState::setup()
 		texture = gef::Texture::Create(platform_, image_);
 		exitButton->setHoveringTexture(texture);
 
-		music = context_->getAudio()->manager()->LoadMusic("Blazer_Rail.wav", platform_);
-		context_->getAudio()->manager()->PlayMusic();
+		context_->getGameAudio()->playMusic(MusicID::MENU);
+		context_->getGameAudio()->loadSoundEffect(SoundEffectID::CLICK);
 
-		context_->getAudio()->manager()->LoadSample("mixkit-video-game-retro-click-237.wav", platform_);
+		//music = context_->getAudio()->manager()->LoadMusic("Blazer_Rail.wav", platform_);
+		//context_->getAudio()->manager()->PlayMusic();
+
+		//context_->getAudio()->manager()->LoadSample("mixkit-video-game-retro-click-237.wav", platform_);
 	}
 
 	firstSetup = false;
@@ -117,19 +120,21 @@ void MenuState::handleInput()
 
 	if (playButton->isClicked())
 	{
-		context_->getAudio()->manager()->PlaySample(1, false);
+		//context_->getAudio()->manager()->PlaySample(1, false);
+
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::LEVEL);
 	}
 
 	if (settingsButton->isClicked())
 	{
-		context_->getAudio()->manager()->PlaySample(1, false);
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::SETTINGS);
 	}
 
 	if (helpButton->isClicked())
 	{
-		context_->getAudio()->manager()->PlaySample(1, false);
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::HELP);
 	}
 

@@ -27,6 +27,4 @@ private:
 	float transitionTime;
 	
 	gef::Sprite splashImage;
-
-	Int32 sfxID;
 };

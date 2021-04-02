@@ -77,13 +77,15 @@ void PauseState::handleInput()
 
 	if (backButton->isClicked())
 	{
-		context_->getAudio()->manager()->PlaySample(1, false);
+		//context_->getAudio()->manager()->PlaySample(1, false);
+
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::MAIN_MENU);
 	}
 
 	if (resumeButton->isClicked())
 	{
-		context_->getAudio()->manager()->PlaySample(1, false);
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::LEVEL);
 	}
 

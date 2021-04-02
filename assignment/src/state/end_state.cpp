@@ -40,6 +40,9 @@ void EndState::setup()
 		context_->getPNGLoader()->Load("potato_lizard.png", platform_, image_);
 		texture = gef::Texture::Create(platform_, image_);
 		background.set_texture(texture);
+
+		context_->getGameAudio()->loadSoundEffect(SoundEffectID::WIN);
+		context_->getGameAudio()->loadSoundEffect(SoundEffectID::LOSE);
 	}
 
 	firstSetup = false;
@@ -58,14 +61,14 @@ void EndState::onEnter()
 		highestScore = lastScore;
 	}
 
-	context_->getAudio()->manager()->StopMusic();
-	lose = context_->getAudio()->manager()->LoadSample("lose.wav", platform_);
-	context_->getAudio()->manager()->PlaySample(lose, false);
+	context_->getGameAudio()->playMusic(MusicID::NONE);
+
+	context_->getGameAudio()->playSoundEffect(SoundEffectID::LOSE, false);
 }
 
 void EndState::onExit()
 {
-	context_->getAudio()->manager()->UnloadSample(lose);
+
 }
 
 void EndState::handleInput()
@@ -74,7 +77,9 @@ void EndState::handleInput()
 
 	if (restartButton->isClicked())
 	{
-		context_->getAudio()->manager()->PlaySample(1, false);
+		//context_->getAudio()->manager()->PlaySample(1, false);
+
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::LEVEL);
 	}
 }
