@@ -8,11 +8,9 @@ LevelState::LevelState(gef::Platform& platform) : State(platform)
 	coin = nullptr;
 	trap = nullptr;
 	camera = nullptr;
-	scene_assets_ = nullptr;
 	world = nullptr;
 
 	fps_ = 0.0f;
-	yPosition = 0.0f;
 }
 
 LevelState* LevelState::create(gef::Platform& platform)
@@ -39,9 +37,6 @@ void LevelState::setup()
 		delete ground;
 		ground = NULL;
 
-		delete scene_assets_;
-		scene_assets_ = NULL;
-
 		delete camera;
 		camera = NULL;
 
@@ -56,17 +51,7 @@ void LevelState::setup()
 	{
 		gef::DebugOut("Level: Performing first time setup!\n");
 
-		// load the assets in from the .scn
-		const char* scene_asset_filename = "world.scn";
-		scene_assets_ = LoadSceneAssets(platform_, scene_asset_filename);
-		if (scene_assets_)
-		{
-			world_mesh_instance_.set_mesh(GetMeshFromSceneAssets(scene_assets_));
-		}
-		else
-		{
-			gef::DebugOut("Scene file %s failed to load\n", scene_asset_filename);
-		}
+		world_mesh_instance_.set_mesh(context_->getMeshManager()->generateMesh("world.scn"));
 
 		b2Vec2 gravity(0.0f, -9.8f);
 		world = new b2World(gravity);
@@ -168,8 +153,6 @@ bool LevelState::update(float deltaTime)
 
 	context_->getGameInput()->updateObjectInput(player);
 
-	yPosition = player->getBody()->GetTransform().p.y;
-
 	world->Step(deltaTime, velocityIterations, positionIterations);
 
 	return true;
@@ -217,7 +200,7 @@ void LevelState::DrawHUD()
 	{
 		// display frame rate
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(650.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT,
-			"Y: %.1f FPS: %.1f Coins: %.1i", yPosition, fps_, player->getCoins());
+			"Y: %.1f FPS: %.1f Coins: %.1i", player->getPosition()->y(), fps_, player->getCoins());
 	}
 }
 
@@ -254,36 +237,4 @@ void LevelState::SetupCamera()
 
 	camera->view_matrix.LookAt(camera->eye, camera->lookAt, camera->up);
 	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
-}
-
-gef::Scene* LevelState::LoadSceneAssets(gef::Platform& platform, const char* filename)
-{
-	gef::Scene* scene = new gef::Scene();
-
-	if (scene->ReadSceneFromFile(platform, filename))
-	{
-		// if scene file loads successful
-		// create material and mesh resources from the scene data
-		scene->CreateMaterials(platform);
-		scene->CreateMeshes(platform);
-	}
-	else
-	{
-		delete scene;
-		scene = NULL;
-	}
-
-	return scene;
-}
-
-gef::Mesh* LevelState::GetMeshFromSceneAssets(gef::Scene* scene)
-{
-	gef::Mesh* mesh = NULL;
-
-	// if the scene data contains at least one mesh
-	// return the first mesh
-	if (scene && scene->meshes.size() > 0)
-		mesh = scene->meshes.front();
-
-	return mesh;
 }

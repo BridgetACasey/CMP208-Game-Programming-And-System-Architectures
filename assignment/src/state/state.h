@@ -11,6 +11,7 @@
 
 #include "util/primitive_builder.h"
 #include "util/texture_manager.h"
+#include "util/mesh_manager.h"
 #include "input/game_input.h"
 #include "audio/game_audio.h"
 

@@ -204,6 +204,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\util\mesh_manager.cpp" />
     <ClCompile Include="src\audio\game_audio.cpp" />
     <ClCompile Include="src\ui\slider.cpp" />
     <ClCompile Include="src\audio\audio_3d.cpp" />
@@ -241,6 +242,7 @@
     <ClCompile Include="src\object\trap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\util\mesh_manager.h" />
     <ClInclude Include="src\audio\game_audio.h" />
     <ClInclude Include="src\ui\slider.h" />
     <ClInclude Include="src\audio\audio_3d.h" />

@@ -46,6 +46,7 @@ void Context::setupStateComponents(gef::Platform& platform)
 	gameInput = GameInput::create(platform);
 	gameAudio = GameAudio::create(platform);
 	textureManager = TextureManager::create(platform);
+	meshManager = MeshManager::create(platform);
 
 	font_ = new gef::Font(platform);
 	font_->Load("comic_sans");
@@ -103,6 +104,11 @@ GameAudio* Context::getGameAudio()
 TextureManager* Context::getTextureManager()
 {
 	return textureManager;
+}
+
+MeshManager* Context::getMeshManager()
+{
+	return meshManager;
 }
 
 void Context::setPlayerScore(int playerScore_)

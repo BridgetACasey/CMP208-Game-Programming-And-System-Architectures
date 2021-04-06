@@ -54,14 +54,11 @@ private:
 	void DrawHUD();
 	void SetupLights();
 	void SetupCamera();
-	gef::Scene* LoadSceneAssets(gef::Platform& platform, const char* filename);
-	gef::Mesh* GetMeshFromSceneAssets(gef::Scene* scene);
 
 	b2World* world;
 	CollisionListener collision;
 
 	gef::MeshInstance world_mesh_instance_;
-	gef::Scene* scene_assets_;
 
 	Camera* camera;
 
@@ -73,5 +70,4 @@ private:
 	AudioEmitter coinCollection;
 
 	float fps_;
-	float yPosition;
 };

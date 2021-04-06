@@ -36,6 +36,7 @@ public:
 	GameInput* getGameInput();
 	GameAudio* getGameAudio();
 	TextureManager* getTextureManager();
+	MeshManager* getMeshManager();
 
 	void setPlayerScore(int playerScore_);
 	int getPlayerScore();
@@ -55,6 +56,7 @@ private:
 
 	PrimitiveBuilder* primitive_builder_;
 	TextureManager* textureManager;
+	MeshManager* meshManager;
 	GameInput* gameInput;
 	GameAudio* gameAudio;
 
