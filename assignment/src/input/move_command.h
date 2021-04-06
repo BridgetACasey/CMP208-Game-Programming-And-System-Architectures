@@ -51,6 +51,7 @@ class JumpCommand : public MoveCommand
 	{
 		if (gameObject->getCanJump())
 		{
+			gameObject->setCanJump(false);
  			move = b2Vec2(0.0f, gameObject->getJumpForce());
 			gameObject->getBody()->ApplyForceToCenter(move, true);
 		}

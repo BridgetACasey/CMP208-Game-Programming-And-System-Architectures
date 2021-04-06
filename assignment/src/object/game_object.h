@@ -67,7 +67,7 @@ public:
 
 protected:
 	void updateTransforms();
-	void checkDeath();
+	void checkDeathFromFalling();
 
 	gef::Vector4 position;
 	gef::Vector4 halfDimensions_;

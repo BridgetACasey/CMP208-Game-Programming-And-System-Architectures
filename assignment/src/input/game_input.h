@@ -47,10 +47,9 @@ public:
 	static GameInput* create(gef::Platform& platform);
 
 	void update();
-	void updateObjectInput(GameObject* gameObject);
+	void processGameObjectCommands(GameObject* gameObject);
 
 	void bindKeys();
-	void processPlayerCommands(GameObject* gameObject);
 
 	void processMouseButton(Int32 touchID, gef::TouchType type);
 	void processTouchInput();

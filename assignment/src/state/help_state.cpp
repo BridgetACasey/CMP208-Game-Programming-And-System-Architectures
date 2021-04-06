@@ -27,7 +27,7 @@ void HelpState::setup()
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
+		background.set_texture(context_->getTextureManager()->generateTexture("Glacial-mountains-parallax-background_vnitti/background_glacial_mountains_lightened.png"));
 	}
 
 	firstSetup = false;
@@ -75,7 +75,7 @@ void HelpState::render()
 	//Render UI elements
 	if (context_->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "HELP");
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 50.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "HOW TO PLAY");
 	}
 
 	context_->getSpriteRenderer()->DrawSprite(*backButton);

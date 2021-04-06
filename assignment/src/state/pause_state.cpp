@@ -18,6 +18,11 @@ void PauseState::setup()
 {
 	if (firstSetup)
 	{
+		background.set_height(platform_.height());
+		background.set_width(platform_.width());
+		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
+		background.set_texture(context_->getTextureManager()->generateTexture("Glacial-mountains-parallax-background_vnitti/background_glacial_mountains.png"));
+
 		resumeButton = Button::create(context_->getGameInput());
 		backButton = Button::create(context_->getGameInput());
 
@@ -32,11 +37,6 @@ void PauseState::setup()
 		backButton->set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f + 100.0f, 0.0f);
 		backButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Menu Button.png"));
 		backButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Menucol_Button.png"));
-
-		background.set_height(platform_.height());
-		background.set_width(platform_.width());
-		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
 	}
 
 	firstSetup = false;

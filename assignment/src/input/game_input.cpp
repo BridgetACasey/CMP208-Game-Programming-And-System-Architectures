@@ -50,9 +50,14 @@ void GameInput::update()
 	}
 }
 
-void GameInput::updateObjectInput(GameObject* gameObject)
+void GameInput::processGameObjectCommands(GameObject* gameObject)
 {
-	processPlayerCommands(gameObject);
+	Key* key = assignKeys();
+
+	if (key)
+	{
+		key->command->executeObjectCommand(gameObject);
+	}
 }
 
 void GameInput::bindKeys()
@@ -61,21 +66,6 @@ void GameInput::bindKeys()
 	key_a->command = &left;
 	key_d->command = &right;
 	key_l_shift->command = &sprint;
-}
-
-void GameInput::processPlayerCommands(GameObject* gameObject)
-{
-	Key* key = assignKeys();
-
-	if (key)
-	{
-		key->command->executeObjectCommand(gameObject);
-	}
-
-	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_SPACE))
-	{
-		gameObject->setCanJump(false);
-	}
 }
 
 void GameInput::processMouseButton(Int32 touchID, gef::TouchType type)

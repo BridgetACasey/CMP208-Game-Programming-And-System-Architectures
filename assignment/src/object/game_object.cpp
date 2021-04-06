@@ -41,7 +41,7 @@ void GameObject::updateTransforms()
 	}
 }
 
-void GameObject::checkDeath()
+void GameObject::checkDeathFromFalling()
 {
 	if (position.y() < 0.0f)
 	{
@@ -52,7 +52,7 @@ void GameObject::checkDeath()
 void GameObject::update(float deltaTime)
 {
 	updateTransforms();
-	checkDeath();
+	checkDeathFromFalling();
 }
 
 void GameObject::onCollisionBeginWith(CollisionTag tag)

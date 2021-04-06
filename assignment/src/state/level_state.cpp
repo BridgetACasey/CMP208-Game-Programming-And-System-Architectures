@@ -92,7 +92,7 @@ void LevelState::setup()
 
 		coinCollection.Init((int)SoundEffectID::COLLECTED, false);
 		coinCollection.set_position(*coin->getPosition());
-		coinCollection.set_radius(25.0f);
+		coinCollection.set_radius(1.5f);
 		context_->getGameAudio()->get3D()->AddEmitter(coinCollection);
 
 		context_->getGameAudio()->playMusic(MusicID::LEVEL);
@@ -151,7 +151,7 @@ bool LevelState::update(float deltaTime)
 		context_->setActiveState(StateLabel::END_SCREEN);
 	}
 
-	context_->getGameInput()->updateObjectInput(player);
+	context_->getGameInput()->processGameObjectCommands(player);
 
 	world->Step(deltaTime, velocityIterations, positionIterations);
 
