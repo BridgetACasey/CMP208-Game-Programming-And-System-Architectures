@@ -237,6 +237,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\util\texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\audio\game_audio.h" />
@@ -264,6 +265,7 @@
     <ClInclude Include="src\util\primitive_builder.h" />
     <ClInclude Include="src\main_app.h" />
     <ClInclude Include="src\state\state.h" />
+    <ClInclude Include="src\util\texture_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

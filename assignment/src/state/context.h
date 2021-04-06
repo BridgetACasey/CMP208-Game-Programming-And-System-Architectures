@@ -31,11 +31,11 @@ public:
 	gef::SpriteRenderer* getSpriteRenderer();
 	gef::Renderer3D* getRenderer3D();
 	gef::Font* getFont();
-	gef::PNGLoader* getPNGLoader();
 
 	PrimitiveBuilder* getPrimitiveBuilder();
 	GameInput* getGameInput();
 	GameAudio* getGameAudio();
+	TextureManager* getTextureManager();
 
 	void setPlayerScore(int playerScore_);
 	int getPlayerScore();
@@ -53,9 +53,8 @@ private:
 	gef::InputManager* input_manager_;
 	gef::Font* font_;
 
-	gef::PNGLoader pngLoader;
-
 	PrimitiveBuilder* primitive_builder_;
+	TextureManager* textureManager;
 	GameInput* gameInput;
 	GameAudio* gameAudio;
 

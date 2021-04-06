@@ -7,6 +7,8 @@ EndState::EndState(gef::Platform& platform) : State(platform)
 {
 	lastScore = 0;
 	highestScore = 0;
+
+	restartButton = nullptr;
 }
 
 EndState* EndState::create(gef::Platform& platform)
@@ -22,24 +24,13 @@ void EndState::setup()
 		restartButton->set_width(150.0f);
 		restartButton->set_height(75.0f);
 		restartButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f + 100.0f, 0.0f));
-
-		gef::ImageData image_;
-		gef::Texture* texture;
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/New Game Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		restartButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/New Gamecol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		restartButton->setHoveringTexture(texture);
+		restartButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/New Game Button.png"));
+		restartButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/New Gamecol_Button.png"));
 
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		context_->getPNGLoader()->Load("potato_lizard.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		background.set_texture(texture);
+		background.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
 
 		context_->getGameAudio()->loadSoundEffect(SoundEffectID::WIN);
 		context_->getGameAudio()->loadSoundEffect(SoundEffectID::LOSE);
@@ -77,8 +68,6 @@ void EndState::handleInput()
 
 	if (restartButton->isClicked())
 	{
-		//context_->getAudio()->manager()->PlaySample(1, false);
-
 		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::LEVEL);
 	}

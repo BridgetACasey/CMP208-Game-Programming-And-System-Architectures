@@ -24,15 +24,10 @@ void MenuState::setup()
 	{
 		gef::DebugOut("Main Menu: Performing first time setup!\n");
 
-		gef::ImageData image_;
-		gef::Texture* texture;
-
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		context_->getPNGLoader()->Load("potato_lizard.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		background.set_texture(texture);
+		background.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
 
 		backgroundCopy = background;
 		backgroundCopy.set_position(backgroundCopy.width() / 2.0f + (float)platform_.width(), platform_.height() / 2.0f, 0.0f);
@@ -45,58 +40,29 @@ void MenuState::setup()
 		playButton->set_width(150.0f);
 		playButton->set_height(75.0f);
 		playButton->set_position(gef::Vector4(platform_.width() / 2.0f, (platform_.height() / 2.0f) - 50.0f, 0.0f));
-		
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Play Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		
-		playButton->setInactiveTexture(texture);
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Playcol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		playButton->setHoveringTexture(texture);
+		playButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Play Button.png"));
+		playButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Playcol_Button.png"));
 
 		settingsButton->set_width(150.0f);
 		settingsButton->set_height(75.0f);
 		settingsButton->set_position(gef::Vector4(playButton->position().x(), playButton->position().y() + 75.0f, 0.0f));
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Settings Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		settingsButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Settingscol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		settingsButton->setHoveringTexture(texture);
+		settingsButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Settings Button.png"));
+		settingsButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Settingscol_Button.png"));
 
 		helpButton->set_width(150.0f);
 		helpButton->set_height(75.0f);
 		helpButton->set_position(gef::Vector4(settingsButton->position().x(), settingsButton->position().y() + 75.0f, 0.0f));
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Controls Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		helpButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Controlscol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		helpButton->setHoveringTexture(texture);
+		helpButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Controls Button.png"));
+		helpButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Controlscol_Button.png"));
 
 		exitButton->set_width(150.0f);
 		exitButton->set_height(75.0f);
 		exitButton->set_position(gef::Vector4(helpButton->position().x(), helpButton->position().y() + 75.0f, 0.0f));
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Exit Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		exitButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Exitcol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		exitButton->setHoveringTexture(texture);
+		exitButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Exit Button.png"));
+		exitButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Exitcol_Button.png"));
 
 		context_->getGameAudio()->playMusic(MusicID::MENU);
 		context_->getGameAudio()->loadSoundEffect(SoundEffectID::CLICK);
-
-		//music = context_->getAudio()->manager()->LoadMusic("Blazer_Rail.wav", platform_);
-		//context_->getAudio()->manager()->PlayMusic();
-
-		//context_->getAudio()->manager()->LoadSample("mixkit-video-game-retro-click-237.wav", platform_);
 	}
 
 	firstSetup = false;
@@ -120,8 +86,6 @@ void MenuState::handleInput()
 
 	if (playButton->isClicked())
 	{
-		//context_->getAudio()->manager()->PlaySample(1, false);
-
 		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::LEVEL);
 	}

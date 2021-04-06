@@ -21,24 +21,13 @@ void HelpState::setup()
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
 		backButton->set_position(gef::Vector4(150.0f, 100.0f, 0.0f));
-
-		gef::ImageData image_;
-		gef::Texture* texture;
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Back Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		backButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Backcol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		backButton->setHoveringTexture(texture);
+		backButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Back Button.png"));
+		backButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Backcol_Button.png"));
 
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		context_->getPNGLoader()->Load("potato_lizard.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		background.set_texture(texture);
+		background.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
 	}
 
 	firstSetup = false;
@@ -61,8 +50,6 @@ void HelpState::handleInput()
 
 	if (backButton->isClicked())
 	{
-		//context_->getAudio()->manager()->PlaySample(1, false);
-
 		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::MAIN_MENU);
 	}

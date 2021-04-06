@@ -17,16 +17,11 @@ void SplashState::setup()
 	{
 		gef::DebugOut("Splash Screen: Performing first time setup!\n");
 
-		gef::ImageData image_;
-		gef::Texture* texture;
-
 		splashImage.set_height(platform_.height());
 		splashImage.set_width(platform_.width());
 		splashImage.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
 
-		context_->getPNGLoader()->Load("potato_lizard.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		splashImage.set_texture(texture);
+		splashImage.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
 	}
 
 	firstSetup = false;

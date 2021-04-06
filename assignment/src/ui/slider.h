@@ -15,12 +15,14 @@ public:
 	void updatePosition();
 
 	void setAnchorPoints(float min, float max);
-	void setHorizontal(bool horizontal_);
 
 	float getPercentageValue();
 
 	float getMinAnchorPoint();
 	float getMaxAnchorPoint();
+
+	gef::Sprite* getLowerBackground();
+	gef::Sprite* getUpperBackground();
 
 private:
 	float minAnchorPoint;
@@ -28,5 +30,6 @@ private:
 
 	float percentageValue;
 
-	bool horizontal;
+	gef::Sprite lowerBackground;
+	gef::Sprite upperBackground;
 };

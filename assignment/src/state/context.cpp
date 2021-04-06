@@ -42,9 +42,10 @@ void Context::setupStateComponents(gef::Platform& platform)
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform);
 	renderer_3d_ = gef::Renderer3D::Create(platform);
 
+	primitive_builder_ = new PrimitiveBuilder(platform);
 	gameInput = GameInput::create(platform);
 	gameAudio = GameAudio::create(platform);
-	primitive_builder_ = new PrimitiveBuilder(platform);
+	textureManager = TextureManager::create(platform);
 
 	font_ = new gef::Font(platform);
 	font_->Load("comic_sans");
@@ -84,11 +85,6 @@ gef::Font* Context::getFont()
 	return font_;
 }
 
-gef::PNGLoader* Context::getPNGLoader()
-{
-	return &pngLoader;
-}
-
 PrimitiveBuilder* Context::getPrimitiveBuilder()
 {
 	return primitive_builder_;
@@ -102,6 +98,11 @@ GameInput* Context::getGameInput()
 GameAudio* Context::getGameAudio()
 {
 	return gameAudio;
+}
+
+TextureManager* Context::getTextureManager()
+{
+	return textureManager;
 }
 
 void Context::setPlayerScore(int playerScore_)

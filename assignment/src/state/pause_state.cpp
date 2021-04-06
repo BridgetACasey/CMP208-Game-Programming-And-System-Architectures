@@ -24,36 +24,19 @@ void PauseState::setup()
 		resumeButton->set_width(150.0f);
 		resumeButton->set_height(75.0f);
 		resumeButton->set_position(gef::Vector4((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f));
-
-		gef::ImageData image_;
-		gef::Texture* texture;
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Resume Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		resumeButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Resumecol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		resumeButton->setHoveringTexture(texture);
+		resumeButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Resume Button.png"));
+		resumeButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Resumecol_Button.png"));
 
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
 		backButton->set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f + 100.0f, 0.0f);
-
-		context_->getPNGLoader()->Load("Large Buttons/Large Buttons/Menu Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		backButton->setInactiveTexture(texture);
-
-		context_->getPNGLoader()->Load("Large Buttons/Colored Large Buttons/Menucol_Button.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		backButton->setHoveringTexture(texture);
+		backButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Menu Button.png"));
+		backButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Menucol_Button.png"));
 
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		context_->getPNGLoader()->Load("potato_lizard.png", platform_, image_);
-		texture = gef::Texture::Create(platform_, image_);
-		background.set_texture(texture);
+		background.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
 	}
 
 	firstSetup = false;
