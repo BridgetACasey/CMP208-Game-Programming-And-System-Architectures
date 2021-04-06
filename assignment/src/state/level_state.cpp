@@ -6,6 +6,7 @@ LevelState::LevelState(gef::Platform& platform) : State(platform)
 	ground = nullptr;
 	player = nullptr;
 	coin = nullptr;
+	trap = nullptr;
 	camera = nullptr;
 	scene_assets_ = nullptr;
 	world = nullptr;
@@ -31,6 +32,9 @@ void LevelState::setup()
 
 		delete coin;
 		coin = NULL;
+
+		delete trap;
+		trap = NULL;
 
 		delete ground;
 		ground = NULL;
@@ -81,6 +85,12 @@ void LevelState::setup()
 		coin->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
 		coin->setBody(world, b2BodyType::b2_staticBody);
 		coin->update(0.0f);
+
+		trap = Trap::create();
+		trap->setPosition(-2.0f, 1.0f, 0.0f);
+		trap->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
+		trap->setBody(world, b2BodyType::b2_staticBody);
+		trap->update(0.0f);
 
 		ground = Obstacle::create();
 		ground->setPosition(0.0f, 0.0f, 0.0f);
@@ -147,6 +157,7 @@ bool LevelState::update(float deltaTime)
 	// don't have to update the ground visuals as it is static
 	player->update(deltaTime);
 	coin->update(deltaTime);
+	trap->update(deltaTime);
 
 	if (!player->getIsAlive())
 	{
@@ -175,12 +186,20 @@ void LevelState::render()
 	// draw player
 	context_->getRenderer3D()->set_override_material(&context_->getPrimitiveBuilder()->red_material());
 	context_->getRenderer3D()->DrawMesh(*player);
-	context_->getRenderer3D()->set_override_material(NULL);
 
-	if (coin->getCollectible())
+	if (!coin->getCollected())
 	{
+		context_->getRenderer3D()->set_override_material(&context_->getPrimitiveBuilder()->green_material());
 		context_->getRenderer3D()->DrawMesh(*coin);
 	}
+
+	if (!trap->getTriggered())
+	{
+		context_->getRenderer3D()->set_override_material(&context_->getPrimitiveBuilder()->blue_material());
+		context_->getRenderer3D()->DrawMesh(*trap);
+	}
+
+	context_->getRenderer3D()->set_override_material(NULL);
 
 	context_->getRenderer3D()->End();
 

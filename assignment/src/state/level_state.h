@@ -7,6 +7,7 @@
 #include "object/player.h"
 #include "object/collectible.h"
 #include "object/obstacle.h"
+#include "object/trap.h"
 
 #include <graphics/mesh_instance.h>
 #include <graphics/scene.h>
@@ -67,6 +68,7 @@ private:
 	Player* player;
 	Collectible* coin;
 	Obstacle* ground;
+	Trap* trap;
 
 	AudioEmitter coinCollection;
 

@@ -4,23 +4,23 @@
 
 #include "game_object.h"
 
-class Collectible : public GameObject
+class Trap : public GameObject
 {
 protected:
-	Collectible();
+	Trap();
 
 public:
-	~Collectible();
+	~Trap();
 
-	static Collectible* create();
+	static Trap* create();
 
 	void update(float deltaTime) override;
 
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
 
-	bool getCollected();
+	bool getTriggered();
 
 private:
-	bool collected;
+	bool triggered;
 };

@@ -4,7 +4,7 @@
 
 Collectible::Collectible()
 {
-	collectible = true;
+	collected = false;
 	tag_ = CollisionTag::COLLECTIBLE;
 }
 
@@ -22,7 +22,7 @@ void Collectible::update(float deltaTime)
 {
 	updateTransforms();
 
-	if (!collectible)
+	if (collected)
 	{
 		body->SetEnabled(false);
 	}
@@ -30,11 +30,11 @@ void Collectible::update(float deltaTime)
 
 void Collectible::onCollisionBeginWith(CollisionTag tag)
 {
-	if (collectible)
+	if (!collected)
 	{
 		if (tag == CollisionTag::PLAYER)
 		{
-			collectible = false;
+			collected = true;
 		}
 	}
 }
@@ -44,7 +44,7 @@ void Collectible::onCollisionEndWith(CollisionTag tag)
 
 }
 
-bool Collectible::getCollectible()
+bool Collectible::getCollected()
 {
-	return collectible;
+	return collected;
 }

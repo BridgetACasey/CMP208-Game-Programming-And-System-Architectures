@@ -17,7 +17,8 @@ enum class CollisionTag
 	NONE = 0,
 	PLAYER,
 	OBSTACLE,
-	COLLECTIBLE
+	COLLECTIBLE,
+	TRAP
 };
 
 class GameObject : public gef::MeshInstance
