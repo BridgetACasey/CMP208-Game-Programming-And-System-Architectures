@@ -6,6 +6,10 @@
 SettingsState::SettingsState(gef::Platform& platform) : State(platform)
 {
 	backButton = nullptr;
+
+	masterVolumeSlider = nullptr;
+	musicVolumeSlider = nullptr;
+	sfxVolumeSlider = nullptr;
 }
 
 SettingsState* SettingsState::create(gef::Platform& platform)
@@ -182,7 +186,7 @@ bool SettingsState::update(float deltaTime)
 		sfxTopLayer.set_position(gef::Vector4((sfxVolumeSlider->getMinAnchorPoint() + sfxVolumeSlider->position().x()) / 2.0f + ((sfxVolumeSlider->width() / 4.0f) * (sfxVolumeSlider->getPercentageValue() / 100.0f)),
 			sfxTopLayer.position().y(), sfxTopLayer.position().z()));
 
-		//context_->getGameAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue(), SoundEffectID::CLICK);
+		context_->getGameAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue());
 	}
 
 	return true;

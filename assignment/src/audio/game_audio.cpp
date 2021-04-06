@@ -59,7 +59,7 @@ void GameAudio::update()
 {
 	if (audio3D)
 	{
-		audio3D->Update();
+		audio3D->Update(sfxVolume);
 	}
 }
 
@@ -115,18 +115,19 @@ void GameAudio::setMusicVolume(float musicVolume_)
 	audioManager->SetMusicVolumeInfo(info);
 }
 
-void GameAudio::setSFXVolume(float sfxVolume_, SoundEffectID id)
+void GameAudio::setSFXVolume(float sfxVolume_)
 {
 	sfxVolume = sfxVolume_;
 
 	gef::VolumeInfo info;
 
-	if (audioManager->GetSampleVoiceVolumeInfo(sfx.at(id).sampleIndex, info) > -1)
-	{
-		info.volume = sfxVolume;
-		info.pan = 0.0f;
+	info.volume = sfxVolume;
 
-		audioManager->SetSampleVoiceVolumeInfo(sfx.at(id).sampleIndex, info);
+	for (auto& effect : sfx)
+	{
+		Int32 index = sfx.at(effect.first).sampleIndex;
+
+		audioManager->SetSampleVoiceVolumeInfo(index, info);
 	}
 }
 

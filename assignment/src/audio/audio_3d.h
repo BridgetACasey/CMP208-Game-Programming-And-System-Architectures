@@ -11,7 +11,7 @@ class Audio3D
 public:
 	Audio3D(gef::AudioManager* audio_manager);
 
-	void Update();
+	void Update(float sfxVolume);
 
 	void AddEmitter(const AudioEmitter& emitter);
 

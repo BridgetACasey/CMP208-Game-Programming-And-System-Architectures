@@ -91,12 +91,13 @@ void LevelState::setup()
 		SetupCamera();
 		SetupLights();
 
+		context_->getGameAudio()->getListener().SetTransform(player->transform());
+
 		context_->getGameAudio()->loadSoundEffect(SoundEffectID::COLLECTED);
 
-		context_->getGameAudio()->getListener().SetTransform(player->transform());
 		coinCollection.Init((int)SoundEffectID::COLLECTED, false);
 		coinCollection.set_position(*coin->getPosition());
-		coinCollection.set_radius(2.0f);
+		coinCollection.set_radius(25.0f);
 		context_->getGameAudio()->get3D()->AddEmitter(coinCollection);
 
 		context_->getGameAudio()->playMusic(MusicID::LEVEL);
@@ -149,9 +150,9 @@ bool LevelState::update(float deltaTime)
 
 	if (!player->getIsAlive())
 	{
-		//context_->setPlayerScore(player->getCoins());
-		//context_->setGameComplete(true);
-		//context_->setActiveState(StateLabel::END_SCREEN);
+		context_->setPlayerScore(player->getCoins());
+		context_->setGameComplete(true);
+		context_->setActiveState(StateLabel::END_SCREEN);
 	}
 
 	context_->getGameInput()->updateObjectInput(player);
