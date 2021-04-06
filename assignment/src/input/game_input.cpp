@@ -3,9 +3,15 @@
 #include "game_input.h"
 #include <iostream>
 
-GameInput::GameInput(gef::Platform& platform, gef::InputManager* inputManager_)
+GameInput::GameInput(gef::Platform& platform)
 {
-	inputManager = inputManager_;
+	inputManager = gef::InputManager::Create(platform);
+
+	// make sure if there is a panel to detect touch input, then activate it
+	if (inputManager && inputManager->touch_manager() && (inputManager->touch_manager()->max_num_panels() > 0))
+	{
+		inputManager->touch_manager()->EnablePanel(0);
+	}
 
 	active_touch_id_ = -1;
 
@@ -24,9 +30,9 @@ GameInput::~GameInput()
 
 }
 
-GameInput* GameInput::create(gef::Platform& platform, gef::InputManager* inputManager_)
+GameInput* GameInput::create(gef::Platform& platform)
 {
-	return new GameInput(platform, inputManager_);
+	return new GameInput(platform);
 }
 
 void GameInput::update()

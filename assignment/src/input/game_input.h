@@ -39,12 +39,12 @@ struct Key
 class GameInput
 {
 protected:
-	GameInput(gef::Platform& platform, gef::InputManager* inputManager_);
+	GameInput(gef::Platform& platform);
 
 public:
 	~GameInput();
 
-	static GameInput* create(gef::Platform& platform, gef::InputManager* inputManager_);
+	static GameInput* create(gef::Platform& platform);
 
 	void update();
 	void updateObjectInput(GameObject* gameObject);
