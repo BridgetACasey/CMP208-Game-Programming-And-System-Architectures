@@ -24,6 +24,11 @@ void MenuState::setup()
 	{
 		gef::DebugOut("Main Menu: Performing first time setup!\n");
 
+		title.set_width(256.0f);
+		title.set_height(128.0f);
+		title.set_position(gef::Vector4(platform_.width() / 2.0f, (platform_.height() / 2.0f) - 175.0f, 0.0f));
+		title.set_texture(context_->getTextureManager()->getTexture(TextureID::GAME_TITLE));
+
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
@@ -140,6 +145,8 @@ void MenuState::render()
 	//Render UI elements
 	context_->getSpriteRenderer()->DrawSprite(background);
 	context_->getSpriteRenderer()->DrawSprite(backgroundCopy);
+
+	context_->getSpriteRenderer()->DrawSprite(title);
 
 	context_->getSpriteRenderer()->DrawSprite(*playButton);
 	context_->getSpriteRenderer()->DrawSprite(*settingsButton);

@@ -11,9 +11,11 @@
 enum class TextureID
 {
 	NONE = -1,
+	GAME_TITLE,
 	SPLASH_BACKGROUND,
 	MENU_BACKGROUND,
 	MENU_BACKGROUND_ALT,
+	END_BACKGROUND,
 	PLAY_BUTTON,
 	SETTINGS_BUTTON,
 	HELP_BUTTON,
@@ -46,11 +48,10 @@ protected:
 public:
 	static TextureManager* create(gef::Platform& platform);
 
-	void initTextures();
-
 	gef::Texture* getTexture(TextureID id);
 
 private:
+	void initTextures();
 	gef::Texture* generateTexture(const char* filePath);
 
 	gef::Platform& platform_;

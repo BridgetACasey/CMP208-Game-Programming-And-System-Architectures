@@ -51,35 +51,36 @@ void LevelState::setup()
 	{
 		gef::DebugOut("Level: Performing first time setup!\n");
 
-		world_mesh_instance_.set_mesh(context_->getMeshManager()->generateMesh("models/world.scn"));
-
 		b2Vec2 gravity(0.0f, -9.8f);
 		world = new b2World(gravity);
 		world->SetContactListener(&collision);
 
 		player = Player::create();
 		player->setPosition(0.0f, 4.0f, 0.0f);
-		player->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
+		player->setDefaultMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
 		player->setBody(world, b2BodyType::b2_dynamicBody);
 		player->setMoveSpeed(25.0f);
 		player->setJumpForce(1200.0f);
 		player->update(0.0f);
 
 		coin = Collectible::create();
-		coin->setPosition(2.0f, 1.0f, 0.0f);
-		coin->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
+		coin->setPosition(2.0f, 3.0f, 0.0f);
+		coin->setScale(2.0f, 2.0f, 1.0f);
+		coin->set_mesh(context_->getMeshManager()->getMesh(MeshID::COIN));
 		coin->setBody(world, b2BodyType::b2_staticBody);
 		coin->update(0.0f);
 
 		trap = Trap::create();
-		trap->setPosition(-2.0f, 1.0f, 0.0f);
-		trap->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
+		trap->setPosition(-2.0f, 0.5f, 0.0f);
+		trap->setRotation(-1.571f, 0.0f, 0.0f);
+		trap->setScale(0.025f, 0.025f, 0.025f);
+		trap->set_mesh(context_->getMeshManager()->getMesh(MeshID::TRAP));
 		trap->setBody(world, b2BodyType::b2_staticBody);
 		trap->update(0.0f);
 
 		ground = Obstacle::create();
 		ground->setPosition(0.0f, 0.0f, 0.0f);
-		ground->setMesh(context_->getPrimitiveBuilder(), gef::Vector4(5.0f, 0.5f, 0.5f));
+		ground->setDefaultMesh(context_->getPrimitiveBuilder(), gef::Vector4(5.0f, 0.5f, 0.5f));
 		ground->setBody(world, b2BodyType::b2_staticBody);
 		ground->update(0.0f);
 
@@ -140,6 +141,7 @@ bool LevelState::update(float deltaTime)
 
 	// update object visuals from simulation data
 	// don't have to update the ground visuals as it is static
+
 	player->update(deltaTime);
 	coin->update(deltaTime);
 	trap->update(deltaTime);
@@ -165,21 +167,17 @@ void LevelState::render()
 	context_->getRenderer3D()->Begin(true);
 
 	context_->getRenderer3D()->DrawMesh(*ground);
-	context_->getRenderer3D()->DrawMesh(world_mesh_instance_);
 
 	// draw player
-	context_->getRenderer3D()->set_override_material(&context_->getPrimitiveBuilder()->red_material());
 	context_->getRenderer3D()->DrawMesh(*player);
 
 	if (!coin->getCollected())
 	{
-		context_->getRenderer3D()->set_override_material(&context_->getPrimitiveBuilder()->green_material());
 		context_->getRenderer3D()->DrawMesh(*coin);
 	}
 
 	if (!trap->getTriggered())
 	{
-		context_->getRenderer3D()->set_override_material(&context_->getPrimitiveBuilder()->blue_material());
 		context_->getRenderer3D()->DrawMesh(*trap);
 	}
 

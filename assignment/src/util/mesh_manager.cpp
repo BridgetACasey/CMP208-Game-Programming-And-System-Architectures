@@ -4,12 +4,23 @@
 
 MeshManager::MeshManager(gef::Platform& platform) : platform_(platform)
 {
-
+	initMeshes();
 }
 
 MeshManager* MeshManager::create(gef::Platform& platform)
 {
 	return new MeshManager(platform);
+}
+
+gef::Mesh* MeshManager::getMesh(MeshID id)
+{
+	return meshes[id];
+}
+
+void MeshManager::initMeshes()
+{
+	meshes[MeshID::COIN] = generateMesh("models/coin.scn");
+	meshes[MeshID::TRAP] = generateMesh("models/trap.scn");
 }
 
 gef::Mesh* MeshManager::generateMesh(const char* filePath)

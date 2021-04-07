@@ -58,8 +58,6 @@ private:
 	b2World* world;
 	CollisionListener collision;
 
-	gef::MeshInstance world_mesh_instance_;
-
 	Camera* camera;
 
 	Player* player;

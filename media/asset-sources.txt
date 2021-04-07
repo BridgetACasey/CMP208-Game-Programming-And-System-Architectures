@@ -2,9 +2,14 @@
 "Glacial Mountains: Parallax Background" - https://vnitti.itch.io/glacial-mountains-parallax-background
 "Menu Buttons" - https://nectanebo.itch.io/menu-buttons
 "PS4 Buttons" - https://arks.itch.io/ps4-buttons
+"Pixel Art Cave Background" - https://lil-cthulhu.itch.io/pixel-art-cave-background
 
 3D Models
-""
+"3D Ninja For 3D Game - Unity" (player) - https://aero25.itch.io/3d-ninja-for-3d-game-unity
+"Hello Neighbor Trap" (trap) - https://sketchfab.com/3d-models/hello-neighbor-trap-b665a81457e14a979a7628c54c0ba6ea
+"Lowpoly gold coin" (collectible) - https://sketchfab.com/3d-models/lowpoly-gold-coin-34794c00e9d140f6b86e930fef18b009#download
+"Low Poly 3D Block - Devils Work.shop" (obstacle) - https://devilsworkshop.itch.io/essential-low-poly-isometric-3d-block-and-hex-pack
+
 
 Sound Effects & Music
 "Blazer Rail" (main menu) - https://www.dl-sounds.com/royalty-free/blazer-rail/

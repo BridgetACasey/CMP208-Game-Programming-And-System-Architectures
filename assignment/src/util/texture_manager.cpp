@@ -14,9 +14,11 @@ TextureManager* TextureManager::create(gef::Platform& platform)
 
 void TextureManager::initTextures()
 {
-	textures[TextureID::SPLASH_BACKGROUND] = generateTexture("sprites/potato_lizard.png");
+	textures[TextureID::GAME_TITLE] = generateTexture("sprites/game_title.png");
+	textures[TextureID::SPLASH_BACKGROUND] = generateTexture("sprites/splash_screen.png");
 	textures[TextureID::MENU_BACKGROUND] = generateTexture("sprites/background_glacial_mountains.png");
 	textures[TextureID::MENU_BACKGROUND_ALT] = generateTexture("sprites/background_glacial_mountains_lightened.png");
+	textures[TextureID::END_BACKGROUND] = generateTexture("sprites/cave_blue.png");
 
 	textures[TextureID::PLAY_BUTTON] = generateTexture("sprites/play_button.png");
 	textures[TextureID::SETTINGS_BUTTON] = generateTexture("sprites/settings_button.png");

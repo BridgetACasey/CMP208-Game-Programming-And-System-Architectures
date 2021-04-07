@@ -40,7 +40,7 @@ void EndState::setup()
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->getTexture(TextureID::SPLASH_BACKGROUND));
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::END_BACKGROUND));
 	}
 
 	firstSetup = false;

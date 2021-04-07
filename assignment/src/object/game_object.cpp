@@ -5,6 +5,12 @@ GameObject::GameObject()
 	body = nullptr;
 	tag_ = CollisionTag::NONE;
 
+	bodyHalfDimensions = gef::Vector4(0.5f, 0.5f, 0.5f);
+
+	position = gef::Vector4(0.0f, 0.0f, 0.0f);
+	rotation = gef::Vector4(0.0f, 0.0f, 0.0f);
+	scale = gef::Vector4(1.0f, 1.0f, 1.0f);
+
 	moveSpeed = 1.0f;
 	jumpForce = 1.0f;
 
@@ -29,14 +35,22 @@ void GameObject::updateTransforms()
 {
 	if (body)
 	{
-		position.set_x(body->GetPosition().x);	//set object position
+		gef::Matrix44 transform, translation, rotX, rotY, rotZ, scale_;
+
+		scale_.Scale(scale);
+
+		rotX.RotationX(rotation.x());
+		rotY.RotationY(rotation.y());
+		rotZ.RotationZ(rotation.z());
+
+		position.set_x(body->GetPosition().x);
 		position.set_y(body->GetPosition().y);
-		position.set_z(0.0f);
 
-		gef::Matrix44 transform;
-		transform.RotationZ(body->GetAngle());	//set object rotation
+		translation.SetIdentity();
+		translation.SetTranslation(position);
 
-		transform.SetTranslation(position);	//build transform matrix
+		transform = scale_ * rotX * rotY * rotZ * translation;
+
 		set_transform(transform);
 	}
 }
@@ -65,9 +79,9 @@ void GameObject::onCollisionEndWith(CollisionTag tag)
 	//To be populated in child classes
 }
 
-void GameObject::setMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions)
+void GameObject::setDefaultMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions)
 {
-	halfDimensions_ = halfDimensions;
+	bodyHalfDimensions = halfDimensions;
 
 	gef::Mesh* mesh = primitive_builder->CreateBoxMesh(halfDimensions);
 	set_mesh(mesh);
@@ -85,7 +99,7 @@ void GameObject::setBody(b2World* world, b2BodyType type)
 
 	// create the shape
 	b2PolygonShape shape;
-	shape.SetAsBox(halfDimensions_.x(), halfDimensions_.y());
+	shape.SetAsBox(bodyHalfDimensions.x(), bodyHalfDimensions.y());
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
@@ -104,6 +118,30 @@ void GameObject::setPosition(float x, float y, float z)
 gef::Vector4* GameObject::getPosition()
 {
 	return &position;
+}
+
+void GameObject::setRotation(float x, float y, float z)
+{
+	rotation.set_x(x);
+	rotation.set_y(y);
+	rotation.set_z(z);
+}
+
+gef::Vector4* GameObject::getRotation()
+{
+	return &rotation;
+}
+
+void GameObject::setScale(float x, float y, float z)
+{
+	scale.set_x(x);
+	scale.set_y(y);
+	scale.set_z(z);
+}
+
+gef::Vector4* GameObject::getScale()
+{
+	return &scale;
 }
 
 b2Body* GameObject::getBody()

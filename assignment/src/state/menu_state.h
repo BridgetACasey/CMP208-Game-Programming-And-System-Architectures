@@ -30,6 +30,8 @@ private:
 	Button* helpButton;
 	Button* quitButton;
 
+	gef::Sprite title;
+
 	gef::Sprite background;
 	gef::Sprite backgroundCopy;
 

@@ -40,11 +40,17 @@ public:
 	virtual void onCollisionBeginWith(CollisionTag tag);
 	virtual void onCollisionEndWith(CollisionTag tag);
 
-	void setMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions);
+	void setDefaultMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions);
 	void setBody(b2World* world, b2BodyType type);
 
 	void setPosition(float x, float y, float z);
 	gef::Vector4* getPosition();
+
+	void setRotation(float x, float y, float z);
+	gef::Vector4* getRotation();
+
+	void setScale(float x, float y, float z);
+	gef::Vector4* getScale();
 
 	b2Body* getBody();
 
@@ -70,7 +76,10 @@ protected:
 	void checkDeathFromFalling();
 
 	gef::Vector4 position;
-	gef::Vector4 halfDimensions_;
+	gef::Vector4 rotation;
+	gef::Vector4 scale;
+
+	gef::Vector4 bodyHalfDimensions;
 
 	b2Body* body;
 
