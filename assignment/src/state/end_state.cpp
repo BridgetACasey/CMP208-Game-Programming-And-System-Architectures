@@ -9,6 +9,9 @@ EndState::EndState(gef::Platform& platform) : State(platform)
 	highestScore = 0;
 
 	restartButton = nullptr;
+	quitButton = nullptr;
+	
+	play = true;
 }
 
 EndState* EndState::create(gef::Platform& platform)
@@ -23,17 +26,21 @@ void EndState::setup()
 		restartButton = Button::create(context_->getGameInput());
 		restartButton->set_width(150.0f);
 		restartButton->set_height(75.0f);
-		restartButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f + 100.0f, 0.0f));
-		restartButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/New Game Button.png"));
-		restartButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/New Gamecol_Button.png"));
+		restartButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
+		restartButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/New Game Button.png"));
+		restartButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/New Gamecol_Button.png"));
+
+		quitButton = Button::create(context_->getGameInput());
+		quitButton->set_width(150.0f);
+		quitButton->set_height(75.0f);
+		quitButton->set_position(gef::Vector4(platform_.width() / 2.0f, restartButton->position().y() + 75.0f, 0.0f));
+		quitButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Quit Button.png"));
+		quitButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Quitcol_Button.png"));
 
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
-		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
-
-		context_->getGameAudio()->loadSoundEffect(SoundEffectID::WIN);
-		context_->getGameAudio()->loadSoundEffect(SoundEffectID::LOSE);
+		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
+		background.set_texture(context_->getTextureManager()->generateTexture("sprites/potato_lizard.png"));
 	}
 
 	firstSetup = false;
@@ -69,13 +76,19 @@ void EndState::handleInput()
 	if (restartButton->isClicked())
 	{
 		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
-		context_->setActiveState(StateLabel::LEVEL);
+		context_->setActiveState(StateLabel::MAIN_MENU);
+	}
+
+	if (quitButton->isClicked())
+	{
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
+		play = false;
 	}
 }
 
 bool EndState::update(float deltaTime)
 {
-	return true;
+	return play;
 }
 
 void EndState::render()
@@ -93,12 +106,13 @@ void EndState::render()
 	//Render UI elements
 	if (context_->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "YOU DIED");
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE,
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 200.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "YOU DIED");
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 100.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE,
 			"Last Score: %.1i   Highest Score: %.1i", lastScore, highestScore);
 	}
 
 	context_->getSpriteRenderer()->DrawSprite(*restartButton);
+	context_->getSpriteRenderer()->DrawSprite(*quitButton);
 
 	context_->getSpriteRenderer()->End();
 }

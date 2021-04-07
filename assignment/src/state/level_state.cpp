@@ -51,7 +51,7 @@ void LevelState::setup()
 	{
 		gef::DebugOut("Level: Performing first time setup!\n");
 
-		world_mesh_instance_.set_mesh(context_->getMeshManager()->generateMesh("world.scn"));
+		world_mesh_instance_.set_mesh(context_->getMeshManager()->generateMesh("models/world.scn"));
 
 		b2Vec2 gravity(0.0f, -9.8f);
 		world = new b2World(gravity);
@@ -88,8 +88,6 @@ void LevelState::setup()
 
 		context_->getGameAudio()->getListener().SetTransform(player->transform());
 
-		context_->getGameAudio()->loadSoundEffect(SoundEffectID::COLLECTED);
-
 		coinCollection.Init((int)SoundEffectID::COLLECTED, false);
 		coinCollection.set_position(*coin->getPosition());
 		coinCollection.set_radius(1.5f);
@@ -106,6 +104,8 @@ void LevelState::onEnter()
 	gef::DebugOut("Entering level\n");
 
 	setup();
+
+	context_->setGamePlaying(true);
 }
 
 void LevelState::onExit()
@@ -147,6 +147,7 @@ bool LevelState::update(float deltaTime)
 	if (!player->getIsAlive())
 	{
 		context_->setPlayerScore(player->getCoins());
+		context_->setGamePlaying(false);
 		context_->setGameComplete(true);
 		context_->setActiveState(StateLabel::END_SCREEN);
 	}

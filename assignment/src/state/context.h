@@ -44,6 +44,9 @@ public:
 	void setGameComplete(bool gameComplete_);
 	bool getGameComplete();
 
+	void setGamePlaying(bool gamePlaying_);
+	bool getGamePlaying();
+
 private:
 	State* activeState;
 
@@ -62,4 +65,5 @@ private:
 
 	int playerScore;
 	bool gameComplete;
+	bool gamePlaying;
 };

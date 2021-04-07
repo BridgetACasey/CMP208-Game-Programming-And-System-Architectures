@@ -6,7 +6,7 @@
 PauseState::PauseState(gef::Platform& platform) : State(platform)
 {
 	resumeButton = nullptr;
-	backButton = nullptr;
+	menuButton = nullptr;
 }
 
 PauseState* PauseState::create(gef::Platform& platform)
@@ -20,23 +20,23 @@ void PauseState::setup()
 	{
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
-		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("Glacial-mountains-parallax-background_vnitti/background_glacial_mountains.png"));
+		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
+		background.set_texture(context_->getTextureManager()->generateTexture("sprites/background_glacial_mountains.png"));
 
 		resumeButton = Button::create(context_->getGameInput());
-		backButton = Button::create(context_->getGameInput());
+		menuButton = Button::create(context_->getGameInput());
 
 		resumeButton->set_width(150.0f);
 		resumeButton->set_height(75.0f);
-		resumeButton->set_position(gef::Vector4((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f));
-		resumeButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Resume Button.png"));
-		resumeButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Resumecol_Button.png"));
+		resumeButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
+		resumeButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Resume Button.png"));
+		resumeButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Resumecol_Button.png"));
 
-		backButton->set_width(150.0f);
-		backButton->set_height(75.0f);
-		backButton->set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f + 100.0f, 0.0f);
-		backButton->setInactiveTexture(context_->getTextureManager()->generateTexture("Large Buttons/Large Buttons/Menu Button.png"));
-		backButton->setHoveringTexture(context_->getTextureManager()->generateTexture("Large Buttons/Colored Large Buttons/Menucol_Button.png"));
+		menuButton->set_width(150.0f);
+		menuButton->set_height(75.0f);
+		menuButton->set_position(platform_.width() / 2.0f, resumeButton->position().y() + 75.0f, 0.0f);
+		menuButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Menu Button.png"));
+		menuButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Menucol_Button.png"));
 	}
 
 	firstSetup = false;
@@ -58,7 +58,7 @@ void PauseState::handleInput()
 {
 	context_->getGameInput()->update();
 
-	if (backButton->isClicked())
+	if (menuButton->isClicked())
 	{
 		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
 		context_->setActiveState(StateLabel::MAIN_MENU);
@@ -95,11 +95,11 @@ void PauseState::render()
 	context_->getSpriteRenderer()->DrawSprite(background);
 
 	context_->getSpriteRenderer()->DrawSprite(*resumeButton);
-	context_->getSpriteRenderer()->DrawSprite(*backButton);
+	context_->getSpriteRenderer()->DrawSprite(*menuButton);
 
 	if (context_->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "PAUSED");
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 200.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "PAUSED");
 	}
 
 	context_->getSpriteRenderer()->End();

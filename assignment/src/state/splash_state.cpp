@@ -19,9 +19,9 @@ void SplashState::setup()
 
 		splashImage.set_height(platform_.height());
 		splashImage.set_width(platform_.width());
-		splashImage.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
+		splashImage.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
 
-		splashImage.set_texture(context_->getTextureManager()->generateTexture("potato_lizard.png"));
+		splashImage.set_texture(context_->getTextureManager()->generateTexture("sprites/potato_lizard.png"));
 	}
 
 	firstSetup = false;
@@ -33,7 +33,6 @@ void SplashState::onEnter()
 
 	setup();
 
-	context_->getGameAudio()->loadSoundEffect(SoundEffectID::INTRO);
 	context_->getGameAudio()->playSoundEffect(SoundEffectID::INTRO, false);
 }
 

@@ -24,7 +24,7 @@ public:
 
 private:
 	Button* resumeButton;
-	Button* backButton;
+	Button* menuButton;
 
 	gef::Sprite background;
 };

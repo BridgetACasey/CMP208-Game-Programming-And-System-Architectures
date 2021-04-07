@@ -33,5 +33,10 @@ private:
 	gef::Sprite background;
 	gef::Sprite backgroundCopy;
 
+	gef::Texture* playActive;
+	gef::Texture* playInactive;
+	gef::Texture* continueActive;
+	gef::Texture* continueInactive;
+
 	bool play;
 };

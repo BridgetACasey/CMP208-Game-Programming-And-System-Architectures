@@ -1,0 +1,15 @@
+2D Sprites & Backgrounds
+"Glacial Mountains: Parallax Background" - https://vnitti.itch.io/glacial-mountains-parallax-background
+"Menu Buttons" - https://nectanebo.itch.io/menu-buttons
+"PS4 Buttons" - https://arks.itch.io/ps4-buttons
+
+3D Models
+""
+
+Sound Effects & Music
+"Blazer Rail" (main menu) - https://www.dl-sounds.com/royalty-free/blazer-rail/
+"Blazer Rail 2" (level) - https://www.dl-sounds.com/royalty-free/blazer-rail-2/
+"Player recharging In video game" (intro) - https://mixkit.co/free-sound-effects/player/
+"Video game retro click" (button click) - https://mixkit.co/free-sound-effects/click/
+"Box collected" (coin collection) - Abertay University
+"Computer Error Alert" (lose) - http://soundbible.com/1540-Computer-Error-Alert.html

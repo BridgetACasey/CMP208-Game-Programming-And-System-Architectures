@@ -43,6 +43,7 @@ public:
 	void update();
 
 	void playMusic(MusicID id);
+	bool isMusicPlaying(MusicID id);
 
 	void loadSoundEffect(SoundEffectID id);
 	void playSoundEffect(SoundEffectID id, bool looping);
@@ -69,6 +70,8 @@ private:
 	float masterVolume;
 	float musicVolume;
 	float sfxVolume;
+
+	MusicID activeMusic;
 
 	std::map<SoundEffectID, SoundEffect> sfx;
 	std::map<MusicID, const char*> music;

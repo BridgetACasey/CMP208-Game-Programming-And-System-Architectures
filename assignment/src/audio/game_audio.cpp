@@ -23,35 +23,41 @@ void GameAudio::initSFX()
 {
 	SoundEffect newSFX{};
 
-	newSFX.filePath = "mixkit-player-recharging-in-video-game-2041.wav";
+	newSFX.filePath = "sfx/mixkit-player-recharging-in-video-game-2041.wav";
 	newSFX.sampleIndex = 0;
 	sfx[SoundEffectID::INTRO] = newSFX;
 
-	newSFX.filePath = "mixkit-video-game-retro-click-237.wav";
+	newSFX.filePath = "sfx/mixkit-video-game-retro-click-237.wav";
 	newSFX.sampleIndex = 1;
 	sfx[SoundEffectID::CLICK] = newSFX;
 
-	newSFX.filePath = "box_collected.wav";
+	newSFX.filePath = "sfx/box_collected.wav";
 	newSFX.sampleIndex = 2;
 	sfx[SoundEffectID::COLLECTED] = newSFX;
 
-	newSFX.filePath = "win.wav";
+	newSFX.filePath = "sfx/win.wav";
 	newSFX.sampleIndex = 3;
 	sfx[SoundEffectID::WIN] = newSFX;
 
-	newSFX.filePath = "lose.wav";
+	newSFX.filePath = "sfx/lose.wav";
 	newSFX.sampleIndex = 4;
 	sfx[SoundEffectID::LOSE] = newSFX;
+
+	loadSoundEffect(SoundEffectID::INTRO);
+	loadSoundEffect(SoundEffectID::CLICK);
+	loadSoundEffect(SoundEffectID::COLLECTED);
+	loadSoundEffect(SoundEffectID::WIN);
+	loadSoundEffect(SoundEffectID::LOSE);
 }
 
 void GameAudio::initMusic()
 {
 	const char* newMusic;
 
-	newMusic = "Blazer_Rail.wav";
+	newMusic = "sfx/Blazer_Rail.wav";
 	music[MusicID::MENU] = newMusic;
 
-	newMusic = "Blazer_Rail_2.wav";
+	newMusic = "sfx/Blazer_Rail_2.wav";
 	music[MusicID::LEVEL] = newMusic;
 }
 
@@ -74,11 +80,23 @@ void GameAudio::playMusic(MusicID id)
 
 	audioManager->LoadMusic(music.at(id), platform_);
 	audioManager->PlayMusic();
+
+	activeMusic = id;
 }
 
 void GameAudio::loadSoundEffect(SoundEffectID id)
 {
 	audioManager->LoadSample(sfx.at(id).filePath, platform_);
+}
+
+bool GameAudio::isMusicPlaying(MusicID id)
+{
+	if (activeMusic == id)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void GameAudio::playSoundEffect(SoundEffectID id, bool looping)
