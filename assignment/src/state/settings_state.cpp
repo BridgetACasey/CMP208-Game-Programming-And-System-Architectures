@@ -24,15 +24,15 @@ void SettingsState::setup()
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("sprites/background_glacial_mountains_lightened.png"));
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::MENU_BACKGROUND_ALT));
 
 		//Back to main menu button
 		backButton = Button::create(context_->getGameInput());
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
 		backButton->set_position(gef::Vector4(150.0f, 100.0f, 0.0f));
-		backButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Back Button.png"));
-		backButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Backcol_Button.png"));
+		backButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::BACK_BUTTON));
+		backButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::BACK_BUTTON_COL));
 
 		//Volume sliders
 		masterVolumeSlider = Slider::create(context_->getGameInput());
@@ -40,30 +40,30 @@ void SettingsState::setup()
 		masterVolumeSlider->set_height(50.0f);
 		masterVolumeSlider->set_position(gef::Vector4(725.0f, 175.0f, 0.0f));
 		masterVolumeSlider->setAnchorPoints(175.0f, 750.0f);
-		masterVolumeSlider->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Music Square Button.png"));
-		masterVolumeSlider->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Music col_Square Button.png"));
-		masterVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->generateTexture("sprites/slider_bar_bottom.png"));
-		masterVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->generateTexture("sprites/slider_bar_top.png"));
+		masterVolumeSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
+		masterVolumeSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
+		masterVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
+		masterVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
 
 		musicVolumeSlider = Slider::create(context_->getGameInput());
 		musicVolumeSlider->set_width(50.0f);
 		musicVolumeSlider->set_height(50.0f);
 		musicVolumeSlider->set_position(gef::Vector4(725.0f, 265.0f, 0.0f));
 		musicVolumeSlider->setAnchorPoints(175.0f, 750.0f);
-		musicVolumeSlider->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Music Square Button.png"));
-		musicVolumeSlider->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Music col_Square Button.png"));
-		musicVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->generateTexture("sprites/slider_bar_bottom.png"));
-		musicVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->generateTexture("sprites/slider_bar_top.png"));
+		musicVolumeSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
+		musicVolumeSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
+		musicVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
+		musicVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
 
 		sfxVolumeSlider = Slider::create(context_->getGameInput());
 		sfxVolumeSlider->set_width(50.0f);
 		sfxVolumeSlider->set_height(50.0f);
 		sfxVolumeSlider->set_position(gef::Vector4(725.0f, 355.0f, 0.0f));
 		sfxVolumeSlider->setAnchorPoints(175.0f, 750.0f);
-		sfxVolumeSlider->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Music Square Button.png"));
-		sfxVolumeSlider->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Music col_Square Button.png"));
-		sfxVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->generateTexture("sprites/slider_bar_bottom.png"));
-		sfxVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->generateTexture("sprites/slider_bar_top.png"));
+		sfxVolumeSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
+		sfxVolumeSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
+		sfxVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
+		sfxVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
 	}
 
 	firstSetup = false;

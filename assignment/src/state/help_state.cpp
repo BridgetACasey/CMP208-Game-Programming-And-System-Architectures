@@ -21,13 +21,13 @@ void HelpState::setup()
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
 		backButton->set_position(gef::Vector4(150.0f, 100.0f, 0.0f));
-		backButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Back Button.png"));
-		backButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Backcol_Button.png"));
+		backButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::BACK_BUTTON));
+		backButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::BACK_BUTTON_COL));
 
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
-		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("sprites/background_glacial_mountains_lightened.png"));
+		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::MENU_BACKGROUND_ALT));
 	}
 
 	firstSetup = false;

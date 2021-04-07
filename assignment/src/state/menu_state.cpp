@@ -8,12 +8,7 @@ MenuState::MenuState(gef::Platform& platform) : State(platform)
 	playButton = nullptr;
 	settingsButton = nullptr;
 	helpButton = nullptr;
-	exitButton = nullptr;
-
-	playInactive = nullptr;
-	playActive = nullptr;
-	continueInactive = nullptr;
-	continueActive = nullptr;
+	quitButton = nullptr;
 
 	play = true;
 }
@@ -32,20 +27,15 @@ void MenuState::setup()
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("sprites/background_glacial_mountains.png"));
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::MENU_BACKGROUND));
 
 		backgroundCopy = background;
 		backgroundCopy.set_position(backgroundCopy.width() / 2.0f + platform_.width(), platform_.height() / 2.0f, 0.0f);
 
-		playInactive = context_->getTextureManager()->generateTexture("sprites/Play Button.png");
-		playActive = context_->getTextureManager()->generateTexture("sprites/Playcol_Button.png");
-		continueInactive = context_->getTextureManager()->generateTexture("sprites/Continue Button.png");
-		continueActive = context_->getTextureManager()->generateTexture("sprites/Continuecol_Button.png");
-
 		playButton = Button::create(context_->getGameInput());
 		settingsButton = Button::create(context_->getGameInput());
 		helpButton = Button::create(context_->getGameInput());
-		exitButton = Button::create(context_->getGameInput());
+		quitButton = Button::create(context_->getGameInput());
 
 		playButton->set_width(150.0f);
 		playButton->set_height(75.0f);
@@ -54,20 +44,20 @@ void MenuState::setup()
 		settingsButton->set_width(150.0f);
 		settingsButton->set_height(75.0f);
 		settingsButton->set_position(gef::Vector4(playButton->position().x(), playButton->position().y() + 75.0f, 0.0f));
-		settingsButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Settings Button.png"));
-		settingsButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Settingscol_Button.png"));
+		settingsButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::SETTINGS_BUTTON));
+		settingsButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::SETTINGS_BUTTON_COL));
 
 		helpButton->set_width(150.0f);
 		helpButton->set_height(75.0f);
 		helpButton->set_position(gef::Vector4(settingsButton->position().x(), settingsButton->position().y() + 75.0f, 0.0f));
-		helpButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Controls Button.png"));
-		helpButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Controlscol_Button.png"));
+		helpButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::HELP_BUTTON));
+		helpButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::HELP_BUTTON_COL));
 
-		exitButton->set_width(150.0f);
-		exitButton->set_height(75.0f);
-		exitButton->set_position(gef::Vector4(helpButton->position().x(), helpButton->position().y() + 75.0f, 0.0f));
-		exitButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Exit Button.png"));
-		exitButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Exitcol_Button.png"));
+		quitButton->set_width(150.0f);
+		quitButton->set_height(75.0f);
+		quitButton->set_position(gef::Vector4(helpButton->position().x(), helpButton->position().y() + 75.0f, 0.0f));
+		quitButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON));
+		quitButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON_COL));
 	}
 
 	firstSetup = false;
@@ -81,14 +71,14 @@ void MenuState::onEnter()
 
 	if (context_->getGamePlaying())
 	{
-		playButton->setInactiveTexture(continueInactive);
-		playButton->setHoveringTexture(continueActive);
+		playButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::CONTINUE_BUTTON));
+		playButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::CONTINUE_BUTTON_COL));
 	}
 
 	else
 	{
-		playButton->setInactiveTexture(playInactive);
-		playButton->setHoveringTexture(playActive);
+		playButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::PLAY_BUTTON));
+		playButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::PLAY_BUTTON_COL));
 	}
 
 	if (!context_->getGamePlaying() && !context_->getGameAudio()->isMusicPlaying(MusicID::MENU))
@@ -124,7 +114,7 @@ void MenuState::handleInput()
 		context_->setActiveState(StateLabel::HELP);
 	}
 
-	if (exitButton->isClicked())
+	if (quitButton->isClicked())
 	{
 		play = false;
 	}
@@ -154,7 +144,7 @@ void MenuState::render()
 	context_->getSpriteRenderer()->DrawSprite(*playButton);
 	context_->getSpriteRenderer()->DrawSprite(*settingsButton);
 	context_->getSpriteRenderer()->DrawSprite(*helpButton);
-	context_->getSpriteRenderer()->DrawSprite(*exitButton);
+	context_->getSpriteRenderer()->DrawSprite(*quitButton);
 
 	if (context_->getFont())
 	{

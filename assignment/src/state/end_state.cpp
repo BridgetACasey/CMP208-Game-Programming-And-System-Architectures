@@ -27,20 +27,20 @@ void EndState::setup()
 		restartButton->set_width(150.0f);
 		restartButton->set_height(75.0f);
 		restartButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
-		restartButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/New Game Button.png"));
-		restartButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/New Gamecol_Button.png"));
+		restartButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::NEW_GAME_BUTTON));
+		restartButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::NEW_GAME_BUTTON_COL));
 
 		quitButton = Button::create(context_->getGameInput());
 		quitButton->set_width(150.0f);
 		quitButton->set_height(75.0f);
 		quitButton->set_position(gef::Vector4(platform_.width() / 2.0f, restartButton->position().y() + 75.0f, 0.0f));
-		quitButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Quit Button.png"));
-		quitButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Quitcol_Button.png"));
+		quitButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON));
+		quitButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON_COL));
 
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("sprites/potato_lizard.png"));
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::SPLASH_BACKGROUND));
 	}
 
 	firstSetup = false;

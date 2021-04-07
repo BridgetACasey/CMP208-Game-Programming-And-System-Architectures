@@ -21,7 +21,7 @@ void PauseState::setup()
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->generateTexture("sprites/background_glacial_mountains.png"));
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::MENU_BACKGROUND_ALT));
 
 		resumeButton = Button::create(context_->getGameInput());
 		menuButton = Button::create(context_->getGameInput());
@@ -29,14 +29,14 @@ void PauseState::setup()
 		resumeButton->set_width(150.0f);
 		resumeButton->set_height(75.0f);
 		resumeButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
-		resumeButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Resume Button.png"));
-		resumeButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Resumecol_Button.png"));
+		resumeButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::RESUME_BUTTON));
+		resumeButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::RESUME_BUTTON_COL));
 
 		menuButton->set_width(150.0f);
 		menuButton->set_height(75.0f);
 		menuButton->set_position(platform_.width() / 2.0f, resumeButton->position().y() + 75.0f, 0.0f);
-		menuButton->setInactiveTexture(context_->getTextureManager()->generateTexture("sprites/Menu Button.png"));
-		menuButton->setHoveringTexture(context_->getTextureManager()->generateTexture("sprites/Menucol_Button.png"));
+		menuButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MENU_BUTTON));
+		menuButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MENU_BUTTON_COL));
 	}
 
 	firstSetup = false;

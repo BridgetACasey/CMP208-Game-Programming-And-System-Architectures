@@ -28,15 +28,10 @@ private:
 	Button* playButton;
 	Button* settingsButton;
 	Button* helpButton;
-	Button* exitButton;
+	Button* quitButton;
 
 	gef::Sprite background;
 	gef::Sprite backgroundCopy;
-
-	gef::Texture* playActive;
-	gef::Texture* playInactive;
-	gef::Texture* continueActive;
-	gef::Texture* continueInactive;
 
 	bool play;
 };

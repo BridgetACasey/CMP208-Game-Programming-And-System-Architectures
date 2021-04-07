@@ -21,7 +21,7 @@ void SplashState::setup()
 		splashImage.set_width(platform_.width());
 		splashImage.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
 
-		splashImage.set_texture(context_->getTextureManager()->generateTexture("sprites/potato_lizard.png"));
+		splashImage.set_texture(context_->getTextureManager()->getTexture(TextureID::SPLASH_BACKGROUND));
 	}
 
 	firstSetup = false;
