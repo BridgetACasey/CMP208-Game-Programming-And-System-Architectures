@@ -22,9 +22,9 @@ void SplashState::setup()
 		splashImage.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
 
 		splashImage.set_texture(context_->getTextureManager()->getTexture(TextureID::SPLASH_BACKGROUND));
-	}
 
-	firstSetup = false;
+		firstSetup = false;
+	}
 }
 
 void SplashState::onEnter()
@@ -38,7 +38,7 @@ void SplashState::onEnter()
 
 void SplashState::onExit()
 {
-
+	context_->getGameAudio()->clearSoundEffect(SoundEffectID::INTRO);	//Clearing this sound effect as the program won't need it again
 }
 
 void SplashState::handleInput()

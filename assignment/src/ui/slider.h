@@ -12,10 +12,16 @@ protected:
 public:
 	static Slider* create(GameInput* input_);
 
+	//Checks if the button component is still within its given range along the x-axis and adjusts its position accordingly
 	void updatePosition();
 
-	void setAnchorPoints(float min, float max);
+	//The width and height of the slider's button component
+	void setButtonDimensions(float width, float height);
 
+	//The minimum and maximum x coordinates the button component can oscillate between, as well as the y position of the entire slider object
+	void setAnchorPoints(float min, float max, float y);
+
+	void setInitialPercentageValue(float initialPercentage);
 	float getPercentageValue();
 
 	float getMinAnchorPoint();

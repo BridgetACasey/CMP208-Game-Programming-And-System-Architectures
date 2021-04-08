@@ -36,6 +36,7 @@ void HelpState::setup()
 void HelpState::onEnter()
 {
 	gef::DebugOut("Entering the help screen\n");
+
 	setup();
 }
 

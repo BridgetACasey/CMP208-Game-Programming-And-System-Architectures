@@ -6,13 +6,9 @@ GameAudio::GameAudio(gef::Platform& platform) : platform_(platform)
 
     audio3D = new Audio3D(audioManager);
 
-	//setMasterVolume(100.0f);
-	//setMusicVolume(100.0f);
-	//sfxVolume = 100.0f;
-
-	setMasterVolume(5.0f);
-	setMusicVolume(5.0f);
-	sfxVolume = 5.0f;
+	setMasterVolume(10.0f);
+	setMusicVolume(10.0f);
+	sfxVolume = 10.0f;
 
 	initSFX();
 	initMusic();
@@ -56,13 +52,8 @@ void GameAudio::initSFX()
 
 void GameAudio::initMusic()
 {
-	const char* newMusic;
-
-	newMusic = "sfx/Blazer_Rail.wav";
-	music[MusicID::MENU] = newMusic;
-
-	newMusic = "sfx/Blazer_Rail_2.wav";
-	music[MusicID::LEVEL] = newMusic;
+	music[MusicID::MENU] = "sfx/Blazer_Rail.wav";
+	music[MusicID::LEVEL] = "sfx/Blazer_Rail_2.wav";
 }
 
 void GameAudio::update()

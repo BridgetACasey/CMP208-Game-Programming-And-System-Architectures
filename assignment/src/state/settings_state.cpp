@@ -21,12 +21,13 @@ void SettingsState::setup()
 {
 	if (firstSetup)
 	{
+		//Background image
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
-		background.set_position((float)platform_.width() / 2.0f, (float)platform_.height() / 2.0f, 0.0f);
+		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
 		background.set_texture(context_->getTextureManager()->getTexture(TextureID::MENU_BACKGROUND_ALT));
 
-		//Back to main menu button
+		//Back button to return to main menu
 		backButton = Button::create(context_->getGameInput());
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
@@ -36,30 +37,27 @@ void SettingsState::setup()
 
 		//Volume sliders
 		masterVolumeSlider = Slider::create(context_->getGameInput());
-		masterVolumeSlider->set_width(50.0f);
-		masterVolumeSlider->set_height(50.0f);
-		masterVolumeSlider->set_position(gef::Vector4(725.0f, 175.0f, 0.0f));
-		masterVolumeSlider->setAnchorPoints(175.0f, 750.0f);
+		masterVolumeSlider->setButtonDimensions(50.0f, 50.0f);
+		masterVolumeSlider->setAnchorPoints(175.0f, 750.0f, 175.0f);
+		masterVolumeSlider->setInitialPercentageValue(context_->getGameAudio()->getMasterVolume());
 		masterVolumeSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
 		masterVolumeSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
 		masterVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
 		masterVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
 
 		musicVolumeSlider = Slider::create(context_->getGameInput());
-		musicVolumeSlider->set_width(50.0f);
-		musicVolumeSlider->set_height(50.0f);
-		musicVolumeSlider->set_position(gef::Vector4(725.0f, 265.0f, 0.0f));
-		musicVolumeSlider->setAnchorPoints(175.0f, 750.0f);
+		musicVolumeSlider->setButtonDimensions(50.0f, 50.0f);
+		musicVolumeSlider->setAnchorPoints(175.0f, 750.0f, 265.0f);
+		musicVolumeSlider->setInitialPercentageValue(context_->getGameAudio()->getMusicVolume());
 		musicVolumeSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
 		musicVolumeSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
 		musicVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
 		musicVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
 
 		sfxVolumeSlider = Slider::create(context_->getGameInput());
-		sfxVolumeSlider->set_width(50.0f);
-		sfxVolumeSlider->set_height(50.0f);
-		sfxVolumeSlider->set_position(gef::Vector4(725.0f, 355.0f, 0.0f));
-		sfxVolumeSlider->setAnchorPoints(175.0f, 750.0f);
+		sfxVolumeSlider->setButtonDimensions(50.0f, 50.0f);
+		sfxVolumeSlider->setAnchorPoints(175.0f, 750.0f, 355.0f);
+		sfxVolumeSlider->setInitialPercentageValue(context_->getGameAudio()->getSFXVolume());
 		sfxVolumeSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
 		sfxVolumeSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
 		sfxVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
@@ -72,6 +70,7 @@ void SettingsState::setup()
 void SettingsState::onEnter()
 {
 	gef::DebugOut("Entering the settings screen\n");
+
 	setup();
 }
 
