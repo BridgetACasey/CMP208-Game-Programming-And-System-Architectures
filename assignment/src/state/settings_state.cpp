@@ -5,6 +5,8 @@
 
 SettingsState::SettingsState(gef::Platform& platform) : State(platform)
 {
+	buttonIndex = 0;
+
 	backButton = nullptr;
 
 	masterVolumeSlider = nullptr;
@@ -62,6 +64,11 @@ void SettingsState::setup()
 		sfxVolumeSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
 		sfxVolumeSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
 		sfxVolumeSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
+
+		buttons[0] = backButton;
+		buttons[1] = masterVolumeSlider;
+		buttons[2] = musicVolumeSlider;
+		buttons[3] = sfxVolumeSlider;
 	}
 
 	firstSetup = false;
@@ -76,41 +83,30 @@ void SettingsState::onEnter()
 
 void SettingsState::onExit()
 {
-
+	buttons[0]->setSelectedByController(false);
+	buttons[1]->setSelectedByController(false);
+	buttons[2]->setSelectedByController(false);
+	buttons[3]->setSelectedByController(false);
 }
 
 void SettingsState::handleInput()
 {
-	context_->getGameInput()->update();
 
-	if (backButton->isClicked())
-	{
-		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
-		context_->setActiveState(StateLabel::MAIN_MENU);
-	}
 }
 
 bool SettingsState::update(float deltaTime)
 {
-	if (masterVolumeSlider->isHeld())
-	{
-		masterVolumeSlider->updatePosition();
+	context_->getGameInput()->update();
 
-		context_->getGameAudio()->setMasterVolume(masterVolumeSlider->getPercentageValue());
+	if (context_->getGameInput()->getController()->active)
+	{
+		checkForController();
+		checkButtonStatus(deltaTime, false);
 	}
 
-	if (musicVolumeSlider->isHeld())
+	else
 	{
-		musicVolumeSlider->updatePosition();
-
-		context_->getGameAudio()->setMusicVolume(musicVolumeSlider->getPercentageValue());
-	}
-
-	if (sfxVolumeSlider->isHeld())
-	{
-		sfxVolumeSlider->updatePosition();
-
-		context_->getGameAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue());
+		checkButtonStatus(deltaTime, true);
 	}
 
 	return true;
@@ -155,4 +151,71 @@ void SettingsState::render()
 	}
 
 	context_->getSpriteRenderer()->End();
+}
+
+void SettingsState::checkForController()
+{
+	if (context_->getGameInput()->getController()->leftStick == ControllerCode::UP ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_UP)
+	{
+		buttons[buttonIndex]->setSelectedByController(false);
+
+		if (buttonIndex <= 0)
+		{
+			buttonIndex = 3;
+		}
+
+		else
+		{
+			--buttonIndex;
+		}
+	}
+
+	else if (context_->getGameInput()->getController()->leftStick == ControllerCode::DOWN ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_DOWN)
+	{
+		buttons[buttonIndex]->setSelectedByController(false);
+
+		if (buttonIndex >= 3)
+		{
+			buttonIndex = 0;
+		}
+
+		else
+		{
+			++buttonIndex;
+		}
+	}
+
+	buttons[buttonIndex]->setSelectedByController(true);
+}
+
+void SettingsState::checkButtonStatus(float deltaTime, bool usingMouse)
+{
+	if (backButton->isClicked(usingMouse))
+	{
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
+		context_->setActiveState(StateLabel::MAIN_MENU);
+	}
+
+	if (masterVolumeSlider->isHeld(usingMouse))
+	{
+		masterVolumeSlider->updatePosition(deltaTime, usingMouse);
+
+		context_->getGameAudio()->setMasterVolume(masterVolumeSlider->getPercentageValue());
+	}
+
+	if (musicVolumeSlider->isHeld(usingMouse))
+	{
+		musicVolumeSlider->updatePosition(deltaTime, usingMouse);
+
+		context_->getGameAudio()->setMusicVolume(musicVolumeSlider->getPercentageValue());
+	}
+
+	if (sfxVolumeSlider->isHeld(usingMouse))
+	{
+		sfxVolumeSlider->updatePosition(deltaTime, usingMouse);
+
+		context_->getGameAudio()->setSFXVolume(sfxVolumeSlider->getPercentageValue());
+	}
 }

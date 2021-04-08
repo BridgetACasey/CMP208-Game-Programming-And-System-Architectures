@@ -15,6 +15,7 @@ GameInput::GameInput(gef::Platform& platform)
 
 	active_touch_id_ = -1;
 
+	controller = new Controller();
 	mouse = new Mouse();
 	
 	key_space = new Key();
@@ -40,6 +41,22 @@ void GameInput::update()
 	if (inputManager)
 	{
 		inputManager->Update();
+
+		if (controller)
+		{
+			if (getSonyController()->buttons_pressed())
+			{
+				controller->active = true;
+			}
+
+			controller->leftPosition = gef::Vector2(inputManager->controller_input()->GetController(0)->left_stick_x_axis(),
+				inputManager->controller_input()->GetController(0)->left_stick_y_axis());
+			controller->rightPosition = gef::Vector2(inputManager->controller_input()->GetController(0)->right_stick_x_axis(),
+				inputManager->controller_input()->GetController(0)->right_stick_y_axis());
+
+			controller->leftStick = processControllerCodes(controller->leftPosition);
+			controller->rightStick = processControllerCodes(controller->rightPosition);
+		}
 
 		if (mouse)
 		{
@@ -68,7 +85,38 @@ void GameInput::bindKeys()
 	key_l_shift->command = &sprint;
 }
 
-void GameInput::processMouseButton(Int32 touchID, gef::TouchType type)
+ControllerCode GameInput::processControllerCodes(gef::Vector2& position)
+{
+	ControllerCode code = ControllerCode::NONE;
+
+	if (position.x <= -0.9f)
+	{
+		code = ControllerCode::LEFT;
+		controller->active = true;
+	}
+
+	else if (position.x >= 0.9f)
+	{
+		code = ControllerCode::RIGHT;
+		controller->active = true;
+	}
+
+	else if (position.y <= -0.9f)
+	{
+		code = ControllerCode::UP;
+		controller->active = true;
+	}
+
+	else if (position.y >= 0.9f)
+	{
+		code = ControllerCode::DOWN;
+		controller->active = true;
+	}
+
+	return code;
+}
+
+void GameInput::processMouseButtonInput(Int32 touchID, gef::TouchType type)
 {
 	MouseCode button;
 
@@ -76,14 +124,17 @@ void GameInput::processMouseButton(Int32 touchID, gef::TouchType type)
 	{
 		case gef::TouchType::TT_NEW:
 			button = MouseCode::PRESSED;
+			controller->active = false;
 			break;
 
 		case gef::TouchType::TT_ACTIVE:
 			button = MouseCode::HELD;
+			controller->active = false;
 			break;
 
 		case gef::TouchType::TT_RELEASED:
 			button = MouseCode::RELEASED;
+			controller->active = false;
 			break;
 
 		default:
@@ -103,22 +154,22 @@ void GameInput::processMouseButton(Int32 touchID, gef::TouchType type)
 
 Key* GameInput::assignKeys()
 {
-	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_SPACE))
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_SPACE) || getSonyController()->buttons_down() == gef_SONY_CTRL_CROSS)
 	{
 		return key_space;
 	}
 
-	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_A))
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_A) || controller->leftStick == ControllerCode::LEFT)
 	{
 		return key_a;
 	}
 
-	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_D))
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_D) || controller->leftStick == ControllerCode::RIGHT)
 	{
 		return key_d;
 	}
 
-	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_LSHIFT))
+	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_LSHIFT) || getSonyController()->buttons_down() == gef_SONY_CTRL_CIRCLE)
 	{
 		return key_l_shift;
 	}
@@ -148,7 +199,7 @@ void GameInput::processTouchInput()
 
 					// do any processing for a new touch here
 					// we're just going to record the position of the touch
-					processMouseButton(touch->id, touch->type);
+					processMouseButtonInput(touch->id, touch->type);
 				}
 			}
 			else if (active_touch_id_ == touch->id)
@@ -158,20 +209,30 @@ void GameInput::processTouchInput()
 				{
 					// update an active touch here
 					// we're just going to record the position of the touch
-					processMouseButton(touch->id, touch->type);
+					processMouseButtonInput(touch->id, touch->type);
 				}
 				else if (touch->type == gef::TT_RELEASED)
 				{
 					// the touch we are tracking has been released
 					// perform any actions that need to happen when a touch is released here
 					// we're not doing anything here apart from resetting the active touch id
-					processMouseButton(touch->id, touch->type);
+					processMouseButtonInput(touch->id, touch->type);
 
 					active_touch_id_ = -1;
 				}
 			}
 		}
 	}
+}
+
+const gef::SonyController* GameInput::getSonyController()
+{
+	return inputManager->controller_input()->GetController(0);
+}
+
+Controller* GameInput::getController()
+{
+	return controller;
 }
 
 Mouse* GameInput::getMouse()

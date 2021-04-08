@@ -8,6 +8,8 @@ Slider::Slider(GameInput* input_) : Button(input_)
 	maxAnchorPoint = 0.0f;
 
 	percentageValue = 100.0f;
+
+	scrollSpeed = 100.0f;
 }
 
 Slider* Slider::create(GameInput* input_)
@@ -15,7 +17,7 @@ Slider* Slider::create(GameInput* input_)
 	return new Slider(input_);
 }
 
-void Slider::updatePosition()
+void Slider::updatePosition(float deltaTime, bool usingMouse)
 {
 	if (position_.x() > maxAnchorPoint - (width_ / 2.0f))	//Setting the button back to its maximum x value
 	{
@@ -27,10 +29,29 @@ void Slider::updatePosition()
 		set_position(minAnchorPoint + (width_ / 2.0f), position_.y(), position_.z());
 	}
 
-	//Adding an extra offset value of 0.2 to either side, otherwise the slider may get stuck
-	else if(input->getMouse()->position.x > minAnchorPoint + (width_ / 2.0f) - 0.2f && input->getMouse()->position.x < maxAnchorPoint - (width_ / 2.0f) + 0.2f)
+	else
 	{
-		set_position(gef::Vector4(input->getMouse()->position.x, position_.y(), position_.z()));
+		if (usingMouse)
+		{
+			//Adding an extra offset value of 0.2 to either side, otherwise the slider may get stuck
+			if (input->getMouse()->position.x > minAnchorPoint + (width_ / 2.0f) - 0.2f && input->getMouse()->position.x < maxAnchorPoint - (width_ / 2.0f) + 0.2f)
+			{
+				set_position(gef::Vector4(input->getMouse()->position.x, position_.y(), position_.z()));
+			}
+		}
+
+		else
+		{
+			if (input->getController()->leftStick == ControllerCode::LEFT || input->getSonyController()->buttons_down() == gef_SONY_CTRL_LEFT)
+			{
+				set_position(gef::Vector4(position_.x() - (scrollSpeed * deltaTime), position_.y(), position_.z()));
+			}
+
+			else if (input->getController()->leftStick == ControllerCode::RIGHT || input->getSonyController()->buttons_down() == gef_SONY_CTRL_RIGHT)
+			{
+				set_position(gef::Vector4(position_.x() + (scrollSpeed * deltaTime), position_.y(), position_.z()));
+			}
+		}
 	}
 
 	float min = minAnchorPoint + (width_ / 2.0f);

@@ -22,7 +22,14 @@ public:
 	bool update(float deltaTime) override;
 	void render() override;
 
+	void checkForController();
+	void checkButtonStatus(float deltaTime, bool usingMouse);
+
 private:
+	int buttonIndex;
+
+	Button* buttons[4];
+	
 	Button* backButton;
 
 	Slider* masterVolumeSlider;

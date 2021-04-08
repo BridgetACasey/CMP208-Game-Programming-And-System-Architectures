@@ -42,17 +42,22 @@ void HelpState::onEnter()
 
 void HelpState::onExit()
 {
-
+	backButton->setSelectedByController(false);
 }
 
 void HelpState::handleInput()
 {
 	context_->getGameInput()->update();
 
-	if (backButton->isClicked())
+	if (context_->getGameInput()->getController()->active)
 	{
-		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
-		context_->setActiveState(StateLabel::MAIN_MENU);
+		checkForController();
+		checkButtonStatus(false);
+	}
+
+	else
+	{
+		checkButtonStatus(true);
 	}
 }
 
@@ -82,4 +87,24 @@ void HelpState::render()
 	context_->getSpriteRenderer()->DrawSprite(*backButton);
 
 	context_->getSpriteRenderer()->End();
+}
+
+void HelpState::checkForController()
+{
+	if (context_->getGameInput()->getController()->leftStick == ControllerCode::UP ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_UP ||
+		context_->getGameInput()->getController()->leftStick == ControllerCode::DOWN ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_DOWN)
+	{
+		backButton->setSelectedByController(!backButton->getSelectedByController());
+	}
+}
+
+void HelpState::checkButtonStatus(bool usingMouse)
+{
+	if (backButton->isClicked(usingMouse))
+	{
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
+		context_->setActiveState(StateLabel::MAIN_MENU);
+	}
 }

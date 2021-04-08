@@ -8,6 +8,8 @@ Button::Button(GameInput* input_)
 
 	inactive = nullptr;
 	hovering = nullptr;
+
+	selectedByController = false;
 }
 
 Button* Button::create(GameInput* input_)
@@ -15,11 +17,23 @@ Button* Button::create(GameInput* input_)
 	return new Button(input_);
 }
 
-bool Button::isHovering()
+bool Button::isHovering(bool isMouse)
 {
-	if (input->getMouse()->position.x > position_.x() - (width() / 2.0f) && input->getMouse()->position.x < position_.x() + (width() / 2.0f))
+	if (isMouse)
 	{
-		if (input->getMouse()->position.y > position_.y() - (height() / 2.0f) && input->getMouse()->position.y < position_.y() + (height() / 2.0f))
+		if (input->getMouse()->position.x > position_.x() - (width() / 2.0f) && input->getMouse()->position.x < position_.x() + (width() / 2.0f))
+		{
+			if (input->getMouse()->position.y > position_.y() - (height() / 2.0f) && input->getMouse()->position.y < position_.y() + (height() / 2.0f))
+			{
+				set_texture(hovering);
+				return true;
+			}
+		}
+	}
+
+	else
+	{
+		if (selectedByController)
 		{
 			set_texture(hovering);
 			return true;
@@ -31,26 +45,48 @@ bool Button::isHovering()
 	return false;
 }
 
-bool Button::isClicked()
+bool Button::isClicked(bool isMouse)
 {
-	if (isHovering())
+	if (isHovering(isMouse))
 	{
-		if (input->getMouse()->left == MouseCode::PRESSED)
+		if (isMouse)
 		{
-			return true;
+			if (input->getMouse()->left == MouseCode::PRESSED)
+			{
+				return true;
+			}
+		}
+
+		else
+		{
+			if (input->getSonyController()->buttons_pressed() == gef_SONY_CTRL_CROSS)
+			{
+				return true;
+			}
 		}
 	}
 
 	return false;
 }
 
-bool Button::isHeld()
+bool Button::isHeld(bool isMouse)
 {
-	if (isHovering())
+	if (isHovering(isMouse))
 	{
-		if (input->getMouse()->left == MouseCode::HELD)
+		if (isMouse)
 		{
-			return true;
+			if (input->getMouse()->left == MouseCode::HELD)
+			{
+				return true;
+			}
+		}
+
+		else
+		{
+			if (selectedByController)
+			{
+				return true;
+			}
 		}
 	}
 
@@ -65,4 +101,14 @@ void Button::setInactiveTexture(gef::Texture* texture)
 void Button::setHoveringTexture(gef::Texture* texture)
 {
 	hovering = texture;
+}
+
+void Button::setSelectedByController(bool selected)
+{
+	selectedByController = selected;
+}
+
+bool Button::getSelectedByController()
+{
+	return selectedByController;
 }

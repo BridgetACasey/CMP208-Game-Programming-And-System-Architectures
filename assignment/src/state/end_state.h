@@ -22,14 +22,18 @@ public:
 	bool update(float deltaTime) override;
 	void render() override;
 
+	void checkForController();
+	void checkButtonStatus(bool usingMouse);
+
 	void setLastScore(int lastScore_);
 
 private:
 	int lastScore;
 	int highestScore;
 
-	Button* restartButton;
-	Button* quitButton;
+	int buttonIndex;
+
+	Button* buttons[2];
 
 	gef::Sprite background;
 

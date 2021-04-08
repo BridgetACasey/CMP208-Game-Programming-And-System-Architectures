@@ -22,13 +22,15 @@ public:
 	bool update(float deltaTime) override;
 	void render() override;
 
+	void checkForController();
+	void checkButtonStatus(bool usingMouse);
+
 	void updateBackground(float deltaTime);
 
 private:
-	Button* playButton;
-	Button* settingsButton;
-	Button* helpButton;
-	Button* quitButton;
+	int buttonIndex;
+	
+	Button* buttons[4];
 
 	gef::Sprite title;
 

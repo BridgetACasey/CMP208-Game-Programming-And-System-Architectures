@@ -5,8 +5,7 @@
 
 PauseState::PauseState(gef::Platform& platform) : State(platform)
 {
-	resumeButton = nullptr;
-	menuButton = nullptr;
+	buttonIndex = 0;
 }
 
 PauseState* PauseState::create(gef::Platform& platform)
@@ -23,20 +22,20 @@ void PauseState::setup()
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
 		background.set_texture(context_->getTextureManager()->getTexture(TextureID::MENU_BACKGROUND_ALT));
 
-		resumeButton = Button::create(context_->getGameInput());
-		menuButton = Button::create(context_->getGameInput());
+		buttons[0] = Button::create(context_->getGameInput());
+		buttons[1] = Button::create(context_->getGameInput());
 
-		resumeButton->set_width(150.0f);
-		resumeButton->set_height(75.0f);
-		resumeButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
-		resumeButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::RESUME_BUTTON));
-		resumeButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::RESUME_BUTTON_COL));
+		buttons[0]->set_width(150.0f);
+		buttons[0]->set_height(75.0f);
+		buttons[0]->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
+		buttons[0]->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::RESUME_BUTTON));
+		buttons[0]->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::RESUME_BUTTON_COL));
 
-		menuButton->set_width(150.0f);
-		menuButton->set_height(75.0f);
-		menuButton->set_position(platform_.width() / 2.0f, resumeButton->position().y() + 75.0f, 0.0f);
-		menuButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MENU_BUTTON));
-		menuButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MENU_BUTTON_COL));
+		buttons[1]->set_width(150.0f);
+		buttons[1]->set_height(75.0f);
+		buttons[1]->set_position(platform_.width() / 2.0f, buttons[0]->position().y() + 75.0f, 0.0f);
+		buttons[1]->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MENU_BUTTON));
+		buttons[1]->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MENU_BUTTON_COL));
 	}
 
 	firstSetup = false;
@@ -51,26 +50,27 @@ void PauseState::onEnter()
 
 void PauseState::onExit()
 {
-
+	buttons[0]->setSelectedByController(false);
+	buttons[1]->setSelectedByController(false);
 }
 
 void PauseState::handleInput()
 {
 	context_->getGameInput()->update();
 
-	if (menuButton->isClicked())
+	if (context_->getGameInput()->getController()->active)
 	{
-		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
-		context_->setActiveState(StateLabel::MAIN_MENU);
+		checkForController();
+		checkButtonStatus(false);
 	}
 
-	if (resumeButton->isClicked())
+	else
 	{
-		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
-		context_->setActiveState(StateLabel::LEVEL);
+		checkButtonStatus(true);
 	}
 
-	if (context_->getGameInput()->getKeyboard()->IsKeyPressed(context_->getGameInput()->getKeyboard()->KC_ESCAPE))
+	if (context_->getGameInput()->getKeyboard()->IsKeyPressed(context_->getGameInput()->getKeyboard()->KC_ESCAPE) ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_SELECT)
 	{
 		context_->setActiveState(StateLabel::LEVEL);
 	}
@@ -94,8 +94,8 @@ void PauseState::render()
 	//Render UI elements
 	context_->getSpriteRenderer()->DrawSprite(background);
 
-	context_->getSpriteRenderer()->DrawSprite(*resumeButton);
-	context_->getSpriteRenderer()->DrawSprite(*menuButton);
+	context_->getSpriteRenderer()->DrawSprite(*buttons[0]);
+	context_->getSpriteRenderer()->DrawSprite(*buttons[1]);
 
 	if (context_->getFont())
 	{
@@ -103,4 +103,56 @@ void PauseState::render()
 	}
 
 	context_->getSpriteRenderer()->End();
+}
+
+void PauseState::checkForController()
+{
+	if (context_->getGameInput()->getController()->leftStick == ControllerCode::UP ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_UP)
+	{
+		buttons[buttonIndex]->setSelectedByController(false);
+
+		if (buttonIndex <= 0)
+		{
+			buttonIndex = 1;
+		}
+
+		else
+		{
+			--buttonIndex;
+		}
+	}
+
+	else if (context_->getGameInput()->getController()->leftStick == ControllerCode::DOWN ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_DOWN)
+	{
+		buttons[buttonIndex]->setSelectedByController(false);
+
+		if (buttonIndex >= 1)
+		{
+			buttonIndex = 0;
+		}
+
+		else
+		{
+			++buttonIndex;
+		}
+	}
+
+	buttons[buttonIndex]->setSelectedByController(true);
+}
+
+void PauseState::checkButtonStatus(bool usingMouse)
+{
+	if (buttons[0]->isClicked(usingMouse))
+	{
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
+		context_->setActiveState(StateLabel::LEVEL);
+	}
+
+	if (buttons[1]->isClicked(usingMouse))
+	{
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
+		context_->setActiveState(StateLabel::MAIN_MENU);
+	}
 }

@@ -8,8 +8,7 @@ EndState::EndState(gef::Platform& platform) : State(platform)
 	lastScore = 0;
 	highestScore = 0;
 
-	restartButton = nullptr;
-	quitButton = nullptr;
+	buttonIndex = 0;
 	
 	play = true;
 }
@@ -23,19 +22,19 @@ void EndState::setup()
 {
 	if (firstSetup)
 	{
-		restartButton = Button::create(context_->getGameInput());
-		restartButton->set_width(150.0f);
-		restartButton->set_height(75.0f);
-		restartButton->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
-		restartButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::NEW_GAME_BUTTON));
-		restartButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::NEW_GAME_BUTTON_COL));
+		buttons[0] = Button::create(context_->getGameInput());
+		buttons[0]->set_width(150.0f);
+		buttons[0]->set_height(75.0f);
+		buttons[0]->set_position(gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f));
+		buttons[0]->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::NEW_GAME_BUTTON));
+		buttons[0]->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::NEW_GAME_BUTTON_COL));
 
-		quitButton = Button::create(context_->getGameInput());
-		quitButton->set_width(150.0f);
-		quitButton->set_height(75.0f);
-		quitButton->set_position(gef::Vector4(platform_.width() / 2.0f, restartButton->position().y() + 75.0f, 0.0f));
-		quitButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON));
-		quitButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON_COL));
+		buttons[1] = Button::create(context_->getGameInput());
+		buttons[1]->set_width(150.0f);
+		buttons[1]->set_height(75.0f);
+		buttons[1]->set_position(gef::Vector4(platform_.width() / 2.0f, buttons[0]->position().y() + 75.0f, 0.0f));
+		buttons[1]->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON));
+		buttons[1]->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::QUIT_BUTTON_COL));
 
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
@@ -66,23 +65,23 @@ void EndState::onEnter()
 
 void EndState::onExit()
 {
-
+	buttons[0]->setSelectedByController(false);
+	buttons[1]->setSelectedByController(false);
 }
 
 void EndState::handleInput()
 {
 	context_->getGameInput()->update();
 
-	if (restartButton->isClicked())
+	if (context_->getGameInput()->getController()->active)
 	{
-		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
-		context_->setActiveState(StateLabel::MAIN_MENU);
+		checkForController();
+		checkButtonStatus(false);
 	}
 
-	if (quitButton->isClicked())
+	else
 	{
-		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
-		play = false;
+		checkButtonStatus(true);
 	}
 }
 
@@ -111,10 +110,62 @@ void EndState::render()
 			"Last Score: %.1i   Highest Score: %.1i", lastScore, highestScore);
 	}
 
-	context_->getSpriteRenderer()->DrawSprite(*restartButton);
-	context_->getSpriteRenderer()->DrawSprite(*quitButton);
+	context_->getSpriteRenderer()->DrawSprite(*buttons[0]);
+	context_->getSpriteRenderer()->DrawSprite(*buttons[1]);
 
 	context_->getSpriteRenderer()->End();
+}
+
+void EndState::checkForController()
+{
+	if (context_->getGameInput()->getController()->leftStick == ControllerCode::UP ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_UP)
+	{
+		buttons[buttonIndex]->setSelectedByController(false);
+
+		if (buttonIndex <= 0)
+		{
+			buttonIndex = 1;
+		}
+
+		else
+		{
+			--buttonIndex;
+		}
+	}
+
+	else if (context_->getGameInput()->getController()->leftStick == ControllerCode::DOWN ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_DOWN)
+	{
+		buttons[buttonIndex]->setSelectedByController(false);
+
+		if (buttonIndex >= 1)
+		{
+			buttonIndex = 0;
+		}
+
+		else
+		{
+			++buttonIndex;
+		}
+	}
+
+	buttons[buttonIndex]->setSelectedByController(true);
+}
+
+void EndState::checkButtonStatus(bool usingMouse)
+{
+	if (buttons[0]->isClicked(usingMouse))
+	{
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
+		context_->setActiveState(StateLabel::MAIN_MENU);
+	}
+
+	if (buttons[1]->isClicked(usingMouse))
+	{
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::CLICK, false);
+		play = false;
+	}
 }
 
 void EndState::setLastScore(int lastScore_)

@@ -13,7 +13,7 @@ public:
 	static Slider* create(GameInput* input_);
 
 	//Checks if the button component is still within its given range along the x-axis and adjusts its position accordingly
-	void updatePosition();
+	void updatePosition(float deltaTime, bool usingMouse);
 
 	//The width and height of the slider's button component
 	void setButtonDimensions(float width, float height);
@@ -35,6 +35,8 @@ private:
 	float maxAnchorPoint;
 
 	float percentageValue;
+
+	float scrollSpeed;
 
 	gef::Sprite lowerBackground;
 	gef::Sprite upperBackground;

@@ -14,7 +14,7 @@ GameObject::GameObject()
 	moveSpeed = 1.0f;
 	jumpForce = 1.0f;
 
-	canJump = true;
+	canJump = false;
 
 	activeDirection = 1;
 

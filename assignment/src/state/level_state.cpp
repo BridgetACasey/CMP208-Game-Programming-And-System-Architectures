@@ -118,7 +118,8 @@ void LevelState::handleInput()
 {
 	context_->getGameInput()->update();
 
-	if (context_->getGameInput()->getKeyboard()->IsKeyPressed(context_->getGameInput()->getKeyboard()->KC_ESCAPE))
+	if (context_->getGameInput()->getKeyboard()->IsKeyPressed(context_->getGameInput()->getKeyboard()->KC_ESCAPE) ||
+		context_->getGameInput()->getSonyController()->buttons_pressed() == gef_SONY_CTRL_SELECT)
 	{
 		context_->setActiveState(StateLabel::PAUSE_MENU);
 	}
