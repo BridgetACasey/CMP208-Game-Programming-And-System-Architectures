@@ -4,10 +4,14 @@
 
 #include "state.h"
 
+#include <vector>
+
 #include "object/player.h"
 #include "object/collectible.h"
+#include "object/ice.h"
+#include "object/lava.h"
+#include "object/campfire.h"
 #include "object/obstacle.h"
-#include "object/trap.h"
 
 #include <graphics/mesh_instance.h>
 #include <graphics/scene.h>
@@ -54,18 +58,26 @@ private:
 	void DrawHUD();
 	void SetupLights();
 	void SetupCamera();
+	
+	void setupPlayer();
+	void setupLava();
+	void setupIce();
+	void setupObstacles();
+	void setupCollectibles();
 
 	b2World* world;
 	CollisionListener collision;
 
 	Camera* camera;
 
-	Player* player;
-	Collectible* coin;
-	Obstacle* ground;
-	Trap* trap;
+	std::vector<Lava*> lava;
+	std::vector<Ice*> ice;
+	std::vector<Obstacle*> obstacles;
+	std::vector<Collectible*> collectibles;
 
-	AudioEmitter coinCollection;
+	Campfire* campfire;
+
+	Player* player;
 
 	float fps_;
 };

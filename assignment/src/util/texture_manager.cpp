@@ -19,7 +19,8 @@ void TextureManager::initTextures()
 	textures[TextureID::SPLASH_BACKGROUND] = generateTexture("sprites/splash_screen.png");
 	textures[TextureID::MENU_BACKGROUND] = generateTexture("sprites/background_glacial_mountains.png");
 	textures[TextureID::MENU_BACKGROUND_ALT] = generateTexture("sprites/background_glacial_mountains_lightened.png");
-	textures[TextureID::END_BACKGROUND] = generateTexture("sprites/cave_blue.png");
+	textures[TextureID::END_WIN_BACKGROUND] = generateTexture("sprites/background_glacial_mountains_warm.png");
+	textures[TextureID::END_LOSE_BACKGROUND] = generateTexture("sprites/cave_blue.png");
 
 	textures[TextureID::PLAY_BUTTON] = generateTexture("sprites/play_button.png");
 	textures[TextureID::SETTINGS_BUTTON] = generateTexture("sprites/settings_button.png");

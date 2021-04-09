@@ -9,7 +9,7 @@
 "Hello Neighbor Trap" (trap) - https://sketchfab.com/3d-models/hello-neighbor-trap-b665a81457e14a979a7628c54c0ba6ea
 "Lowpoly gold coin" (collectible) - https://sketchfab.com/3d-models/lowpoly-gold-coin-34794c00e9d140f6b86e930fef18b009#download
 "Low Poly 3D Block - Devils Work.shop" (obstacle) - https://devilsworkshop.itch.io/essential-low-poly-isometric-3d-block-and-hex-pack
-
+"Low Poly Campfire" - https://sketchfab.com/3d-models/low-poly-campfire-07e1f44b9b7c4492a0f3abb08b86e243
 
 Sound Effects & Music
 "Blazer Rail" (main menu) - https://www.dl-sounds.com/royalty-free/blazer-rail/

@@ -3,10 +3,8 @@
 
 LevelState::LevelState(gef::Platform& platform) : State(platform)
 {
-	ground = nullptr;
+	campfire = nullptr;
 	player = nullptr;
-	coin = nullptr;
-	trap = nullptr;
 	camera = nullptr;
 	world = nullptr;
 
@@ -20,30 +18,53 @@ LevelState* LevelState::create(gef::Platform& platform)
 
 void LevelState::setup()
 {
-	if (context_->getGameComplete())
+	if (!context_->getGamePlaying())
 	{
 		delete world;
 		world = NULL;
 
+		delete camera;
+		camera = NULL;
+
 		delete player;
 		player = NULL;
 
-		delete coin;
-		coin = NULL;
+		delete campfire;
+		campfire = NULL;
 
-		delete trap;
-		trap = NULL;
+		for (Collectible* coin : collectibles)
+		{
+			delete coin;
+		}
+		
+		for (Ice* iceObject : ice)
+		{
+			delete iceObject;
+		}
+		
+		for (Lava* lavaObject : lava)
+		{
+			delete lavaObject;
+		}
+		
+		for (Obstacle* obstacle : obstacles)
+		{
+			delete obstacle;
+		}
 
-		delete ground;
-		ground = NULL;
-
-		delete camera;
-		camera = NULL;
+		collectibles.clear();
+		ice.clear();
+		lava.clear();
+		obstacles.clear();
 
 		gef::Default3DShaderData& default_shader_data = context_->getRenderer3D()->default_shader_data();
 		default_shader_data.CleanUp();
 
-		context_->setGameComplete(false);
+		if (context_->getGameWon())
+		{
+			context_->setGameWon(false);
+		}
+
 		firstSetup = true;
 	}
 
@@ -55,44 +76,23 @@ void LevelState::setup()
 		world = new b2World(gravity);
 		world->SetContactListener(&collision);
 
-		player = Player::create();
-		player->setPosition(0.0f, 4.0f, 0.0f);
-		player->setDefaultMesh(context_->getPrimitiveBuilder(), gef::Vector4(0.5f, 0.5f, 0.5f));
-		player->setBody(world, b2BodyType::b2_dynamicBody);
-		player->setMoveSpeed(25.0f);
-		player->setJumpForce(1200.0f);
-		player->update(0.0f);
+		setupPlayer();
+		setupCollectibles();
+		setupObstacles();
+		setupLava();
+		setupIce();
 
-		coin = Collectible::create();
-		coin->setPosition(2.0f, 3.0f, 0.0f);
-		coin->setScale(2.0f, 2.0f, 1.0f);
-		coin->set_mesh(context_->getMeshManager()->getMesh(MeshID::COIN));
-		coin->setBody(world, b2BodyType::b2_staticBody);
-		coin->update(0.0f);
-
-		trap = Trap::create();
-		trap->setPosition(-2.0f, 0.5f, 0.0f);
-		trap->setRotation(-1.571f, 0.0f, 0.0f);
-		trap->setScale(0.025f, 0.025f, 0.025f);
-		trap->set_mesh(context_->getMeshManager()->getMesh(MeshID::TRAP));
-		trap->setBody(world, b2BodyType::b2_staticBody);
-		trap->update(0.0f);
-
-		ground = Obstacle::create();
-		ground->setPosition(0.0f, 0.0f, 0.0f);
-		ground->setDefaultMesh(context_->getPrimitiveBuilder(), gef::Vector4(5.0f, 0.5f, 0.5f));
-		ground->setBody(world, b2BodyType::b2_staticBody);
-		ground->update(0.0f);
+		campfire = Campfire::create();
+		campfire->setPosition(3.0f, 0.0f, 0.0f);
+		campfire->setScale(0.5f, 0.5f, 0.5f);
+		campfire->set_mesh(context_->getMeshManager()->getMesh(MeshID::CAMPFIRE));
+		campfire->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(1.0f, 1.5f, 1.0f));
+		campfire->update(0.0f);
 
 		SetupCamera();
 		SetupLights();
 
 		context_->getGameAudio()->getListener().SetTransform(player->transform());
-
-		coinCollection.Init((int)SoundEffectID::COLLECTED, false);
-		coinCollection.set_position(*coin->getPosition());
-		coinCollection.set_radius(1.5f);
-		context_->getGameAudio()->get3D()->AddEmitter(coinCollection);
 
 		context_->getGameAudio()->playMusic(MusicID::LEVEL);
 	}
@@ -144,14 +144,25 @@ bool LevelState::update(float deltaTime)
 	// don't have to update the ground visuals as it is static
 
 	player->update(deltaTime);
-	coin->update(deltaTime);
-	trap->update(deltaTime);
+
+	for (Collectible* coin : collectibles)
+	{
+		coin->update(deltaTime);
+	}
+
+	if (campfire->getContacted())
+	{
+		context_->setPlayerScore(player->getCoins());
+		context_->setGamePlaying(false);
+		context_->setGameWon(true);
+		context_->setActiveState(StateLabel::END_SCREEN);
+	}
 
 	if (!player->getIsAlive())
 	{
 		context_->setPlayerScore(player->getCoins());
 		context_->setGamePlaying(false);
-		context_->setGameComplete(true);
+		context_->setGameWon(false);
 		context_->setActiveState(StateLabel::END_SCREEN);
 	}
 
@@ -167,19 +178,32 @@ void LevelState::render()
 	// draw 3d geometry
 	context_->getRenderer3D()->Begin(true);
 
-	context_->getRenderer3D()->DrawMesh(*ground);
+	context_->getRenderer3D()->DrawMesh(*campfire);
 
 	// draw player
 	context_->getRenderer3D()->DrawMesh(*player);
 
-	if (!coin->getCollected())
+	for (Collectible* coin : collectibles)
 	{
-		context_->getRenderer3D()->DrawMesh(*coin);
+		if (!coin->getCollected())
+		{
+			context_->getRenderer3D()->DrawMesh(*coin);
+		}
 	}
 
-	if (!trap->getTriggered())
+	for (Ice* iceObject : ice)
 	{
-		context_->getRenderer3D()->DrawMesh(*trap);
+		context_->getRenderer3D()->DrawMesh(*iceObject);
+	}
+
+	for (Lava* lavaObject : lava)
+	{
+		context_->getRenderer3D()->DrawMesh(*lavaObject);
+	}
+
+	for (Obstacle* obstacle : obstacles)
+	{
+		context_->getRenderer3D()->DrawMesh(*obstacle);
 	}
 
 	context_->getRenderer3D()->set_override_material(NULL);
@@ -200,7 +224,10 @@ void LevelState::DrawHUD()
 	{
 		// display frame rate
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(650.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT,
-			"Y: %.1f FPS: %.1f Coins: %.1i", player->getPosition()->y(), fps_, player->getCoins());
+			"X: %.1f Y: %.1f FPS: %.1f", player->getPosition()->x(), player->getPosition()->y(), fps_);
+
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(775.0f, 75.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT,
+			"Coins: %.1i", player->getCoins());
 	}
 }
 
@@ -215,7 +242,7 @@ void LevelState::SetupLights()
 	// add a point light that is almost white, but with a blue tinge
 	// the position of the light is set far away so it acts light a directional light
 	gef::PointLight default_point_light;
-	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
+	default_point_light.set_colour(gef::Colour(0.9f, 0.7f, 0.7f, 1.0f));
 	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
 	default_shader_data.AddPointLight(default_point_light);
 }
@@ -231,10 +258,108 @@ void LevelState::SetupCamera()
 	context_->getRenderer3D()->set_projection_matrix(camera->projection_matrix);
 
 	// view
-	camera->eye = gef::Vector4(0.0f, 4.0f, 12.0f);
+	camera->eye = gef::Vector4(0.0f, 4.0f, 6.0f);
 	camera->lookAt = gef::Vector4(0.0f, 0.0f, 0.0f);
 	camera->up = gef::Vector4(0.0f, 1.0f, 0.0f);
 
 	camera->view_matrix.LookAt(camera->eye, camera->lookAt, camera->up);
 	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
+}
+
+void LevelState::setupPlayer()
+{
+	player = Player::create();
+	player->setPosition(0.0f, 4.0f, 0.0f);
+	player->setScale(0.5f, 0.5f, 0.5f);
+	player->set_mesh(context_->getMeshManager()->getMesh(MeshID::PLAYER));
+	player->setBody(world, b2BodyType::b2_dynamicBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+	player->setMoveSpeed(25.0f);
+	player->setJumpForce(1200.0f);
+	player->update(0.0f);
+}
+
+void LevelState::setupLava()
+{
+	int objectTotal = 1;
+
+	Lava* newLava;
+
+	for (int i = 0; i < objectTotal; ++i)
+	{
+		newLava = Lava::create();
+		newLava->setPosition(-2.0f, 0.0f, 0.0f);
+		newLava->setScale(0.1f, 0.1f, 0.1f);
+		newLava->set_mesh(context_->getMeshManager()->getMesh(MeshID::LAVA));
+		newLava->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+		newLava->update(0.0f);
+
+		lava.push_back(newLava);
+	}
+
+	newLava = NULL;
+}
+
+void LevelState::setupIce()
+{
+	int objectTotal = 1;
+	
+	Ice* newIce;
+
+	for (int i = 0; i < objectTotal; ++i)
+	{
+		newIce = Ice::create();
+		newIce->setPosition(0.0f, 0.0f, 0.0f);
+		newIce->setScale(0.1f, 0.1f, 0.1f);
+		newIce->set_mesh(context_->getMeshManager()->getMesh(MeshID::ICE));
+		newIce->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+		newIce->update(0.0f);
+
+		ice.push_back(newIce);
+	}
+
+	newIce = NULL;
+}
+
+void LevelState::setupObstacles()
+{
+	Obstacle* snow;
+	Obstacle* stone;
+
+	snow = Obstacle::create();
+	snow->setPosition(-1.0f, 0.0f, 0.0f);
+	snow->setScale(0.1f, 0.1f, 0.1f);
+	snow->set_mesh(context_->getMeshManager()->getMesh(MeshID::SNOW));
+	snow->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+	snow->update(0.0f);
+
+	stone = Obstacle::create();
+	stone->setPosition(1.0f, 0.0f, 0.0f);
+	stone->setScale(0.1f, 0.1f, 0.1f);
+	stone->set_mesh(context_->getMeshManager()->getMesh(MeshID::STONE));
+	stone->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+	stone->update(0.0f);
+
+	obstacles.push_back(snow);
+	obstacles.push_back(stone);
+}
+
+void LevelState::setupCollectibles()
+{
+	int objectTotal = 1;
+
+	Collectible* coin;
+	
+	for (int i = 0; i < objectTotal; ++i)
+	{
+		coin = Collectible::create();
+		coin->setPosition(2.0f, 3.0f, 0.0f);
+		coin->setScale(2.0f, 2.0f, 1.0f);
+		coin->set_mesh(context_->getMeshManager()->getMesh(MeshID::COIN));
+		coin->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+		coin->update(0.0f);
+
+		collectibles.push_back(coin);
+	}
+
+	coin = NULL;
 }

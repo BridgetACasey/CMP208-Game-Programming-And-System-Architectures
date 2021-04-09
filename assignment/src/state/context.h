@@ -41,8 +41,8 @@ public:
 	void setPlayerScore(int playerScore_);
 	int getPlayerScore();
 
-	void setGameComplete(bool gameComplete_);
-	bool getGameComplete();
+	void setGameWon(bool gameWon_);
+	bool getGameWon();
 
 	void setGamePlaying(bool gamePlaying_);
 	bool getGamePlaying();
@@ -64,6 +64,6 @@ private:
 	GameAudio* gameAudio;
 
 	int playerScore;
-	bool gameComplete;
+	bool gameWon;
 	bool gamePlaying;
 };

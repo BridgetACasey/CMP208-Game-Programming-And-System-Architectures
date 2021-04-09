@@ -7,6 +7,8 @@ MenuState::MenuState(gef::Platform& platform) : State(platform)
 {
 	buttonIndex = 0;
 
+	scrollSpeed = 25.0f;
+	
 	play = true;
 }
 
@@ -218,8 +220,8 @@ void MenuState::checkButtonStatus(bool usingMouse)
 
 void MenuState::updateBackground(float deltaTime)
 {
-	background.set_position(background.position().x() - 75.0f * deltaTime, background.position().y(), background.position().z());
-	backgroundCopy.set_position(backgroundCopy.position().x() - 75.0f * deltaTime, backgroundCopy.position().y(), backgroundCopy.position().z());
+	background.set_position(background.position().x() - scrollSpeed * deltaTime, background.position().y(), background.position().z());
+	backgroundCopy.set_position(backgroundCopy.position().x() - scrollSpeed * deltaTime, backgroundCopy.position().y(), backgroundCopy.position().z());
 
 	if (background.position().x() < -(background.width() / 2.0f))
 	{

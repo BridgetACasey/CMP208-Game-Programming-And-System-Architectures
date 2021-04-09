@@ -19,13 +19,6 @@ class CollisionListener : public b2ContactListener
 			if (objectB)
 			{
 				objectA->onCollisionBeginWith(objectB->getCollisionTag());
-			}
-		}
-
-		if (objectB)
-		{
-			if (objectA)
-			{
 				objectB->onCollisionBeginWith(objectA->getCollisionTag());
 			}
 		}
@@ -44,13 +37,6 @@ class CollisionListener : public b2ContactListener
 			if (objectB)
 			{
 				objectA->onCollisionEndWith(objectB->getCollisionTag());
-			}
-		}
-
-		if (objectB)
-		{
-			if (objectA)
-			{
 				objectB->onCollisionEndWith(objectA->getCollisionTag());
 			}
 		}

@@ -87,10 +87,16 @@
     <ClCompile Include="src\util\texture_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\object\trap.cpp">
+    <ClCompile Include="src\util\mesh_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\util\mesh_manager.cpp">
+    <ClCompile Include="src\object\ice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\lava.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\campfire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,10 +179,16 @@
     <ClInclude Include="src\util\texture_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\object\trap.h">
+    <ClInclude Include="src\util\mesh_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\util\mesh_manager.h">
+    <ClInclude Include="src\object\ice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\lava.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\campfire.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

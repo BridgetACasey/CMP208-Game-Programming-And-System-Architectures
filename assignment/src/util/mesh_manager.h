@@ -12,7 +12,11 @@ enum class MeshID
 	NONE = -1,
 	PLAYER,
 	COIN,
-	TRAP
+	LAVA,
+	SNOW,
+	ICE,
+	STONE,
+	CAMPFIRE
 };
 
 class MeshManager

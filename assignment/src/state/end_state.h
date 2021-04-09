@@ -33,6 +33,8 @@ private:
 
 	int buttonIndex;
 
+	char* text;
+
 	Button* buttons[2];
 
 	gef::Sprite background;

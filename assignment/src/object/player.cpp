@@ -36,7 +36,7 @@ void Player::onCollisionBeginWith(CollisionTag tag)
 		canJump = true;
 	}
 
-	if(tag == CollisionTag::TRAP)
+	if(tag == CollisionTag::LAVA)
 	{
 		isAlive = false;
 	}

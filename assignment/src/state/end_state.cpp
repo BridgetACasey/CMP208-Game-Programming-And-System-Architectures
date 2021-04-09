@@ -39,7 +39,6 @@ void EndState::setup()
 		background.set_height(platform_.height());
 		background.set_width(platform_.width());
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
-		background.set_texture(context_->getTextureManager()->getTexture(TextureID::END_BACKGROUND));
 	}
 
 	firstSetup = false;
@@ -58,9 +57,21 @@ void EndState::onEnter()
 		highestScore = lastScore;
 	}
 
-	context_->getGameAudio()->playMusic(MusicID::NONE);
+	if (context_->getGameWon())
+	{
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::END_WIN_BACKGROUND));
+		text = "YOU REACHED THE CAMPFIRE";
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::WIN, false);
+	}
 
-	context_->getGameAudio()->playSoundEffect(SoundEffectID::LOSE, false);
+	else
+	{
+		background.set_texture(context_->getTextureManager()->getTexture(TextureID::END_LOSE_BACKGROUND));
+		text = "YOU DIED";
+		context_->getGameAudio()->playSoundEffect(SoundEffectID::LOSE, false);
+	}
+
+	context_->getGameAudio()->playMusic(MusicID::NONE);
 }
 
 void EndState::onExit()
@@ -105,7 +116,7 @@ void EndState::render()
 	//Render UI elements
 	if (context_->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 200.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "YOU DIED");
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 200.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, text);
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 100.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE,
 			"Last Score: %.1i   Highest Score: %.1i", lastScore, highestScore);
 	}

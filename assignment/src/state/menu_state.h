@@ -30,6 +30,8 @@ public:
 private:
 	int buttonIndex;
 	
+	float scrollSpeed;
+
 	Button* buttons[4];
 
 	gef::Sprite title;

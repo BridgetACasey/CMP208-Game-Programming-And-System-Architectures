@@ -5,8 +5,6 @@ GameObject::GameObject()
 	body = nullptr;
 	tag_ = CollisionTag::NONE;
 
-	bodyHalfDimensions = gef::Vector4(0.5f, 0.5f, 0.5f);
-
 	position = gef::Vector4(0.0f, 0.0f, 0.0f);
 	rotation = gef::Vector4(0.0f, 0.0f, 0.0f);
 	scale = gef::Vector4(1.0f, 1.0f, 1.0f);
@@ -81,13 +79,11 @@ void GameObject::onCollisionEndWith(CollisionTag tag)
 
 void GameObject::setDefaultMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions)
 {
-	bodyHalfDimensions = halfDimensions;
-
 	gef::Mesh* mesh = primitive_builder->CreateBoxMesh(halfDimensions);
 	set_mesh(mesh);
 }
 
-void GameObject::setBody(b2World* world, b2BodyType type)
+void GameObject::setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions)
 {
 	// create a physics body
 	b2BodyDef bodyDef;
@@ -99,7 +95,7 @@ void GameObject::setBody(b2World* world, b2BodyType type)
 
 	// create the shape
 	b2PolygonShape shape;
-	shape.SetAsBox(bodyHalfDimensions.x(), bodyHalfDimensions.y());
+	shape.SetAsBox(halfDimensions.x(), halfDimensions.y());
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;

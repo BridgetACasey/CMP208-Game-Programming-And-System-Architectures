@@ -3,7 +3,7 @@
 Context::Context(gef::Platform& platform)
 {
 	playerScore = 0;
-	gameComplete = false;
+	gameWon = false;
 	gamePlaying = false;
 
 	activeState = nullptr;
@@ -122,14 +122,14 @@ int Context::getPlayerScore()
 	return playerScore;
 }
 
-void Context::setGameComplete(bool gameComplete_)
+void Context::setGameWon(bool gameWon_)
 {
-	gameComplete = gameComplete_;
+	gameWon = gameWon_;
 }
 
-bool Context::getGameComplete()
+bool Context::getGameWon()
 {
-	return gameComplete;
+	return gameWon;
 }
 
 void Context::setGamePlaying(bool gamePlaying_)

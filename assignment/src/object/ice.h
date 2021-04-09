@@ -2,25 +2,20 @@
 
 #pragma once
 
-#include "game_object.h"
+#include "object/game_object.h"
 
-class Trap : public GameObject
+class Ice : public GameObject
 {
 protected:
-	Trap();
+	Ice();
 
 public:
-	~Trap();
+	~Ice();
 
-	static Trap* create();
+	static Ice* create();
 
 	void update(float deltaTime) override;
 
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
-
-	bool getTriggered();
-
-private:
-	bool triggered;
 };

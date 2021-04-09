@@ -19,8 +19,13 @@ gef::Mesh* MeshManager::getMesh(MeshID id)
 
 void MeshManager::initMeshes()
 {
-	meshes[MeshID::COIN] = generateMesh("models/coin.scn");
-	meshes[MeshID::TRAP] = generateMesh("models/trap.scn");
+	meshes[MeshID::PLAYER] = generateMesh("player.scn");
+	meshes[MeshID::COIN] = generateMesh("coin.scn");
+	meshes[MeshID::LAVA] = generateMesh("lava.scn");
+	meshes[MeshID::SNOW] = generateMesh("snow.scn");
+	meshes[MeshID::ICE] = generateMesh("ice.scn");
+	meshes[MeshID::STONE] = generateMesh("stone.scn");
+	meshes[MeshID::CAMPFIRE] = generateMesh("campfire.scn");
 }
 
 gef::Mesh* MeshManager::generateMesh(const char* filePath)

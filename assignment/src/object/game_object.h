@@ -18,7 +18,9 @@ enum class CollisionTag
 	PLAYER,
 	OBSTACLE,
 	COLLECTIBLE,
-	TRAP
+	LAVA,
+	ICE,
+	CAMPFIRE
 };
 
 class GameObject : public gef::MeshInstance
@@ -41,7 +43,7 @@ public:
 	virtual void onCollisionEndWith(CollisionTag tag);
 
 	void setDefaultMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions);
-	void setBody(b2World* world, b2BodyType type);
+	void setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions);
 
 	void setPosition(float x, float y, float z);
 	gef::Vector4* getPosition();
@@ -78,8 +80,6 @@ protected:
 	gef::Vector4 position;
 	gef::Vector4 rotation;
 	gef::Vector4 scale;
-
-	gef::Vector4 bodyHalfDimensions;
 
 	b2Body* body;
 
