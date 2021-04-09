@@ -107,6 +107,9 @@ void LevelState::onEnter()
 	setup();
 
 	context_->setGamePlaying(true);
+
+	player->setMoveSpeed(context_->getPlayerSpeed());
+	player->setJumpForce(context_->getPlayerJumpForce());
 }
 
 void LevelState::onExit()
@@ -273,8 +276,6 @@ void LevelState::setupPlayer()
 	player->setScale(0.5f, 0.5f, 0.5f);
 	player->set_mesh(context_->getMeshManager()->getMesh(MeshID::PLAYER));
 	player->setBody(world, b2BodyType::b2_dynamicBody, gef::Vector4(0.5f, 0.5f, 0.5f));
-	player->setMoveSpeed(25.0f);
-	player->setJumpForce(1200.0f);
 	player->update(0.0f);
 }
 

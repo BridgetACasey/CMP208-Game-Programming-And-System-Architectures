@@ -61,7 +61,7 @@ void Slider::updatePosition(float deltaTime, bool usingMouse)
 
 	//Scaling the top portion of the slider sprites relative to the position of the button component
 	upperBackground.set_width((maxAnchorPoint - minAnchorPoint) * (percentageValue / 100.0f));
-	upperBackground.set_position(gef::Vector4((minAnchorPoint + position_.x()) / 2.0f + ((width_ / 4.0f) * (percentageValue / 100.0f)), position_.y(), position_.z()));
+	upperBackground.set_position(gef::Vector4(minAnchorPoint + (upperBackground.width() / 2.0f), position_.y(), position_.z()));
 }
 
 void Slider::setButtonDimensions(float width, float height)

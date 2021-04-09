@@ -3,6 +3,12 @@
 Context::Context(gef::Platform& platform)
 {
 	playerScore = 0;
+
+	maxPlayerSpeed = 50.0f;
+	maxPlayerJumpForce = 2500.0f;
+	playerSpeed = maxPlayerSpeed / 2.0f;
+	playerJumpForce = maxPlayerJumpForce / 2.0f;
+
 	gameWon = false;
 	gamePlaying = false;
 
@@ -120,6 +126,36 @@ void Context::setPlayerScore(int playerScore_)
 int Context::getPlayerScore()
 {
 	return playerScore;
+}
+
+void Context::setPlayerSpeed(float playerSpeed_)
+{
+	playerSpeed = playerSpeed_;
+}
+
+float Context::getPlayerSpeed()
+{
+	return playerSpeed;
+}
+
+void Context::setPlayerJumpForce(float playerJumpForce_)
+{
+	playerJumpForce = playerJumpForce_;
+}
+
+float Context::getPlayerJumpForce()
+{
+	return playerJumpForce;
+}
+
+float Context::getMaxPlayerSpeed()
+{
+	return maxPlayerSpeed;
+}
+
+float Context::getMaxPlayerJumpForce()
+{
+	return maxPlayerJumpForce;
 }
 
 void Context::setGameWon(bool gameWon_)

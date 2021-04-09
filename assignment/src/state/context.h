@@ -41,6 +41,15 @@ public:
 	void setPlayerScore(int playerScore_);
 	int getPlayerScore();
 
+	void setPlayerSpeed(float playerSpeed_);
+	float getPlayerSpeed();
+
+	void setPlayerJumpForce(float playerJumpForce_);
+	float getPlayerJumpForce();
+
+	float getMaxPlayerSpeed();
+	float getMaxPlayerJumpForce();
+
 	void setGameWon(bool gameWon_);
 	bool getGameWon();
 
@@ -64,6 +73,12 @@ private:
 	GameAudio* gameAudio;
 
 	int playerScore;
+
+	float playerSpeed;
+	float playerJumpForce;
+	float maxPlayerSpeed;
+	float maxPlayerJumpForce;
+
 	bool gameWon;
 	bool gamePlaying;
 };

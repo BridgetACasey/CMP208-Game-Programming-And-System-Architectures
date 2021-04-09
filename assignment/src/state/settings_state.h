@@ -28,7 +28,7 @@ public:
 private:
 	int buttonIndex;
 
-	Button* buttons[4];
+	Button* buttons[6];
 	
 	Button* backButton;
 
@@ -36,13 +36,8 @@ private:
 	Slider* musicVolumeSlider;
 	Slider* sfxVolumeSlider;
 
+	Slider* speedSlider;
+	Slider* jumpSlider;
+
 	gef::Sprite background;
-
-	gef::Sprite masterBottomLayer;
-	gef::Sprite musicBottomLayer;
-	gef::Sprite sfxBottomLayer;
-
-	gef::Sprite masterTopLayer;
-	gef::Sprite musicTopLayer;
-	gef::Sprite sfxTopLayer;
 };
