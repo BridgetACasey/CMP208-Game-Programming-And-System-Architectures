@@ -29,4 +29,5 @@ private:
 	Button* backButton;
 
 	gef::Sprite background;
+	gef::Sprite help;
 };

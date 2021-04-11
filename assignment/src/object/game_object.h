@@ -16,7 +16,8 @@ enum class CollisionTag
 {
 	NONE = 0,
 	PLAYER,
-	OBSTACLE,
+	OBSTACLE_GROUND,
+	OBSTACLE_WALL,
 	COLLECTIBLE,
 	LAVA,
 	ICE,

@@ -25,7 +25,8 @@ enum MapObjectID
 {
 	NONE = 0,
 	SNOW,
-	STONE,
+	STONE_GROUND,
+	STONE_WALL,
 	ICE,
 	LAVA,
 	COIN

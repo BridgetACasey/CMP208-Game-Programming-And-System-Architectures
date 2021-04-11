@@ -182,14 +182,13 @@ void LevelState::render()
 	if (context_->getFont())
 	{
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 25.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
-			"X: %.1f   Y: %.1f", player->getPosition()->x(), player->getPosition()->y());
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
-			"FPS: %.1f", fps_);
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 100.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
-			"Coins: %.1i", player->getCoins());
-
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 150.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
 			"VX: %.1f   VY: %.1f   AV: %.1f", player->getVelocity().x, player->getVelocity().y, player->getBody()->GetAngularVelocity());
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+			"X: %.1f   Y: %.1f", player->getPosition()->x(), player->getPosition()->y());
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 75.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+			"FPS: %.1f", fps_);
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+			"Coins: %.1i", player->getCoins());
 	}
 
 	context_->getSpriteRenderer()->End();
@@ -239,7 +238,7 @@ void LevelState::setupPlayer()
 	player = Player::create();
 	player->setPosition(1.0f, 33.0f, 0.0f);
 	player->setScale(0.5f, 0.5f, 0.5f);
-	player->setMaxVelocity(b2Vec2(context_->getPlayerSpeed(), context_->getPlayerJumpForce()));
+	player->setMaxVelocity(b2Vec2(context_->getPlayerSpeed(), context_->getPlayerSpeed() / 2.0f));
 	player->set_mesh(context_->getMeshManager()->getMesh(MeshID::PLAYER));
 	player->setBody(world, b2BodyType::b2_dynamicBody, gef::Vector4(0.4f, 0.5f, 0.5f));
 	player->update(0.0f);
@@ -307,10 +306,21 @@ void LevelState::generateMap(std::vector<int>& mapData, const int width, const i
 				object->update(0.0f);
 				break;
 
-			case MapObjectID::STONE:
+			case MapObjectID::STONE_GROUND:
 				object = Obstacle::create();
 				object->setPosition(x, y, 0.0f);
 				object->setScale(0.1f, 0.1f, 0.1f);
+				object->setCollisionTag(CollisionTag::OBSTACLE_GROUND);
+				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::STONE));
+				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+				object->update(0.0f);
+				break;
+
+			case MapObjectID::STONE_WALL:
+				object = Obstacle::create();
+				object->setPosition(x, y, 0.0f);
+				object->setScale(0.1f, 0.1f, 0.1f);
+				object->setCollisionTag(CollisionTag::OBSTACLE_WALL);
 				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::STONE));
 				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
 				object->update(0.0f);

@@ -31,7 +31,7 @@ void Player::onCollisionBeginWith(CollisionTag tag)
 		coins += 1;
 	}
 
-	if (tag == CollisionTag::OBSTACLE)
+	if (tag == CollisionTag::OBSTACLE_GROUND)
 	{
 		canJump = true;
 	}

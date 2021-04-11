@@ -20,7 +20,7 @@ void HelpState::setup()
 		backButton = Button::create(context_->getGameInput());
 		backButton->set_width(150.0f);
 		backButton->set_height(75.0f);
-		backButton->set_position(gef::Vector4(150.0f, 100.0f, 0.0f));
+		backButton->set_position(gef::Vector4(100.0f, 50.0f, 0.0f));
 		backButton->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::BACK_BUTTON));
 		backButton->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::BACK_BUTTON_COL));
 
@@ -28,6 +28,11 @@ void HelpState::setup()
 		background.set_width(platform_.width());
 		background.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
 		background.set_texture(context_->getTextureManager()->getTexture(TextureID::MENU_BACKGROUND_ALT));
+
+		help.set_height(platform_.height() - 100.0f);
+		help.set_width(platform_.width() - 100.0f);
+		help.set_position(platform_.width() / 2.0f, 310.0f, 0.0f);
+		help.set_texture(context_->getTextureManager()->getTexture(TextureID::HELP_SCREEN_BACKGROUND));
 	}
 
 	firstSetup = false;
@@ -78,10 +83,12 @@ void HelpState::render()
 
 	context_->getSpriteRenderer()->DrawSprite(background);
 
+	context_->getSpriteRenderer()->DrawSprite(help);
+
 	//Render UI elements
 	if (context_->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 50.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "HOW TO PLAY");
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 25.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "HOW TO PLAY");
 	}
 
 	context_->getSpriteRenderer()->DrawSprite(*backButton);

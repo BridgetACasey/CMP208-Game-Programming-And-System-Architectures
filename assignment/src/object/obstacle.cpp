@@ -4,7 +4,7 @@
 
 Obstacle::Obstacle()
 {
-	tag_ = CollisionTag::OBSTACLE;
+	tag_ = CollisionTag::OBSTACLE_GROUND;
 }
 
 Obstacle::~Obstacle()

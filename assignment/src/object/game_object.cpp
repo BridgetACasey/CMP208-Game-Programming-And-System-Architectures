@@ -60,9 +60,9 @@ void GameObject::updateTransforms()
 
 void GameObject::checkDeathFromFalling()
 {
-	if (position.y() < 0.0f)
+	if (position.y() > 36.0f || position.y() < 0.0f)
 	{
-		isAlive = false;
+		//isAlive = false;
 	}
 }
 
@@ -152,6 +152,8 @@ b2Body* GameObject::getBody()
 void GameObject::setMaxVelocity(b2Vec2& vel)
 {
 	maxVelocity = vel;
+
+	moveSpeed = maxVelocity.x;
 }
 
 b2Vec2& GameObject::getMaxVelocity()

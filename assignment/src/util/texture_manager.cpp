@@ -21,6 +21,7 @@ void TextureManager::initTextures()
 	textures[TextureID::MENU_BACKGROUND_ALT] = generateTexture("sprites/background_glacial_mountains_lightened.png");
 	textures[TextureID::END_WIN_BACKGROUND] = generateTexture("sprites/background_glacial_mountains_warm.png");
 	textures[TextureID::END_LOSE_BACKGROUND] = generateTexture("sprites/cave_blue.png");
+	textures[TextureID::HELP_SCREEN_BACKGROUND] = generateTexture("sprites/help_screen.png");
 
 	textures[TextureID::PARALLAX_CLOUD] = generateTexture("sprites/cloud_lonely.png");
 	textures[TextureID::PARALLAX_CLOUDS_BACK] = generateTexture("sprites/clouds_bg.png");
