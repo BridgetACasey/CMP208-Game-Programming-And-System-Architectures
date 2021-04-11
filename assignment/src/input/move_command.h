@@ -25,7 +25,11 @@ class MoveLeftCommand : public MoveCommand
 		gameObject->setActiveDirection(-1);
 		gameObject->setRotation(gameObject->getRotation()->x(), gef::DegToRad(-90.0f), gameObject->getRotation()->z());
 		move = b2Vec2(-gameObject->getMoveSpeed(), 0.0f);
-		gameObject->getBody()->ApplyForceToCenter(move, true);
+
+		if (gameObject->getVelocity().x > -(gameObject->getMaxVelocity().x) && gameObject->getVelocity().x < gameObject->getMaxVelocity().x)
+		{
+			gameObject->getBody()->ApplyForceToCenter(move, true);
+		}
 	}
 };
 
@@ -36,7 +40,11 @@ class MoveRightCommand : public MoveCommand
 		gameObject->setActiveDirection(1);
 		gameObject->setRotation(gameObject->getRotation()->x(), gef::DegToRad(90.0f), gameObject->getRotation()->z());
 		move = b2Vec2(gameObject->getMoveSpeed(), 0.0f);
-		gameObject->getBody()->ApplyForceToCenter(move, true);
+
+		if (gameObject->getVelocity().x > -(gameObject->getMaxVelocity().x) && gameObject->getVelocity().x < gameObject->getMaxVelocity().x)
+		{
+			gameObject->getBody()->ApplyForceToCenter(move, true);
+		}
 	}
 };
 
@@ -55,9 +63,12 @@ class JumpCommand : public MoveCommand
 	{
 		if (gameObject->getCanJump())
 		{
-			gameObject->setCanJump(false);
- 			move = b2Vec2(0.0f, gameObject->getJumpForce());
-			gameObject->getBody()->ApplyForceToCenter(move, true);
+			if (gameObject->getVelocity().y > -(gameObject->getMaxVelocity().y) && gameObject->getVelocity().y < gameObject->getMaxVelocity().y)
+			{
+				gameObject->setCanJump(false);
+				move = b2Vec2(0.0f, gameObject->getJumpForce());
+				gameObject->getBody()->ApplyForceToCenter(move, true);
+			}
 		}
 	}
 };

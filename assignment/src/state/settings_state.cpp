@@ -12,6 +12,8 @@ SettingsState::SettingsState(gef::Platform& platform) : State(platform)
 	masterVolumeSlider = nullptr;
 	musicVolumeSlider = nullptr;
 	sfxVolumeSlider = nullptr;
+	speedSlider = nullptr;
+	jumpSlider = nullptr;
 }
 
 SettingsState* SettingsState::create(gef::Platform& platform)
@@ -71,9 +73,9 @@ void SettingsState::setup()
 		speedSlider = Slider::create(context_->getGameInput());
 		speedSlider->setButtonDimensions(50.0f, 50.0f);
 		speedSlider->setAnchorPoints(175.0f, 425.0f, 450.0f);
-		speedSlider->setInitialPercentageValue(50.0f);
-		speedSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
-		speedSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
+		speedSlider->setInitialPercentageValue(100.0f);
+		speedSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::GEAR_BUTTON));
+		speedSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::GEAR_BUTTON_COL));
 		speedSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
 		speedSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
 		speedSlider->updatePosition(0.0f, false);
@@ -81,9 +83,9 @@ void SettingsState::setup()
 		jumpSlider = Slider::create(context_->getGameInput());
 		jumpSlider->setButtonDimensions(50.0f, 50.0f);
 		jumpSlider->setAnchorPoints(500.0f, 750.0f, 450.0f);
-		jumpSlider->setInitialPercentageValue(50.0f);
-		jumpSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON));
-		jumpSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::MUSIC_BUTTON_COL));
+		jumpSlider->setInitialPercentageValue(100.0f);
+		jumpSlider->setInactiveTexture(context_->getTextureManager()->getTexture(TextureID::GEAR_BUTTON));
+		jumpSlider->setHoveringTexture(context_->getTextureManager()->getTexture(TextureID::GEAR_BUTTON_COL));
 		jumpSlider->getLowerBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_BOTTOM));
 		jumpSlider->getUpperBackground()->set_texture(context_->getTextureManager()->getTexture(TextureID::SLIDER_TOP));
 		jumpSlider->updatePosition(0.0f, false);
@@ -177,9 +179,6 @@ void SettingsState::render()
 	//Render UI elements
 	if (context_->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(700.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "X: %.1f Y: %.1f",
-			context_->getGameInput()->getMouse()->position.x, context_->getGameInput()->getMouse()->position.y);
-
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 50.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "SETTINGS");
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MASTER:   %.1f", masterVolumeSlider->getPercentageValue());
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 210.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MUSIC:   %.1f", musicVolumeSlider->getPercentageValue());

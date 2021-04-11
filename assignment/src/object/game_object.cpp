@@ -5,6 +5,9 @@ GameObject::GameObject()
 	body = nullptr;
 	tag_ = CollisionTag::NONE;
 
+	velocity = b2Vec2(0.0f, 0.0f);
+	maxVelocity = b2Vec2(0.0f, 0.0f);
+
 	position = gef::Vector4(0.0f, 0.0f, 0.0f);
 	rotation = gef::Vector4(0.0f, 0.0f, 0.0f);
 	scale = gef::Vector4(1.0f, 1.0f, 1.0f);
@@ -35,6 +38,8 @@ void GameObject::updateTransforms()
 	{
 		gef::Matrix44 transform, translation, rotX, rotY, rotZ, scale_;
 
+		velocity = body->GetLinearVelocity();
+		
 		scale_.Scale(scale);
 
 		rotX.RotationX(rotation.x());
@@ -64,7 +69,6 @@ void GameObject::checkDeathFromFalling()
 void GameObject::update(float deltaTime)
 {
 	updateTransforms();
-	checkDeathFromFalling();
 }
 
 void GameObject::onCollisionBeginWith(CollisionTag tag)
@@ -143,6 +147,21 @@ gef::Vector4* GameObject::getScale()
 b2Body* GameObject::getBody()
 {
 	return body;
+}
+
+void GameObject::setMaxVelocity(b2Vec2& vel)
+{
+	maxVelocity = vel;
+}
+
+b2Vec2& GameObject::getMaxVelocity()
+{
+	return maxVelocity;
+}
+
+b2Vec2& GameObject::getVelocity()
+{
+	return velocity;
 }
 
 void GameObject::setCollisionTag(CollisionTag tag)

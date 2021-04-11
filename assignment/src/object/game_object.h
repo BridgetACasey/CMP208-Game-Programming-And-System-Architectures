@@ -56,6 +56,11 @@ public:
 
 	b2Body* getBody();
 
+	void setMaxVelocity(b2Vec2& vel);
+	b2Vec2& getMaxVelocity();
+	
+	b2Vec2& getVelocity();
+
 	void setCollisionTag(CollisionTag newTag);
 	CollisionTag& getCollisionTag();
 
@@ -82,6 +87,9 @@ protected:
 	gef::Vector4 scale;
 
 	b2Body* body;
+
+	b2Vec2 velocity;
+	b2Vec2 maxVelocity;
 
 	CollisionTag tag_;
 

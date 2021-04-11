@@ -3,10 +3,11 @@
 
 LevelState::LevelState(gef::Platform& platform) : State(platform)
 {
-	campfire = nullptr;
 	player = nullptr;
+	campfire = nullptr;
 	camera = nullptr;
 	world = nullptr;
+	parallax = nullptr;
 
 	fps_ = 0.0f;
 }
@@ -29,33 +30,12 @@ void LevelState::setup()
 		delete player;
 		player = NULL;
 
-		delete campfire;
-		campfire = NULL;
-
-		for (Collectible* coin : collectibles)
+		for (GameObject* object : map)
 		{
-			delete coin;
-		}
-		
-		for (Ice* iceObject : ice)
-		{
-			delete iceObject;
-		}
-		
-		for (Lava* lavaObject : lava)
-		{
-			delete lavaObject;
-		}
-		
-		for (Obstacle* obstacle : obstacles)
-		{
-			delete obstacle;
+			delete object;
 		}
 
-		collectibles.clear();
-		ice.clear();
-		lava.clear();
-		obstacles.clear();
+		map.clear();
 
 		gef::Default3DShaderData& default_shader_data = context_->getRenderer3D()->default_shader_data();
 		default_shader_data.CleanUp();
@@ -77,22 +57,19 @@ void LevelState::setup()
 		world->SetContactListener(&collision);
 
 		setupPlayer();
-		setupCollectibles();
-		setupObstacles();
-		setupLava();
-		setupIce();
+		setupCampfire();
 
-		campfire = Campfire::create();
-		campfire->setPosition(3.0f, 0.0f, 0.0f);
-		campfire->setScale(0.5f, 0.5f, 0.5f);
-		campfire->set_mesh(context_->getMeshManager()->getMesh(MeshID::CAMPFIRE));
-		campfire->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(1.0f, 1.5f, 1.0f));
-		campfire->update(0.0f);
+		readMapData("map-data.csv");
 
-		SetupCamera();
-		SetupLights();
+		setupCamera();
+		setupLighting();
 
-		context_->getGameAudio()->getListener().SetTransform(player->transform());
+		sky.set_height(platform_.height());
+		sky.set_width(platform_.width());
+		sky.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 1.0f);
+		sky.set_texture(context_->getTextureManager()->getTexture(TextureID::PARALLAX_SKY));
+
+		parallax = ParallaxBackground::create(platform_, context_);
 
 		context_->getGameAudio()->playMusic(MusicID::LEVEL);
 	}
@@ -130,11 +107,13 @@ void LevelState::handleInput()
 
 bool LevelState::update(float deltaTime)
 {
+	camera->updateFollow(player);
+	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
+
 	context_->getGameAudio()->getListener().SetTransform(player->transform());
 	context_->getGameAudio()->update();
 
-	camera->updateFollow(player);
-	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
+	pointLight.set_position(gef::Vector4(player->getPosition()->x(), player->getPosition()->y(), player->getPosition()->z()));
 
 	fps_ = 1.0f / deltaTime;
 
@@ -144,13 +123,13 @@ bool LevelState::update(float deltaTime)
 	float timeStep = 1.0f / 60.0f;
 
 	// update object visuals from simulation data
-	// don't have to update the ground visuals as it is static
 
+	parallax->updateBackgrounds(deltaTime);
 	player->update(deltaTime);
 
-	for (Collectible* coin : collectibles)
+	for (GameObject* object : map)
 	{
-		coin->update(deltaTime);
+		object->update(deltaTime);
 	}
 
 	if (campfire->getContacted())
@@ -181,76 +160,58 @@ void LevelState::render()
 	// draw 3d geometry
 	context_->getRenderer3D()->Begin(true);
 
+	context_->getRenderer3D()->DrawMesh(*player);
 	context_->getRenderer3D()->DrawMesh(*campfire);
 
-	// draw player
-	context_->getRenderer3D()->DrawMesh(*player);
-
-	for (Collectible* coin : collectibles)
+	for (GameObject* object : map)
 	{
-		if (!coin->getCollected())
+		if (object->getIsAlive())
 		{
-			context_->getRenderer3D()->DrawMesh(*coin);
+			context_->getRenderer3D()->DrawMesh(*object);
 		}
 	}
-
-	for (Ice* iceObject : ice)
-	{
-		context_->getRenderer3D()->DrawMesh(*iceObject);
-	}
-
-	for (Lava* lavaObject : lava)
-	{
-		context_->getRenderer3D()->DrawMesh(*lavaObject);
-	}
-
-	for (Obstacle* obstacle : obstacles)
-	{
-		context_->getRenderer3D()->DrawMesh(*obstacle);
-	}
-
-	context_->getRenderer3D()->set_override_material(NULL);
 
 	context_->getRenderer3D()->End();
 
 	// start drawing sprites, but don't clear the frame buffer
 	context_->getSpriteRenderer()->Begin(false);
 
-	DrawHUD();
+	context_->getSpriteRenderer()->DrawSprite(sky);
+	parallax->renderBackgrounds();
+
+	if (context_->getFont())
+	{
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 25.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+			"X: %.1f   Y: %.1f", player->getPosition()->x(), player->getPosition()->y());
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+			"FPS: %.1f", fps_);
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 100.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+			"Coins: %.1i", player->getCoins());
+
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 150.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+			"VX: %.1f   VY: %.1f   AV: %.1f", player->getVelocity().x, player->getVelocity().y, player->getBody()->GetAngularVelocity());
+	}
 
 	context_->getSpriteRenderer()->End();
 }
 
-void LevelState::DrawHUD()
-{
-	if (context_->getFont())
-	{
-		// display frame rate
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(650.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT,
-			"X: %.1f Y: %.1f FPS: %.1f", player->getPosition()->x(), player->getPosition()->y(), fps_);
-
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(775.0f, 75.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT,
-			"Coins: %.1i", player->getCoins());
-	}
-}
-
-void LevelState::SetupLights()
+void LevelState::setupLighting()
 {
 	// grab the data for the default shader used for rendering 3D geometry
 	gef::Default3DShaderData& default_shader_data = context_->getRenderer3D()->default_shader_data();
 
 	// set the ambient light
-	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
+	default_shader_data.set_ambient_light_colour(gef::Colour(0.35f, 0.35f, 0.5f, 1.0f));
 
 	// add a point light that is almost white, but with a blue tinge
 	// the position of the light is set far away so it acts light a directional light
-	gef::PointLight default_point_light;
-	default_point_light.set_colour(gef::Colour(0.9f, 0.7f, 0.7f, 1.0f));
-	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
-	default_shader_data.AddPointLight(default_point_light);
+	//gef::PointLight default_point_light;
+	pointLight.set_colour(gef::Colour(0.7f, 0.7f, 0.9f, 1.0f));
+	pointLight.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
+	default_shader_data.AddPointLight(pointLight);
 }
 
-void LevelState::SetupCamera()
+void LevelState::setupCamera()
 {
 	// projection
 	camera = new Camera();
@@ -261,9 +222,13 @@ void LevelState::SetupCamera()
 	context_->getRenderer3D()->set_projection_matrix(camera->projection_matrix);
 
 	// view
-	camera->eye = gef::Vector4(0.0f, 4.0f, 6.0f);
-	camera->lookAt = gef::Vector4(0.0f, 0.0f, 0.0f);
-	camera->up = gef::Vector4(0.0f, 1.0f, 0.0f);
+
+	if (player)
+	{
+		camera->eye = gef::Vector4(0.0f, player->getPosition()->y(), 8.0f);
+		camera->lookAt = gef::Vector4(0.0f, 0.0f, 0.0f);
+		camera->up = gef::Vector4(0.0f, 1.0f, 0.0f);
+	}
 
 	camera->view_matrix.LookAt(camera->eye, camera->lookAt, camera->up);
 	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
@@ -272,95 +237,126 @@ void LevelState::SetupCamera()
 void LevelState::setupPlayer()
 {
 	player = Player::create();
-	player->setPosition(0.0f, 4.0f, 0.0f);
+	player->setPosition(1.0f, 33.0f, 0.0f);
 	player->setScale(0.5f, 0.5f, 0.5f);
+	player->setMaxVelocity(b2Vec2(context_->getPlayerSpeed(), context_->getPlayerJumpForce()));
 	player->set_mesh(context_->getMeshManager()->getMesh(MeshID::PLAYER));
-	player->setBody(world, b2BodyType::b2_dynamicBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+	player->setBody(world, b2BodyType::b2_dynamicBody, gef::Vector4(0.4f, 0.5f, 0.5f));
 	player->update(0.0f);
 }
 
-void LevelState::setupLava()
+void LevelState::setupCampfire()
 {
-	int objectTotal = 1;
-
-	Lava* newLava;
-
-	for (int i = 0; i < objectTotal; ++i)
-	{
-		newLava = Lava::create();
-		newLava->setPosition(-2.0f, 0.0f, 0.0f);
-		newLava->setScale(0.1f, 0.1f, 0.1f);
-		newLava->set_mesh(context_->getMeshManager()->getMesh(MeshID::LAVA));
-		newLava->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
-		newLava->update(0.0f);
-
-		lava.push_back(newLava);
-	}
-
-	newLava = NULL;
+	campfire = Campfire::create();
+	campfire->setPosition(7.0f, 32.75f, 0.0f);
+	campfire->setScale(0.4f, 0.4f, 0.4f);
+	campfire->set_mesh(context_->getMeshManager()->getMesh(MeshID::CAMPFIRE));
+	campfire->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(1.0f, 1.5f, 1.0f));
+	campfire->update(0.0f);
 }
 
-void LevelState::setupIce()
+void LevelState::readMapData(const char* filePath)
 {
-	int objectTotal = 1;
-	
-	Ice* newIce;
+	std::string line, value;
+	std::ifstream mapFile;
+	std::vector<int> mapData;
 
-	for (int i = 0; i < objectTotal; ++i)
+	if (filePath)
 	{
-		newIce = Ice::create();
-		newIce->setPosition(0.0f, 0.0f, 0.0f);
-		newIce->setScale(0.1f, 0.1f, 0.1f);
-		newIce->set_mesh(context_->getMeshManager()->getMesh(MeshID::ICE));
-		newIce->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
-		newIce->update(0.0f);
+		mapFile.open(filePath);
 
-		ice.push_back(newIce);
+		if (!mapFile.is_open())
+		{
+			std::cerr << "Error: failed to open '" << filePath << "'.\n";
+			return;
+		}
 	}
 
-	newIce = NULL;
-}
-
-void LevelState::setupObstacles()
-{
-	Obstacle* snow;
-	Obstacle* stone;
-
-	snow = Obstacle::create();
-	snow->setPosition(-1.0f, 0.0f, 0.0f);
-	snow->setScale(0.1f, 0.1f, 0.1f);
-	snow->set_mesh(context_->getMeshManager()->getMesh(MeshID::SNOW));
-	snow->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
-	snow->update(0.0f);
-
-	stone = Obstacle::create();
-	stone->setPosition(1.0f, 0.0f, 0.0f);
-	stone->setScale(0.1f, 0.1f, 0.1f);
-	stone->set_mesh(context_->getMeshManager()->getMesh(MeshID::STONE));
-	stone->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
-	stone->update(0.0f);
-
-	obstacles.push_back(snow);
-	obstacles.push_back(stone);
-}
-
-void LevelState::setupCollectibles()
-{
-	int objectTotal = 1;
-
-	Collectible* coin;
-	
-	for (int i = 0; i < objectTotal; ++i)
+	while (std::getline(mapFile, line))	
 	{
-		coin = Collectible::create();
-		coin->setPosition(2.0f, 3.0f, 0.0f);
-		coin->setScale(2.0f, 2.0f, 1.0f);
-		coin->set_mesh(context_->getMeshManager()->getMesh(MeshID::COIN));
-		coin->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
-		coin->update(0.0f);
+		std::stringstream s(line);
 
-		collectibles.push_back(coin);
+		while (getline(s, value, ','))
+		{
+			mapData.push_back(std::stoi(value));
+		}
 	}
 
-	coin = NULL;
+	generateMap(mapData, 128, 32);
+}
+
+void LevelState::generateMap(std::vector<int>& mapData, const int width, const int height)
+{
+	GameObject* object = nullptr;
+	AudioEmitter emitter;
+
+	int current = 0;
+
+	for (int y = height; y > 0; --y)
+	{
+		for (int x = 0; x < width; ++x)
+		{
+			switch (mapData.at(current))
+			{
+			case MapObjectID::SNOW:
+				object = Obstacle::create();
+				object->setPosition(x, y, 0.0f);
+				object->setScale(0.1f, 0.1f, 0.1f);
+				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::SNOW));
+				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+				object->update(0.0f);
+				break;
+
+			case MapObjectID::STONE:
+				object = Obstacle::create();
+				object->setPosition(x, y, 0.0f);
+				object->setScale(0.1f, 0.1f, 0.1f);
+				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::STONE));
+				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+				object->update(0.0f);
+				break;
+
+			case MapObjectID::ICE:
+				object = Ice::create();
+				object->setPosition(x, y, 0.0f);
+				object->setScale(0.1f, 0.1f, 0.1f);
+				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::ICE));
+				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+				object->update(0.0f);
+				break;
+
+			case MapObjectID::LAVA:
+				object = Lava::create();
+				object->setPosition(x, y, 0.0f);
+				object->setScale(0.1f, 0.1f, 0.1f);
+				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::LAVA));
+				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+				object->update(0.0f);
+				break;
+
+			case MapObjectID::COIN:
+				object = Collectible::create();
+				object->setPosition(x, y, 0.0f);
+				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::COIN));
+				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+				object->update(0.0f);
+
+				emitter.Init((int)SoundEffectID::COLLECTED, false);
+				emitter.set_radius(object->getScale()->x() / 2.0f);
+				emitter.set_position(*object->getPosition());
+				context_->getGameAudio()->get3D()->AddEmitter(emitter);
+				break;
+
+			default:
+				object = nullptr;
+			}
+
+			if (object)
+			{
+				map.push_back(object);
+			}
+
+			++current;
+		}
+	}
 }

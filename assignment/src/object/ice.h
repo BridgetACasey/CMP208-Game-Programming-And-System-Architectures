@@ -18,4 +18,8 @@ public:
 
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
+
+private:
+	bool triggered;
+	float timer;
 };

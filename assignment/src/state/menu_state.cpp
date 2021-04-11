@@ -143,15 +143,6 @@ void MenuState::render()
 	context_->getSpriteRenderer()->DrawSprite(*buttons[2]);
 	context_->getSpriteRenderer()->DrawSprite(*buttons[3]);
 
-	if (context_->getFont())
-	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(700.0f, 500.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "X: %.1f Y: %.1f",
-			context_->getGameInput()->getMouse()->position.x, context_->getGameInput()->getMouse()->position.y);
-
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(700.0f, 475.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "CX: %.1f CY: %.1f",
-			context_->getGameInput()->getController()->leftPosition.x, context_->getGameInput()->getController()->leftPosition.y);
-	}
-
 	context_->getSpriteRenderer()->End();
 }
 

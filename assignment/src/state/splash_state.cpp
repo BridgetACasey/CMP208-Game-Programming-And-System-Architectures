@@ -33,7 +33,7 @@ void SplashState::onEnter()
 
 	setup();
 
-	context_->getGameAudio()->playSoundEffect(SoundEffectID::INTRO, false);
+	//context_->getGameAudio()->playSoundEffect(SoundEffectID::INTRO, false);
 }
 
 void SplashState::onExit()

@@ -25,6 +25,7 @@ void Collectible::update(float deltaTime)
 	if (collected)
 	{
 		body->SetEnabled(false);
+		isAlive = false;
 	}
 }
 

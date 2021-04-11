@@ -204,6 +204,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\util\parallax_background.cpp" />
     <ClCompile Include="src\object\campfire.cpp" />
     <ClCompile Include="src\object\ice.cpp" />
     <ClCompile Include="src\object\lava.cpp" />
@@ -244,6 +245,7 @@
     <ClCompile Include="src\util\texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\util\parallax_background.h" />
     <ClInclude Include="src\object\campfire.h" />
     <ClInclude Include="src\object\ice.h" />
     <ClInclude Include="src\object\lava.h" />
