@@ -6,9 +6,9 @@ GameAudio::GameAudio(gef::Platform& platform) : platform_(platform)
 
     audio3D = new Audio3D(audioManager);
 
-	setMasterVolume(10.0f);
-	setMusicVolume(10.0f);
-	sfxVolume = 10.0f;
+	setMasterVolume(50.0f);
+	setMusicVolume(50.0f);
+	sfxVolume = 50.0f;
 
 	initSFX();
 	initMusic();

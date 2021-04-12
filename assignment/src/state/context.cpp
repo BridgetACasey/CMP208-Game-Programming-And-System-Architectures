@@ -4,8 +4,8 @@ Context::Context(gef::Platform& platform)
 {
 	playerScore = 0;
 
-	maxPlayerSpeed = 12.0f;
-	maxPlayerJumpForce = 750.0f;
+	maxPlayerSpeed = 8.0f;
+	maxPlayerJumpForce = 350.0f;
 	playerSpeed = maxPlayerSpeed;
 	playerJumpForce = maxPlayerJumpForce;
 

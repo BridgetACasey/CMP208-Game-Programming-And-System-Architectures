@@ -60,9 +60,9 @@ void GameObject::updateTransforms()
 
 void GameObject::checkDeathFromFalling()
 {
-	if (position.y() > 36.0f || position.y() < 0.0f)
+	if (position.y() < 0.0f)
 	{
-		//isAlive = false;
+		isAlive = false;
 	}
 }
 

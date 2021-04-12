@@ -204,7 +204,6 @@ void LevelState::setupLighting()
 
 	// add a point light that is almost white, but with a blue tinge
 	// the position of the light is set far away so it acts light a directional light
-	//gef::PointLight default_point_light;
 	pointLight.set_colour(gef::Colour(0.7f, 0.7f, 0.9f, 1.0f));
 	pointLight.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
 	default_shader_data.AddPointLight(pointLight);
@@ -224,7 +223,7 @@ void LevelState::setupCamera()
 
 	if (player)
 	{
-		camera->eye = gef::Vector4(0.0f, player->getPosition()->y(), 8.0f);
+		camera->eye = gef::Vector4(0.0f, player->getPosition()->y(), 12.0f);
 		camera->lookAt = gef::Vector4(0.0f, 0.0f, 0.0f);
 		camera->up = gef::Vector4(0.0f, 1.0f, 0.0f);
 	}
@@ -236,7 +235,7 @@ void LevelState::setupCamera()
 void LevelState::setupPlayer()
 {
 	player = Player::create();
-	player->setPosition(1.0f, 33.0f, 0.0f);
+	player->setPosition(2.0f, 21.0f, 0.0f);
 	player->setScale(0.5f, 0.5f, 0.5f);
 	player->setMaxVelocity(b2Vec2(context_->getPlayerSpeed(), context_->getPlayerSpeed() / 2.0f));
 	player->set_mesh(context_->getMeshManager()->getMesh(MeshID::PLAYER));
@@ -247,7 +246,7 @@ void LevelState::setupPlayer()
 void LevelState::setupCampfire()
 {
 	campfire = Campfire::create();
-	campfire->setPosition(7.0f, 32.75f, 0.0f);
+	campfire->setPosition(125.0f, 24.75f, 0.0f);
 	campfire->setScale(0.4f, 0.4f, 0.4f);
 	campfire->set_mesh(context_->getMeshManager()->getMesh(MeshID::CAMPFIRE));
 	campfire->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(1.0f, 1.5f, 1.0f));
@@ -323,6 +322,7 @@ void LevelState::generateMap(std::vector<int>& mapData, const int width, const i
 				object->setCollisionTag(CollisionTag::OBSTACLE_WALL);
 				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::STONE));
 				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
+				//object->getBody()->SetAwake(false);
 				object->update(0.0f);
 				break;
 
@@ -352,7 +352,7 @@ void LevelState::generateMap(std::vector<int>& mapData, const int width, const i
 				object->update(0.0f);
 
 				emitter.Init((int)SoundEffectID::COLLECTED, false);
-				emitter.set_radius(object->getScale()->x() / 2.0f);
+				emitter.set_radius(3.0f);
 				emitter.set_position(*object->getPosition());
 				context_->getGameAudio()->get3D()->AddEmitter(emitter);
 				break;

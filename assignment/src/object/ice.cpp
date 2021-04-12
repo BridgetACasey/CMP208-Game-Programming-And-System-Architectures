@@ -25,7 +25,7 @@ void Ice::update(float deltaTime)
 
 	if (triggered)
 	{
-		if (timer > 2.0f)
+		if (timer > 1.0f)
 		{
 			body->SetEnabled(false);
 			isAlive = false;

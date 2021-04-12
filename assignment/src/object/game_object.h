@@ -44,7 +44,8 @@ public:
 	virtual void onCollisionEndWith(CollisionTag tag);
 
 	void setDefaultMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions);
-	void setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions);
+
+	virtual void setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions);
 
 	void setPosition(float x, float y, float z);
 	gef::Vector4* getPosition();

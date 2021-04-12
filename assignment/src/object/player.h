@@ -19,6 +19,8 @@ public:
 
 	void update(float deltaTime) override;
 
+	void setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions) override;
+
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
 
