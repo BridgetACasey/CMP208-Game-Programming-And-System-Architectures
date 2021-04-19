@@ -19,7 +19,7 @@ public:
 	void setButtonDimensions(float width, float height);
 
 	//The minimum and maximum x coordinates the button component can oscillate between, as well as the y position of the entire slider object
-	void setAnchorPoints(float min, float max, float y);
+	void setAnchorPoints(float min, float max, float y, float z);
 
 	void setInitialPercentageValue(float initialPercentage);
 	float getPercentageValue();

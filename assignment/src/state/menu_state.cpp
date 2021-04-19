@@ -87,7 +87,7 @@ void MenuState::onEnter()
 
 	if (!context_->getGamePlaying() && !context_->getGameAudio()->isMusicPlaying(MusicID::MENU))
 	{
-		context_->getGameAudio()->playMusic(MusicID::MENU);
+		//context_->getGameAudio()->playMusic(MusicID::MENU);
 	}
 }
 

@@ -70,18 +70,19 @@ void Slider::setButtonDimensions(float width, float height)
 	set_height(height);
 }
 
-void Slider::setAnchorPoints(float min, float max, float y)
+void Slider::setAnchorPoints(float min, float max, float y, float z)
 {
 	minAnchorPoint = min;
 	maxAnchorPoint = max;
 
 	position_.set_y(y);
+	position_.set_z(z);
 
-	lowerBackground.set_position(gef::Vector4((maxAnchorPoint + minAnchorPoint) / 2.0f, position_.y(), position_.z()));
+	lowerBackground.set_position(gef::Vector4((maxAnchorPoint + minAnchorPoint) / 2.0f, position_.y(), position_.z() + 1.0f));
 	lowerBackground.set_height(height_);
 	lowerBackground.set_width(maxAnchorPoint - minAnchorPoint);
 
-	upperBackground.set_position(gef::Vector4((maxAnchorPoint + minAnchorPoint) / 2.0f, position_.y(), position_.z()));
+	upperBackground.set_position(gef::Vector4((maxAnchorPoint + minAnchorPoint) / 2.0f, position_.y(), position_.z() - 1.0f));
 	upperBackground.set_height(height_);
 	upperBackground.set_width(maxAnchorPoint - minAnchorPoint);
 }

@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _GAME_AUDIO_H
+#define _GAME_AUDIO_H
+
 #pragma once
 
 #include <map>
@@ -26,9 +29,12 @@ enum class MusicID
 struct SoundEffect
 {
 	const char* filePath = 0;
+	//The index of the sound effect within the 'samples' vector of the gef::AudioManager class
+	//Not ideal, but stored here because the samples vector cannot otherwise be accessed from outside gef
 	Int32 sampleIndex = -1;
 };
 
+//Wrapper class for audio-related functions
 class GameAudio
 {
 protected:
@@ -76,3 +82,5 @@ private:
 	std::map<SoundEffectID, SoundEffect> sfx;
 	std::map<MusicID, const char*> music;
 };
+
+#endif	//_GAME_AUDIO_H

@@ -71,7 +71,7 @@ void LevelState::setup()
 
 		parallax = ParallaxBackground::create(platform_, context_);
 
-		context_->getGameAudio()->playMusic(MusicID::LEVEL);
+		//context_->getGameAudio()->playMusic(MusicID::LEVEL);
 	}
 
 	firstSetup = false;
@@ -235,7 +235,8 @@ void LevelState::setupCamera()
 void LevelState::setupPlayer()
 {
 	player = Player::create();
-	player->setPosition(2.0f, 21.0f, 0.0f);
+	//player->setPosition(2.0f, 21.0f, 0.0f);
+	player->setPosition(120.0f, 23.0f, 0.0f);
 	player->setScale(0.5f, 0.5f, 0.5f);
 	player->setMaxVelocity(b2Vec2(context_->getPlayerSpeed(), context_->getPlayerSpeed() / 2.0f));
 	player->set_mesh(context_->getMeshManager()->getMesh(MeshID::PLAYER));

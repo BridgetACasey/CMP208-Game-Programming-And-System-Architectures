@@ -19,7 +19,7 @@ GameAudio* GameAudio::create(gef::Platform& platform)
     return new GameAudio(platform);
 }
 
-void GameAudio::initSFX()
+void GameAudio::initSFX()	//Loading in all the sfx file paths so they can be called with enum values instead
 {
 	SoundEffect newSFX{};
 

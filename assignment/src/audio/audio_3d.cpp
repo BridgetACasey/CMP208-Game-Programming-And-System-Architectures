@@ -33,6 +33,12 @@ void Audio3D::Update(float sfxVolume)
 			// remove the emitter if it has stopped
 			if (emitter->playing())
 			{
+				/*
+				* I have edited this section to check 'sfx_id' against the 'samples' vector in the audio manager class instead of 'voice_id',
+				* as I noticed that the voice id only ever returns 0 or -1, and therefore this Update function does not behave correctly when
+				* trying to retrieve a sample from the audio manager with an index > 0
+				*/
+
 				//if (!audio_manager_->sample_voice_playing(emitter->voice_id()))
 				if (!audio_manager_->sample_voice_playing(emitter->sfx_id()))
 				{
@@ -60,6 +66,11 @@ void Audio3D::Update(float sfxVolume)
 				// safety check, make sure the emitter is playing before trying to alter the volume settings
 				if (emitter->playing())
 				{
+					/*
+					* Edited to pass the sound effect volume into Update so it scales with the volume settings as defined in the settings menu.
+					* I believe adding a scalar value was necessary anyway as otherwise the volume is very quiet.
+					*/
+
 					// Set the sound volume based on the distance from the emitter
 					float volume = sfxVolume * (1.0f - (distance / emitter->radius()));
 
