@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _PAUSE_STATE_H
+#define _PAUSE_STATE_H
+
 #pragma once
 
 #include "state.h"
@@ -32,3 +35,5 @@ private:
 
 	gef::Sprite background;
 };
+
+#endif	//_PAUSE_STATE_H

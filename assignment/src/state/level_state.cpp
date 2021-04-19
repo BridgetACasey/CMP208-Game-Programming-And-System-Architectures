@@ -1,3 +1,5 @@
+//@BridgetACasey
+
 #include "level_state.h"
 #include "context.h"
 
@@ -8,8 +10,6 @@ LevelState::LevelState(gef::Platform& platform) : State(platform)
 	camera = nullptr;
 	world = nullptr;
 	parallax = nullptr;
-
-	fps_ = 0.0f;
 }
 
 LevelState* LevelState::create(gef::Platform& platform)
@@ -107,6 +107,8 @@ void LevelState::handleInput()
 
 bool LevelState::update(float deltaTime)
 {
+	fps_ = 1.0f / deltaTime;
+
 	camera->updateFollow(player);
 	context_->getRenderer3D()->set_view_matrix(camera->view_matrix);
 
@@ -114,8 +116,6 @@ bool LevelState::update(float deltaTime)
 	context_->getGameAudio()->update();
 
 	pointLight.set_position(gef::Vector4(player->getPosition()->x(), player->getPosition()->y(), player->getPosition()->z()));
-
-	fps_ = 1.0f / deltaTime;
 
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
@@ -182,10 +182,8 @@ void LevelState::render()
 	if (context_->getFont())
 	{
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 25.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
-			"VX: %.1f   VY: %.1f   AV: %.1f", player->getVelocity().x, player->getVelocity().y, player->getBody()->GetAngularVelocity());
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
 			"X: %.1f   Y: %.1f", player->getPosition()->x(), player->getPosition()->y());
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 75.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
 			"FPS: %.1f", fps_);
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT,
 			"Coins: %.1i", player->getCoins());
@@ -235,8 +233,7 @@ void LevelState::setupCamera()
 void LevelState::setupPlayer()
 {
 	player = Player::create();
-	//player->setPosition(2.0f, 21.0f, 0.0f);
-	player->setPosition(120.0f, 23.0f, 0.0f);
+	player->setPosition(2.0f, 21.0f, 0.0f);
 	player->setScale(0.5f, 0.5f, 0.5f);
 	player->setMaxVelocity(b2Vec2(context_->getPlayerSpeed(), context_->getPlayerSpeed() / 2.0f));
 	player->set_mesh(context_->getMeshManager()->getMesh(MeshID::PLAYER));
@@ -323,7 +320,7 @@ void LevelState::generateMap(std::vector<int>& mapData, const int width, const i
 				object->setCollisionTag(CollisionTag::OBSTACLE_WALL);
 				object->set_mesh(context_->getMeshManager()->getMesh(MeshID::STONE));
 				object->setBody(world, b2BodyType::b2_staticBody, gef::Vector4(0.5f, 0.5f, 0.5f));
-				//object->getBody()->SetAwake(false);
+				object->getBody()->SetAwake(false);
 				object->update(0.0f);
 				break;
 

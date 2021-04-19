@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _CAMPFIRE_H
+#define _CAMPFIRE_H
+
 #pragma once
 
 #include "object/game_object.h"
@@ -24,3 +27,5 @@ public:
 private:
 	bool contacted;
 };
+
+#endif	//_CAMPFIRE_H

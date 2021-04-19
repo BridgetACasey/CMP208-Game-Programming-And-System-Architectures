@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _MENU_STATE_H
+#define _MENU_STATE_H
+
 #pragma once
 
 #include "state.h"
@@ -41,3 +44,5 @@ private:
 
 	bool play;
 };
+
+#endif	//_MENU_STATE_H

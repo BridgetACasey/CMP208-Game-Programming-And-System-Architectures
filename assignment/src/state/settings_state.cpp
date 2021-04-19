@@ -128,6 +128,8 @@ void SettingsState::handleInput()
 
 bool SettingsState::update(float deltaTime)
 {
+	fps_ = 1.0f / deltaTime;
+	
 	context_->getGameInput()->update();
 
 	if (context_->getGameInput()->getController()->active)
@@ -178,6 +180,8 @@ void SettingsState::render()
 	//Render UI elements
 	if (context_->getFont())
 	{
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps_);
+		
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 50.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "SETTINGS");
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 125.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MASTER:   %.1f", masterVolumeSlider->getPercentageValue());
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 210.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "MUSIC:   %.1f", musicVolumeSlider->getPercentageValue());

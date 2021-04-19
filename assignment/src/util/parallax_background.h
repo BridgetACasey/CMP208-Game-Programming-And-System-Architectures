@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _PARALLAX_BACKGROUND_H
+#define _PARALLAX_BACKGROUND_H
+
 #pragma once
 
 #include <vector>
@@ -37,3 +40,5 @@ private:
 	std::vector<Layer> layers;
 	std::vector<Layer> layersCopy;
 };
+
+#endif	//_PARALLAX_BACKGROUND_H

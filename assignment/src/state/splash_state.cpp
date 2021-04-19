@@ -1,3 +1,5 @@
+//@BridgetACasey
+
 #include "splash_state.h"
 #include "context.h"
 
@@ -48,6 +50,8 @@ void SplashState::handleInput()
 
 bool SplashState::update(float deltaTime)
 {
+	fps_ = 1.0f / deltaTime;
+
 	if (transitionTime > 3.0f)
 	{
 		transitionTime = 0.0f;
@@ -71,6 +75,11 @@ void SplashState::render()
 
 	//Render UI elements
 	context_->getSpriteRenderer()->DrawSprite(splashImage);
+
+	if (context_->getFont())
+	{
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps_);
+	}
 
 	context_->getSpriteRenderer()->End();
 }

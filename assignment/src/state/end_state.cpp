@@ -98,6 +98,8 @@ void EndState::handleInput()
 
 bool EndState::update(float deltaTime)
 {
+	fps_ = 1.0f / deltaTime;
+	
 	return play;
 }
 
@@ -116,6 +118,8 @@ void EndState::render()
 	//Render UI elements
 	if (context_->getFont())
 	{
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps_);
+		
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 75.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, text);
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 140.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "Last Score: %.1i", lastScore);
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 170.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_CENTRE, "Highest Score: %.1i", highestScore);

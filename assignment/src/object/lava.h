@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _LAVA_H
+#define _LAVA_H
+
 #pragma once
 
 #include "object/game_object.h"
@@ -19,3 +22,5 @@ public:
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
 };
+
+#endif	//_LAVA_H

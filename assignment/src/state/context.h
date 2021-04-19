@@ -1,3 +1,8 @@
+//@BridgetACasey
+
+#ifndef _CONTEXT_H
+#define _CONTEXT_H
+
 #pragma once
 
 #include <map>
@@ -9,11 +14,6 @@
 #include "end_state.h"
 #include "settings_state.h"
 #include "help_state.h"
-
-namespace gef
-{
-	class Platform;
-}
 
 class Context
 {
@@ -82,3 +82,5 @@ private:
 	bool gameWon;
 	bool gamePlaying;
 };
+
+#endif	//_CONTEXT_H

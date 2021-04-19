@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _SPLASH_STATE_H
+#define _SPLASH_STATE_H
+
 #pragma once
 
 #include "state.h"
@@ -28,3 +31,5 @@ private:
 	
 	gef::Sprite splashImage;
 };
+
+#endif	//_SPLASH_STATE_H

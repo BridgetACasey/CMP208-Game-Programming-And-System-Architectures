@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _END_STATE_H
+#define _END_STATE_H
+
 #pragma once
 
 #include "state.h"
@@ -41,3 +44,5 @@ private:
 
 	bool play;
 };
+
+#endif	//_END_STATE_H

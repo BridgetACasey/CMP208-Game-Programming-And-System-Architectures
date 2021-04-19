@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _STATE_H
+#define _STATE_H
+
 #pragma once
 
 #include <system/platform.h>
@@ -48,9 +51,13 @@ public:
 	void setContext(Context* context) { this->context_ = context; }
 
 protected:
+	float fps_;
+	
 	Context* context_;
 
 	gef::Platform& platform_;
 
 	bool firstSetup = true;
 };
+
+#endif	//_STATE_H

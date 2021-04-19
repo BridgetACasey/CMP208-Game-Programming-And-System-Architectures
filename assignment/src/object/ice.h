@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _ICE_H
+#define _ICE_H
+
 #pragma once
 
 #include "object/game_object.h"
@@ -23,3 +26,5 @@ private:
 	bool triggered;
 	float timer;
 };
+
+#endif	//_ICE_H

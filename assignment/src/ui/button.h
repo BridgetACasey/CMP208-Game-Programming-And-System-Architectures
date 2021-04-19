@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _BUTTON_H
+#define _BUTTON_H
+
 #pragma once
 
 #include "graphics/sprite.h"
@@ -31,3 +34,5 @@ protected:
 
 	bool selectedByController;
 };
+
+#endif	//_BUTTON_H

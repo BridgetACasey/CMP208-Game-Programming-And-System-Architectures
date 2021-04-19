@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _COLLECTIBLE_H
+#define _COLLECTIBLE_H
+
 #pragma once
 
 #include "game_object.h"
@@ -24,3 +27,5 @@ public:
 private:
 	bool collected;
 };
+
+#endif	//_COLLECTIBLE_H

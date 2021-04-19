@@ -68,6 +68,8 @@ void HelpState::handleInput()
 
 bool HelpState::update(float deltaTime)
 {
+	fps_ = 1.0f / deltaTime;
+
 	return true;
 }
 
@@ -88,6 +90,8 @@ void HelpState::render()
 	//Render UI elements
 	if (context_->getFont())
 	{
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps_);
+		
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, 25.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "HOW TO PLAY");
 	}
 

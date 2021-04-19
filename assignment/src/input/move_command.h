@@ -2,6 +2,9 @@
 
 #pragma once
 
+#ifndef _MOVE_COMMAND_H
+#define _MOVE_COMMAND_H
+
 #include "input_command.h"
 #include "object/game_object.h"
 
@@ -72,3 +75,5 @@ class JumpCommand : public MoveCommand
 		}
 	}
 };
+
+#endif	//_MOVE_COMMAND_H

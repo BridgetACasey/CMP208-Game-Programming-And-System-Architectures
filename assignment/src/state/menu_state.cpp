@@ -8,6 +8,11 @@ MenuState::MenuState(gef::Platform& platform) : State(platform)
 	buttonIndex = 0;
 
 	scrollSpeed = 25.0f;
+
+	buttons[0] = nullptr;
+	buttons[1] = nullptr;
+	buttons[2] = nullptr;
+	buttons[3] = nullptr;
 	
 	play = true;
 }
@@ -117,6 +122,8 @@ void MenuState::handleInput()
 
 bool MenuState::update(float deltaTime)
 {
+	fps_ = 1.0f / deltaTime;
+
 	updateBackground(deltaTime);
 
 	return play;
@@ -142,6 +149,11 @@ void MenuState::render()
 	context_->getSpriteRenderer()->DrawSprite(*buttons[1]);
 	context_->getSpriteRenderer()->DrawSprite(*buttons[2]);
 	context_->getSpriteRenderer()->DrawSprite(*buttons[3]);
+
+	if (context_->getFont())
+	{
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps_);
+	}
 
 	context_->getSpriteRenderer()->End();
 }

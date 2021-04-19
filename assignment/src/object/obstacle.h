@@ -23,4 +23,4 @@ public:
 	void onCollisionEndWith(CollisionTag tag) override;
 };
 
-#endif
+#endif	//_OBSTACLE_H

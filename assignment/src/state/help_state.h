@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _HELP_STATE_H
+#define _HELP_STATE_H
+
 #pragma once
 
 #include "state.h"
@@ -31,3 +34,5 @@ private:
 	gef::Sprite background;
 	gef::Sprite help;
 };
+
+#endif	//_HELP_STATE_H

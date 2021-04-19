@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _MESH_MANAGER_H
+#define _MESH_MANAGER_H
+
 #pragma once
 
 #include <map>
@@ -40,3 +43,5 @@ private:
 
 	std::map<MeshID, gef::Mesh*> meshes;
 };
+
+#endif	//_MESH_MANAGER_H

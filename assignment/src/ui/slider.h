@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _SLIDER_H
+#define _SLIDER_H
+
 #pragma once
 
 #include "button.h"
@@ -41,3 +44,5 @@ private:
 	gef::Sprite lowerBackground;
 	gef::Sprite upperBackground;
 };
+
+#endif	//_SLIDER_H

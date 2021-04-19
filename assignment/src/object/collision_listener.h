@@ -1,3 +1,8 @@
+//@BridgetACasey
+
+#ifndef _COLLISION_LISTENER_H
+#define _COLLISION_LISTENER_H
+
 #pragma once
 
 #include "box2d/b2_world_callbacks.h"
@@ -42,3 +47,5 @@ class CollisionListener : public b2ContactListener
 		}
 	}
 };
+
+#endif	//_COLLISION_LISTENER_H

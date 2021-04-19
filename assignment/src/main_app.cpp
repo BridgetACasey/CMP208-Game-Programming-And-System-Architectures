@@ -1,3 +1,5 @@
+//@BridgetACasey
+
 #include "main_app.h"
 
 MainApp::MainApp(gef::Platform& platform) : Application(platform)

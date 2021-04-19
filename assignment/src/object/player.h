@@ -30,4 +30,4 @@ private:
 	int coins;
 };
 
-#endif
+#endif	//_PLAYER_H

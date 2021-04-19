@@ -103,4 +103,4 @@ private:
 	Int32 active_touch_id_;
 };
 
-#endif
+#endif	//_GAME_INPUT_H

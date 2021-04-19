@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _TEXTURE_MANAGER_H
+#define _TEXTURE_MANAGER_H
+
 #pragma once
 
 #include <map>
@@ -71,3 +74,5 @@ private:
 
 	std::map<TextureID, gef::Texture*> textures;
 };
+
+#endif	//_TEXTURE_MANAGER_H

@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _LEVEL_STATE_H
+#define _LEVEL_STATE_H
+
 #pragma once
 
 #include "state.h"
@@ -92,6 +95,6 @@ private:
 	Campfire* campfire;
 
 	std::vector<GameObject*> map;
-
-	float fps_;
 };
+
+#endif	//_LEVEL_STATE_H

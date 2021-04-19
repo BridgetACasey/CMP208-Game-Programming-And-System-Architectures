@@ -78,6 +78,8 @@ void PauseState::handleInput()
 
 bool PauseState::update(float deltaTime)
 {
+	fps_ = 1.0f / deltaTime;
+
 	return true;
 }
 
@@ -98,8 +100,10 @@ void PauseState::render()
 	context_->getSpriteRenderer()->DrawSprite(*buttons[1]);
 
 	if (context_->getFont())
-	{
+	{		
 		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(platform_.width() / 2.0f, platform_.height() / 2.0f - 200.0f, -0.9f), 1.5f, 0xffffffff, gef::TJ_CENTRE, "PAUSED");
+
+		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps_);
 	}
 
 	context_->getSpriteRenderer()->End();

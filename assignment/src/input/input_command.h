@@ -1,5 +1,8 @@
 //@BridgetACasey
 
+#ifndef _INPUT_COMMAND_H
+#define _INPUT_COMMAND_H
+
 #pragma once
 
 #include <system/debug_log.h>
@@ -13,3 +16,5 @@ public:
 
 	virtual void executeObjectCommand(GameObject* gameObject) = 0;
 };
+
+#endif	//_INPUT_COMMAND_H
