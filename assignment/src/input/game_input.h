@@ -17,7 +17,7 @@
 class InputCommand;
 class GameObject;
 
-enum class ControllerCode
+enum class ControllerCode	//A more readable way of checking which angle the controller's analog sticks are sitting at
 {
 	NONE = 0,
 	UP,
@@ -42,7 +42,7 @@ struct Controller
 	gef::Vector2 leftPosition;
 	gef::Vector2 rightPosition;
 
-	bool active;
+	bool active;	//To check if the controller is being actively used, if not, it is assumed mouse & keyboard are being used
 };
 
 struct Mouse
@@ -53,7 +53,7 @@ struct Mouse
 	gef::Vector2 position;
 };
 
-struct Key
+struct Key	//A key that is assigned to a specific command, so that it can be easily modified
 {
 	InputCommand* command;
 };
@@ -95,10 +95,10 @@ private:
 	MoveRightCommand right;
 	SprintCommand sprint;
 
-	Key* key_a;
-	Key* key_d;
-	Key* key_space;
-	Key* key_l_shift;
+	Key* keyMoveLeft;
+	Key* keyMoveRight;
+	Key* keyJump;
+	Key* keySprint;
 
 	Int32 active_touch_id_;
 };

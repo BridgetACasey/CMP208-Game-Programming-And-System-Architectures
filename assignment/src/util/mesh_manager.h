@@ -22,6 +22,7 @@ enum class MeshID
 	CAMPFIRE
 };
 
+//Loads in and manages all the required meshes from .scn files, similiar in function to the TextureManager class
 class MeshManager
 {
 protected:
@@ -39,7 +40,7 @@ private:
 	gef::Scene* loadSceneAssets(gef::Platform& platform, const char* filename);
 	gef::Mesh* getMeshFromSceneAssets(gef::Scene* scene);
 
-	gef::Platform& platform_;
+	gef::Platform& platform;
 
 	std::map<MeshID, gef::Mesh*> meshes;
 };

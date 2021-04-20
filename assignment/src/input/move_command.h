@@ -10,6 +10,9 @@
 
 #include <maths/math_utils.h>
 
+//A collection of GameObject commands related to movement
+//Intended to be used by the Player
+
 class MoveCommand : public InputCommand
 {
 	void executeObjectCommand(GameObject* gameObject) override

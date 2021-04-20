@@ -4,7 +4,7 @@
 
 Ice::Ice()
 {
-	tag_ = CollisionTag::ICE;
+	collisionTag = CollisionTag::ICE;
 	triggered = false;
 	timer = 0.0f;
 }
@@ -25,6 +25,7 @@ void Ice::update(float deltaTime)
 
 	if (triggered)
 	{
+		//After one full second, the ice should disappear and the player should fall
 		if (timer > 1.0f)
 		{
 			body->SetEnabled(false);
@@ -45,6 +46,7 @@ void Ice::onCollisionBeginWith(CollisionTag tag)
 
 void Ice::onCollisionEndWith(CollisionTag tag)
 {
+	//If the player moves away from the ice, the timer resets
 	if (tag == CollisionTag::PLAYER)
 	{
 		triggered = false;

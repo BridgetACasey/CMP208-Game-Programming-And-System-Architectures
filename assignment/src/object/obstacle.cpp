@@ -4,7 +4,7 @@
 
 Obstacle::Obstacle()
 {
-	tag_ = CollisionTag::OBSTACLE_GROUND;
+	collisionTag = CollisionTag::OBSTACLE_GROUND;	//By default, the player can jump off this object type
 }
 
 Obstacle::~Obstacle()

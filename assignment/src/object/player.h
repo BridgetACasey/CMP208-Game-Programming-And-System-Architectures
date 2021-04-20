@@ -7,6 +7,7 @@
 
 #include "object/game_object.h"
 
+//Represents the player
 class Player : public GameObject
 {
 protected:
@@ -27,7 +28,7 @@ public:
 	int getCoins();
 
 private:
-	int coins;
+	int coins;	//The player's score, equivalent to how many coins have been collected in the level
 };
 
 #endif	//_PLAYER_H

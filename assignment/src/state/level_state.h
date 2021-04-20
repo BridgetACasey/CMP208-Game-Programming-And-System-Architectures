@@ -20,11 +20,9 @@
 #include "object/obstacle.h"
 #include "util/parallax_background.h"
 
-#include <graphics/mesh_instance.h>
-#include <graphics/scene.h>
 #include <object/collision_listener.h>
 
-enum MapObjectID
+enum MapObjectID	//Readable way of distinguishing object types when loading in map data
 {
 	NONE = 0,
 	SNOW,
@@ -35,26 +33,30 @@ enum MapObjectID
 	COIN
 };
 
+//A struct to bundle up all the relevant values related to the camera, so they can be more easily accessed elsewhere
 struct Camera
 {
 	float fov;
-	float aspect_ratio;
+	float aspectRatio;
 
-	gef::Matrix44 projection_matrix;
-	gef::Matrix44 view_matrix;
+	gef::Matrix44 projection;
+	gef::Matrix44 view;
 
 	gef::Vector4 eye;
 	gef::Vector4 lookAt;
 	gef::Vector4 up;
 
+	//Centres on a game object and follows it around the level as it moves
+	//Intended for the player, but could theoretically be used to focus on any game object
 	void updateFollow(GameObject* object)
 	{
 		eye = gef::Vector4(object->getPosition()->x(), object->getPosition()->y(), eye.z());
 		lookAt = gef::Vector4(object->getPosition()->x(), object->getPosition()->y(), lookAt.z());
-		view_matrix.LookAt(eye, lookAt, up);
+		view.LookAt(eye, lookAt, up);
 	}
 };
 
+//The main level state
 class LevelState : public State
 {
 protected:
@@ -83,8 +85,7 @@ private:
 	void generateMap(std::vector<int>& mapData, const int width, const int height);
 
 	b2World* world;
-	CollisionListener collision;
-	gef::PointLight pointLight;
+	CollisionListener collisionListener;
 
 	ParallaxBackground* parallax;
 	gef::Sprite sky;
@@ -93,6 +94,7 @@ private:
 
 	Player* player;
 	Campfire* campfire;
+	AudioEmitter fireEmitter;	//For the campfire sound effect
 
 	std::vector<GameObject*> map;
 };

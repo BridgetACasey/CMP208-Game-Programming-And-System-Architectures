@@ -2,7 +2,7 @@
 
 #include "game_audio.h"
 
-GameAudio::GameAudio(gef::Platform& platform) : platform_(platform)
+GameAudio::GameAudio(gef::Platform& pltfrm) : platform(pltfrm)
 {
     audioManager = gef::AudioManager::Create();
 
@@ -16,9 +16,9 @@ GameAudio::GameAudio(gef::Platform& platform) : platform_(platform)
 	initMusic();
 }
 
-GameAudio* GameAudio::create(gef::Platform& platform)
+GameAudio* GameAudio::create(gef::Platform& pltfrm)
 {
-    return new GameAudio(platform);
+    return new GameAudio(pltfrm);
 }
 
 void GameAudio::initSFX()	//Loading in all the sfx file paths so they can be called with enum values instead
@@ -37,17 +37,27 @@ void GameAudio::initSFX()	//Loading in all the sfx file paths so they can be cal
 	newSFX.sampleIndex = 2;
 	sfx[SoundEffectID::COLLECTED] = newSFX;
 
-	newSFX.filePath = "sfx/win.wav";
+	newSFX.filePath = "sfx/fire.wav";
 	newSFX.sampleIndex = 3;
+	sfx[SoundEffectID::FIRE] = newSFX;
+
+	newSFX.filePath = "sfx/win.wav";
+	newSFX.sampleIndex = 4;
 	sfx[SoundEffectID::WIN] = newSFX;
 
 	newSFX.filePath = "sfx/lose.wav";
-	newSFX.sampleIndex = 4;
+	newSFX.sampleIndex = 5;
 	sfx[SoundEffectID::LOSE] = newSFX;
+
+	/*
+	* Keeping a separate sample index values stored means having to load in all sound effects upon launching the application.
+	* This is not ideal, but makes it easier to retrieve the sample index instead of loading and unloading. 
+	*/
 
 	loadSoundEffect(SoundEffectID::INTRO);
 	loadSoundEffect(SoundEffectID::CLICK);
 	loadSoundEffect(SoundEffectID::COLLECTED);
+	loadSoundEffect(SoundEffectID::FIRE);
 	loadSoundEffect(SoundEffectID::WIN);
 	loadSoundEffect(SoundEffectID::LOSE);
 }
@@ -75,7 +85,7 @@ void GameAudio::playMusic(MusicID id)
 		return;
 	}
 
-	audioManager->LoadMusic(music.at(id), platform_);
+	audioManager->LoadMusic(music.at(id), platform);
 	audioManager->PlayMusic();
 
 	activeMusic = id;
@@ -83,7 +93,7 @@ void GameAudio::playMusic(MusicID id)
 
 void GameAudio::loadSoundEffect(SoundEffectID id)
 {
-	audioManager->LoadSample(sfx.at(id).filePath, platform_);
+	audioManager->LoadSample(sfx.at(id).filePath, platform);
 }
 
 bool GameAudio::isMusicPlaying(MusicID id)
@@ -111,16 +121,16 @@ void GameAudio::clearSoundEffect(SoundEffectID id)
 	audioManager->UnloadSample(sfx.at(id).sampleIndex);
 }
 
-void GameAudio::setMasterVolume(float masterVolume_)
+void GameAudio::setMasterVolume(float volume)
 {
-	masterVolume = masterVolume_;
+	masterVolume = volume;
 
 	audioManager->SetMasterVolume(masterVolume);
 }
 
-void GameAudio::setMusicVolume(float musicVolume_)
+void GameAudio::setMusicVolume(float volume)
 {
-	musicVolume = musicVolume_;
+	musicVolume = volume;
 
 	gef::VolumeInfo info;
 
@@ -130,9 +140,9 @@ void GameAudio::setMusicVolume(float musicVolume_)
 	audioManager->SetMusicVolumeInfo(info);
 }
 
-void GameAudio::setSFXVolume(float sfxVolume_)
+void GameAudio::setSFXVolume(float volume)
 {
-	sfxVolume = sfxVolume_;
+	sfxVolume = volume;
 
 	gef::VolumeInfo info;
 

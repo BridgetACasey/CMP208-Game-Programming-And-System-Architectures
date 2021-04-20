@@ -9,6 +9,7 @@
 
 #include "graphics/sprite.h"
 
+//The splash screen, which is the first state displayed upon starting the application
 class SplashState : public State
 {
 protected:

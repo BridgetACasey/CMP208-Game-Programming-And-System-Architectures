@@ -2,7 +2,7 @@
 
 #include "texture_manager.h"
 
-TextureManager::TextureManager(gef::Platform& platform) : platform_(platform)
+TextureManager::TextureManager(gef::Platform& pltfrm) : platform(pltfrm)
 {
 	initTextures();
 }
@@ -14,6 +14,7 @@ TextureManager* TextureManager::create(gef::Platform& platform)
 
 void TextureManager::initTextures()
 {
+	//Initialises all the textures so they can be easily retrieved in other parts of the program
 	textures[TextureID::GAME_TITLE] = generateTexture("sprites/game_title.png");
 
 	textures[TextureID::SPLASH_BACKGROUND] = generateTexture("sprites/splash_screen.png");
@@ -69,8 +70,8 @@ gef::Texture* TextureManager::generateTexture(const char* filePath)
 	gef::ImageData image;
 	gef::Texture* texture;
 
-	pngLoader.Load(filePath, platform_, image);
-	texture = gef::Texture::Create(platform_, image);
+	pngLoader.Load(filePath, platform, image);
+	texture = gef::Texture::Create(platform, image);
 
 	return texture;
 }

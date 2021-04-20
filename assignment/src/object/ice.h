@@ -7,6 +7,7 @@
 
 #include "object/game_object.h"
 
+//Ice, one of the obstacles encountered in the level
 class Ice : public GameObject
 {
 protected:

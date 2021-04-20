@@ -12,7 +12,7 @@
 
 class PrimitiveBuilder;
 
-enum class CollisionTag
+enum class CollisionTag	//The tag for different game object types, used in the CollisionListener class
 {
 	NONE = 0,
 	PLAYER,
@@ -36,13 +36,16 @@ public:
 
 	virtual void update(float deltaTime);
 
-	/*For collision events
-	 Does not actually check if collisions have occurred (handled by CollisionListener),
-	 only handles what happens to this GameObject after a valid collision with another GameObject
-	 as determined by its CollisionTag*/
+	/*
+	 * For collision events
+	 * Does not actually check if collisions have occurred (handled by CollisionListener),
+	 * only handles what happens to this GameObject after a valid collision with another GameObject
+	 * as determined by its CollisionTag
+	 */
 	virtual void onCollisionBeginWith(CollisionTag tag);
 	virtual void onCollisionEndWith(CollisionTag tag);
 
+	//Sets the mesh to a basic cube, not intended to be used in the final build
 	void setDefaultMesh(PrimitiveBuilder* primitive_builder, gef::Vector4& halfDimensions);
 
 	virtual void setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions);
@@ -66,16 +69,16 @@ public:
 	void setCollisionTag(CollisionTag newTag);
 	CollisionTag& getCollisionTag();
 
-	void setMoveSpeed(float moveSpeed_);
+	void setMoveSpeed(float speed);
 	float getMoveSpeed();
 
-	void setJumpForce(float jumpForce_);
+	void setJumpForce(float force);
 	float getJumpForce();
 
-	void setCanJump(bool canJump_);
+	void setCanJump(bool jump);
 	bool getCanJump();
 
-	void setActiveDirection(int activeDirection_);
+	void setActiveDirection(int direction);
 	int getActiveDirection();
 
 	bool getIsAlive();
@@ -93,14 +96,14 @@ protected:
 	b2Vec2 velocity;
 	b2Vec2 maxVelocity;
 
-	CollisionTag tag_;
+	CollisionTag collisionTag;
 
 	float moveSpeed;
 	float jumpForce;
 
 	bool canJump;
 
-	int activeDirection;
+	int activeDirection;	//Used to determine if the object is moving left or right
 
 	bool isAlive;
 };

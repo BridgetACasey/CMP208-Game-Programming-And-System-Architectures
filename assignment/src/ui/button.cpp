@@ -2,9 +2,9 @@
 
 #include "button.h"
 
-Button::Button(GameInput* input_)
+Button::Button(GameInput* input)
 {
-	input = input_;
+	gameInput = input;
 
 	inactive = nullptr;
 	hovering = nullptr;
@@ -12,18 +12,19 @@ Button::Button(GameInput* input_)
 	selectedByController = false;
 }
 
-Button* Button::create(GameInput* input_)
+Button* Button::create(GameInput* input)
 {
-	return new Button(input_);
+	return new Button(input);
 }
 
 bool Button::isHovering(bool isMouse)
 {
+	//Checks if the mouse is overlapping the bounds of the button object
 	if (isMouse)
 	{
-		if (input->getMouse()->position.x > position_.x() - (width() / 2.0f) && input->getMouse()->position.x < position_.x() + (width() / 2.0f))
+		if (gameInput->getMouse()->position.x > position_.x() - (width() / 2.0f) && gameInput->getMouse()->position.x < position_.x() + (width() / 2.0f))
 		{
-			if (input->getMouse()->position.y > position_.y() - (height() / 2.0f) && input->getMouse()->position.y < position_.y() + (height() / 2.0f))
+			if (gameInput->getMouse()->position.y > position_.y() - (height() / 2.0f) && gameInput->getMouse()->position.y < position_.y() + (height() / 2.0f))
 			{
 				set_texture(hovering);
 				return true;
@@ -31,6 +32,7 @@ bool Button::isHovering(bool isMouse)
 		}
 	}
 
+	//Otherwise, if it is marked as active by the controller, assume it is being hovered over in the same way
 	else
 	{
 		if (selectedByController)
@@ -47,11 +49,13 @@ bool Button::isHovering(bool isMouse)
 
 bool Button::isClicked(bool isMouse)
 {
+	//Checks if the appropriate button has been pressed whilst hovering
+	//This is the function that would normally be used when assigning an action to a button
 	if (isHovering(isMouse))
 	{
 		if (isMouse)
 		{
-			if (input->getMouse()->left == MouseCode::PRESSED)
+			if (gameInput->getMouse()->left == MouseCode::PRESSED)
 			{
 				return true;
 			}
@@ -59,7 +63,7 @@ bool Button::isClicked(bool isMouse)
 
 		else
 		{
-			if (input->getSonyController()->buttons_pressed() == gef_SONY_CTRL_CROSS)
+			if (gameInput->getSonyController()->buttons_pressed() == gef_SONY_CTRL_CROSS)
 			{
 				return true;
 			}
@@ -71,11 +75,13 @@ bool Button::isClicked(bool isMouse)
 
 bool Button::isHeld(bool isMouse)
 {
+	//Similar to isClicked, but checks if the corresponding button has been held down instead
+	//Assumes that if the controller is being used, the button is held down anyway
 	if (isHovering(isMouse))
 	{
 		if (isMouse)
 		{
-			if (input->getMouse()->left == MouseCode::HELD)
+			if (gameInput->getMouse()->left == MouseCode::HELD)
 			{
 				return true;
 			}

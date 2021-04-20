@@ -15,7 +15,7 @@ public:
 
 	void Init();
 	void CleanUp();
-	bool Update(float frame_time);
+	bool Update(float deltaTime);
 	void Render();
 
 private:

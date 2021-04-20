@@ -8,13 +8,14 @@
 #include "graphics/sprite.h"
 #include "input/game_input.h"
 
+//A button object that can be clicked on
 class Button : public gef::Sprite
 {
 protected:
-	Button(GameInput* input_);
+	Button(GameInput* input);
 
 public:
-	static Button* create(GameInput* input_);
+	static Button* create(GameInput* input);
 
 	bool isHovering(bool isMouse);
 	bool isClicked(bool isMouse);
@@ -27,12 +28,12 @@ public:
 	bool getSelectedByController();
 
 protected:
-	GameInput* input;
+	GameInput* gameInput;
 
 	gef::Texture* inactive;
 	gef::Texture* hovering;
 
-	bool selectedByController;
+	bool selectedByController;	//For checking if this is the active button being interacted with by the Sony Controller
 };
 
 #endif	//_BUTTON_H

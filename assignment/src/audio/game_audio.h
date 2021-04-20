@@ -15,6 +15,7 @@ enum class SoundEffectID
 	INTRO,
 	CLICK,
 	COLLECTED,
+	FIRE,
 	WIN,
 	LOSE
 };
@@ -38,10 +39,10 @@ struct SoundEffect
 class GameAudio
 {
 protected:
-	GameAudio(gef::Platform& platform);
+	GameAudio(gef::Platform& pltfrm);
 
 public:
-	static GameAudio* create(gef::Platform& platform);
+	static GameAudio* create(gef::Platform& pltfrm);
 
 	void initSFX();
 	void initMusic();
@@ -55,9 +56,9 @@ public:
 	void playSoundEffect(SoundEffectID id, bool looping);
 	void clearSoundEffect(SoundEffectID id);
 
-	void setMasterVolume(float masterVolume_);
-	void setMusicVolume(float musicVolume_);
-	void setSFXVolume(float sfxVolume_);
+	void setMasterVolume(float volume);
+	void setMusicVolume(float volume);
+	void setSFXVolume(float volume);
 
 	float getMasterVolume();
 	float getMusicVolume();
@@ -68,7 +69,7 @@ public:
 	AudioListener& getListener();
 
 private:
-	gef::Platform& platform_;
+	gef::Platform& platform;
 
 	Audio3D* audio3D;
 	gef::AudioManager* audioManager;

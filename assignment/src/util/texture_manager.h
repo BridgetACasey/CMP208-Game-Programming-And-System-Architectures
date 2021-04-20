@@ -54,6 +54,7 @@ enum class TextureID
 	SLIDER_TOP
 };
 
+//Loads in and manages all the required textures from .png files, similiar in function to the MeshManager class
 class TextureManager
 {
 protected:
@@ -68,7 +69,7 @@ private:
 	void initTextures();
 	gef::Texture* generateTexture(const char* filePath);
 
-	gef::Platform& platform_;
+	gef::Platform& platform;
 
 	gef::PNGLoader pngLoader;
 

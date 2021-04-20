@@ -8,6 +8,8 @@
 #include "state.h"
 #include "ui/slider.h"
 
+//The settings menu, accessed through the main menu
+//Here, the user can alter gameplay settings such as music volume and player movement speed
 class SettingsState : public State
 {
 protected:

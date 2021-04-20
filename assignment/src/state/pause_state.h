@@ -8,6 +8,7 @@
 #include "state.h"
 #include "ui/button.h"
 
+//The pause menu, accessed whilst playing the level
 class PauseState : public State
 {
 protected:

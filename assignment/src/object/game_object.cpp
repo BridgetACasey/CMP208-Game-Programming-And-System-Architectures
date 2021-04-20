@@ -5,7 +5,7 @@
 GameObject::GameObject()
 {
 	body = nullptr;
-	tag_ = CollisionTag::NONE;
+	collisionTag = CollisionTag::NONE;
 
 	velocity = b2Vec2(0.0f, 0.0f);
 	maxVelocity = b2Vec2(0.0f, 0.0f);
@@ -36,6 +36,7 @@ GameObject* GameObject::create()
 
 void GameObject::updateTransforms()
 {
+	//Calculates and sets the transforms of the body so the game object can move
 	if (body)
 	{
 		gef::Matrix44 transform, translation, rotX, rotY, rotZ, scale_;
@@ -170,22 +171,22 @@ b2Vec2& GameObject::getVelocity()
 
 void GameObject::setCollisionTag(CollisionTag tag)
 {
-	tag_ = tag;
+	collisionTag = tag;
 }
 
 CollisionTag& GameObject::getCollisionTag()
 {
-	return tag_;
+	return collisionTag;
 }
 
-void GameObject::setMoveSpeed(float moveSpeed_)
+void GameObject::setMoveSpeed(float speed)
 {
-	moveSpeed = moveSpeed_;
+	moveSpeed = speed;
 }
 
-void GameObject::setJumpForce(float jumpForce_)
+void GameObject::setJumpForce(float force)
 {
-	jumpForce = jumpForce_;
+	jumpForce = force;
 }
 
 float GameObject::getMoveSpeed()
@@ -198,9 +199,9 @@ float GameObject::getJumpForce()
 	return jumpForce;
 }
 
-void GameObject::setCanJump(bool canJump_)
+void GameObject::setCanJump(bool jump)
 {
-	canJump = canJump_;
+	canJump = jump;
 }
 
 bool GameObject::getCanJump()
@@ -208,9 +209,9 @@ bool GameObject::getCanJump()
 	return canJump;
 }
 
-void GameObject::setActiveDirection(int activeDirection_)
+void GameObject::setActiveDirection(int direction)
 {
-	activeDirection = activeDirection_;
+	activeDirection = direction;
 }
 
 int GameObject::getActiveDirection()

@@ -7,6 +7,8 @@
 
 #include "object/game_object.h"
 
+//The lava object, which instantly kills the player upon contact
+//Does not do anything specific on its own, as the player class is responsible for determining if it is still alive
 class Lava : public GameObject
 {
 protected:

@@ -15,6 +15,7 @@
 #include "settings_state.h"
 #include "help_state.h"
 
+//Similar to a game state manager, stores all of the key objects that each state needs
 class Context
 {
 public:
@@ -38,22 +39,22 @@ public:
 	TextureManager* getTextureManager();
 	MeshManager* getMeshManager();
 
-	void setPlayerScore(int playerScore_);
+	void setPlayerScore(int score);
 	int getPlayerScore();
 
-	void setPlayerSpeed(float playerSpeed_);
+	void setPlayerSpeed(float speed);
 	float getPlayerSpeed();
 
-	void setPlayerJumpForce(float playerJumpForce_);
+	void setPlayerJumpForce(float force);
 	float getPlayerJumpForce();
 
 	float getMaxPlayerSpeed();
 	float getMaxPlayerJumpForce();
 
-	void setGameWon(bool gameWon_);
+	void setGameWon(bool won);
 	bool getGameWon();
 
-	void setGamePlaying(bool gamePlaying_);
+	void setGamePlaying(bool playing);
 	bool getGamePlaying();
 
 private:
@@ -61,12 +62,13 @@ private:
 
 	std::map<StateLabel, State*> states;
 
-	gef::SpriteRenderer* sprite_renderer_;
-	gef::Renderer3D* renderer_3d_;
-	gef::InputManager* input_manager_;
-	gef::Font* font_;
+	gef::SpriteRenderer* spriteRenderer;
+	gef::Renderer3D* renderer3D;
+	gef::InputManager* inputManager;
+	gef::Font* font;
 
-	PrimitiveBuilder* primitive_builder_;
+	PrimitiveBuilder* primitiveBuilder;
+
 	TextureManager* textureManager;
 	MeshManager* meshManager;
 	GameInput* gameInput;

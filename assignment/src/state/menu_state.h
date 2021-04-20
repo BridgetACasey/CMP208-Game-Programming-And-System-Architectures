@@ -8,6 +8,7 @@
 #include "state.h"
 #include "ui/button.h"
 
+//The main menu state, displayed automatically after the splash screen
 class MenuState : public State
 {
 protected:
@@ -40,7 +41,7 @@ private:
 	gef::Sprite title;
 
 	gef::Sprite background;
-	gef::Sprite backgroundCopy;
+	gef::Sprite backgroundCopy;	//Copy of the background image to create an infinitely scrolling background
 
 	bool play;
 };

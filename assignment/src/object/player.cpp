@@ -4,7 +4,7 @@
 
 Player::Player()
 {
-	tag_ = CollisionTag::PLAYER;
+	collisionTag = CollisionTag::PLAYER;
 	coins = 0;
 }
 

@@ -19,6 +19,7 @@ struct Layer
 	gef::Sprite sprite;
 };
 
+//Handles the calculations for parallax scrolling in the level state
 class ParallaxBackground
 {
 protected:
@@ -34,9 +35,10 @@ public:
 private:
 	void setupBackgroundLayers();
 
-	gef::Platform& platform_;
-	Context* context_;
+	gef::Platform& platform;
+	Context* context;
 
+	//Stores two identical groups of layers, then resets their positions when they reach the edge of the screen
 	std::vector<Layer> layers;
 	std::vector<Layer> layersCopy;
 };

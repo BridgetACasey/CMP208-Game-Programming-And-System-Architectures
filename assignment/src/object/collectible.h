@@ -7,6 +7,7 @@
 
 #include "game_object.h"
 
+//The base class for coin objects found in the level
 class Collectible : public GameObject
 {
 protected:
@@ -22,7 +23,7 @@ public:
 	void onCollisionBeginWith(CollisionTag tag) override;
 	void onCollisionEndWith(CollisionTag tag) override;
 
-	bool getCollected();
+	void setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions) override;
 
 private:
 	bool collected;

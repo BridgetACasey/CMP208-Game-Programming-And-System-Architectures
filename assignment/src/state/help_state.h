@@ -8,6 +8,8 @@
 #include "state.h"
 #include "ui/button.h"
 
+//The screen that informs the player of how to play the game
+//Does nothing except display an image
 class HelpState : public State
 {
 protected:

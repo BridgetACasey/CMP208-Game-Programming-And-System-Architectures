@@ -4,7 +4,7 @@
 
 Lava::Lava()
 {
-	tag_ = CollisionTag::LAVA;
+	collisionTag = CollisionTag::LAVA;
 }
 
 Lava::~Lava()

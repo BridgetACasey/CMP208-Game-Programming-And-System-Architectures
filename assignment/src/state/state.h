@@ -5,6 +5,10 @@
 
 #pragma once
 
+/*
+* Header files are included in the base state class instead of being copied into context
+* or child state classes to avoid duplication.
+*/
 #include <system/platform.h>
 #include <system/debug_log.h>
 #include <graphics/sprite_renderer.h>
@@ -20,7 +24,7 @@
 
 class Context;
 
-enum class StateLabel
+enum class StateLabel	//For switching between states in a more readable way
 {
 	SPLASH_SCREEN = 0,
 	MAIN_MENU,
@@ -31,10 +35,11 @@ enum class StateLabel
 	HELP
 };
 
+//A purely virtual class that all states inherit from
 class State
 {
 protected:
-	State(gef::Platform& platform) : platform_(platform) { context_ = nullptr; }
+	State(gef::Platform& pltfrm) : platform(pltfrm) { context = nullptr; }
 
 public:
 	virtual ~State() = default;
@@ -48,15 +53,20 @@ public:
 	virtual bool update(float deltaTime) = 0;
 	virtual void render() = 0;
 
-	void setContext(Context* context) { this->context_ = context; }
+	void setContext(Context* cntxt) { this->context = cntxt; }
 
 protected:
-	float fps_;
-	
-	Context* context_;
+	gef::Platform& platform;
 
-	gef::Platform& platform_;
+	Context* context;
 
+	float fps = 0.0f;
+
+	/*
+	* Used to determine if objects need to be created.
+	* They cannot be created in the state's constructor, as many objects rely on a reference to context,
+	* which is only passed to the class upon it becoming the active state.
+	*/
 	bool firstSetup = true;
 };
 

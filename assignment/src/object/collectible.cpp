@@ -5,7 +5,7 @@
 Collectible::Collectible()
 {
 	collected = false;
-	tag_ = CollisionTag::COLLECTIBLE;
+	collisionTag = CollisionTag::COLLECTIBLE;
 }
 
 Collectible::~Collectible()
@@ -45,7 +45,24 @@ void Collectible::onCollisionEndWith(CollisionTag tag)
 
 }
 
-bool Collectible::getCollected()
+void Collectible::setBody(b2World* world, b2BodyType type, gef::Vector4& halfDimensions)
 {
-	return collected;
+	// create a physics body
+	b2BodyDef bodyDef;
+	bodyDef.type = type;
+	bodyDef.position = b2Vec2(position.x(), position.y());
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(this);
+
+	body = world->CreateBody(&bodyDef);
+
+	// create the shape
+	b2PolygonShape shape;
+	shape.SetAsBox(halfDimensions.x(), halfDimensions.y());
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	fixtureDef.isSensor = true;	//Overriding this function to make the body a sensor, so the player doesn't bounce off it
+	b2Fixture* fixture = body->CreateFixture(&fixtureDef);
 }

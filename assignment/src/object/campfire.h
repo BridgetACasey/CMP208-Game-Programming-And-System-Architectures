@@ -7,6 +7,7 @@
 
 #include "object/game_object.h"
 
+//Campfire object found at the end of the level
 class Campfire : public GameObject
 {
 protected:

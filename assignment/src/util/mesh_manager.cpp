@@ -2,7 +2,7 @@
 
 #include "mesh_manager.h"
 
-MeshManager::MeshManager(gef::Platform& platform) : platform_(platform)
+MeshManager::MeshManager(gef::Platform& pltfrm) : platform(pltfrm)
 {
 	initMeshes();
 }
@@ -19,6 +19,7 @@ gef::Mesh* MeshManager::getMesh(MeshID id)
 
 void MeshManager::initMeshes()
 {
+	//Initialises all the meshes so they can be easily retrieved in other parts of the program
 	meshes[MeshID::PLAYER] = generateMesh("player.scn");
 	meshes[MeshID::COIN] = generateMesh("coin.scn");
 	meshes[MeshID::LAVA] = generateMesh("lava.scn");
@@ -35,7 +36,7 @@ gef::Mesh* MeshManager::generateMesh(const char* filePath)
 	// load the scene asset in from the .scn
 	gef::Scene* asset;
 
-	asset = loadSceneAssets(platform_, filePath);
+	asset = loadSceneAssets(platform, filePath);
 
 	if (asset)
 	{

@@ -11,6 +11,12 @@
 
 class CollisionListener : public b2ContactListener
 {
+	/*
+	 * Since all objects inherit from GameObject, it is most sensible to cast them to their base class and call their respective 'onCollision' functions.
+	 * This makes it easier to determine what happens to an object when it comes in contact with another object of a specific type, without them
+	 * ever having to know anything about each other.
+	 */
+
 	void BeginContact(b2Contact* contact) override 
 	{
 		b2Body* bodyA = contact->GetFixtureA()->GetBody();

@@ -8,6 +8,7 @@
 #include "state.h"
 #include "ui/button.h"
 
+//The state displayed once the player has completed the level or died
 class EndState : public State
 {
 protected:
@@ -28,7 +29,7 @@ public:
 	void checkForController();
 	void checkButtonStatus(bool usingMouse);
 
-	void setLastScore(int lastScore_);
+	void setLastScore(int score);
 
 private:
 	int lastScore;

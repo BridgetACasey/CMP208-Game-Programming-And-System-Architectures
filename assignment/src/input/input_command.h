@@ -9,6 +9,7 @@
 
 class GameObject;
 
+//The base command class for GameObject-related input commands
 class InputCommand
 {
 public:

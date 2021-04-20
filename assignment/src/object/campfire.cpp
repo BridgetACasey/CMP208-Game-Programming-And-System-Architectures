@@ -4,7 +4,7 @@
 
 Campfire::Campfire()
 {
-	tag_ = CollisionTag::CAMPFIRE;
+	collisionTag = CollisionTag::CAMPFIRE;
 	contacted = false;
 }
 

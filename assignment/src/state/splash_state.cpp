@@ -19,11 +19,11 @@ void SplashState::setup()
 	{
 		gef::DebugOut("Splash Screen: Performing first time setup!\n");
 
-		splashImage.set_height(platform_.height());
-		splashImage.set_width(platform_.width());
-		splashImage.set_position(platform_.width() / 2.0f, platform_.height() / 2.0f, 0.0f);
+		splashImage.set_height(platform.height());
+		splashImage.set_width(platform.width());
+		splashImage.set_position(platform.width() / 2.0f, platform.height() / 2.0f, 0.0f);
 
-		splashImage.set_texture(context_->getTextureManager()->getTexture(TextureID::SPLASH_BACKGROUND));
+		splashImage.set_texture(context->getTextureManager()->getTexture(TextureID::SPLASH_BACKGROUND));
 
 		firstSetup = false;
 	}
@@ -35,12 +35,12 @@ void SplashState::onEnter()
 
 	setup();
 
-	//context_->getGameAudio()->playSoundEffect(SoundEffectID::INTRO, false);
+	context->getGameAudio()->playSoundEffect(SoundEffectID::INTRO, false);
 }
 
 void SplashState::onExit()
 {
-	context_->getGameAudio()->clearSoundEffect(SoundEffectID::INTRO);	//Clearing this sound effect as the program won't need it again
+	context->getGameAudio()->clearSoundEffect(SoundEffectID::INTRO);	//Clearing this sound effect as the program won't need it again
 }
 
 void SplashState::handleInput()
@@ -50,12 +50,13 @@ void SplashState::handleInput()
 
 bool SplashState::update(float deltaTime)
 {
-	fps_ = 1.0f / deltaTime;
+	fps = 1.0f / deltaTime;
 
+	//After 3 full seconds pass, progress to the main menu
 	if (transitionTime > 3.0f)
 	{
 		transitionTime = 0.0f;
-		context_->setActiveState(StateLabel::MAIN_MENU);
+		context->setActiveState(StateLabel::MAIN_MENU);
 	}
 
 	transitionTime += 1.0f * deltaTime;
@@ -65,21 +66,21 @@ bool SplashState::update(float deltaTime)
 
 void SplashState::render()
 {
-	context_->getRenderer3D()->Begin(true);
+	context->getRenderer3D()->Begin(true);
 
 	//Render 3D geometry
 
-	context_->getRenderer3D()->End();
+	context->getRenderer3D()->End();
 
-	context_->getSpriteRenderer()->Begin(false);
+	context->getSpriteRenderer()->Begin(false);
 
 	//Render UI elements
-	context_->getSpriteRenderer()->DrawSprite(splashImage);
+	context->getSpriteRenderer()->DrawSprite(splashImage);
 
-	if (context_->getFont())
+	if (context->getFont())
 	{
-		context_->getFont()->RenderText(context_->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps_);
+		context->getFont()->RenderText(context->getSpriteRenderer(), gef::Vector4(925.0f, 50.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_RIGHT, "FPS: %.1f", fps);
 	}
 
-	context_->getSpriteRenderer()->End();
+	context->getSpriteRenderer()->End();
 }

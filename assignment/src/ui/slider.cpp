@@ -2,7 +2,7 @@
 
 #include "slider.h"
 
-Slider::Slider(GameInput* input_) : Button(input_)
+Slider::Slider(GameInput* input) : Button(input)
 {
 	minAnchorPoint = 0.0f;
 	maxAnchorPoint = 0.0f;
@@ -12,9 +12,9 @@ Slider::Slider(GameInput* input_) : Button(input_)
 	scrollSpeed = 100.0f;
 }
 
-Slider* Slider::create(GameInput* input_)
+Slider* Slider::create(GameInput* input)
 {
-	return new Slider(input_);
+	return new Slider(input);
 }
 
 void Slider::updatePosition(float deltaTime, bool usingMouse)
@@ -34,26 +34,27 @@ void Slider::updatePosition(float deltaTime, bool usingMouse)
 		if (usingMouse)
 		{
 			//Adding an extra offset value of 0.2 to either side, otherwise the slider may get stuck
-			if (input->getMouse()->position.x > minAnchorPoint + (width_ / 2.0f) - 0.2f && input->getMouse()->position.x < maxAnchorPoint - (width_ / 2.0f) + 0.2f)
+			if (gameInput->getMouse()->position.x > minAnchorPoint + (width_ / 2.0f) - 0.2f && gameInput->getMouse()->position.x < maxAnchorPoint - (width_ / 2.0f) + 0.2f)
 			{
-				set_position(gef::Vector4(input->getMouse()->position.x, position_.y(), position_.z()));
+				set_position(gef::Vector4(gameInput->getMouse()->position.x, position_.y(), position_.z()));
 			}
 		}
 
 		else
 		{
-			if (input->getController()->leftStick == ControllerCode::LEFT || input->getSonyController()->buttons_down() == gef_SONY_CTRL_LEFT)
+			if (gameInput->getController()->leftStick == ControllerCode::LEFT || gameInput->getSonyController()->buttons_down() == gef_SONY_CTRL_LEFT)
 			{
 				set_position(gef::Vector4(position_.x() - (scrollSpeed * deltaTime), position_.y(), position_.z()));
 			}
 
-			else if (input->getController()->leftStick == ControllerCode::RIGHT || input->getSonyController()->buttons_down() == gef_SONY_CTRL_RIGHT)
+			else if (gameInput->getController()->leftStick == ControllerCode::RIGHT || gameInput->getSonyController()->buttons_down() == gef_SONY_CTRL_RIGHT)
 			{
 				set_position(gef::Vector4(position_.x() + (scrollSpeed * deltaTime), position_.y(), position_.z()));
 			}
 		}
 	}
 
+	//Min and max values the slider button can sit at, as the sprite's origin is its centre instead of the top left
 	float min = minAnchorPoint + (width_ / 2.0f);
 	float max = maxAnchorPoint - (width_ / 2.0f);
 

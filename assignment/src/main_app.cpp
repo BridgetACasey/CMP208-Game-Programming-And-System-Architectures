@@ -18,11 +18,11 @@ void MainApp::CleanUp()
 	context = NULL;
 }
 
-bool MainApp::Update(float frame_time)
+bool MainApp::Update(float deltaTime)
 {
 	context->getActiveState()->handleInput();
 
-	return context->getActiveState()->update(frame_time);
+	return context->getActiveState()->update(deltaTime);
 }
 
 void MainApp::Render()

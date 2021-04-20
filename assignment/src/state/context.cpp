@@ -4,13 +4,16 @@
 
 Context::Context(gef::Platform& platform)
 {
+	//Player score, to be passed between the level and end state
 	playerScore = 0;
 
+	//Default player movement values, to be used in the settings state
 	maxPlayerSpeed = 8.0f;
 	maxPlayerJumpForce = 500.0f;
 	playerSpeed = maxPlayerSpeed;
 	playerJumpForce = maxPlayerJumpForce;
 
+	//To check if the level is being actively played, or has been successfully completed
 	gameWon = false;
 	gamePlaying = false;
 
@@ -48,21 +51,22 @@ Context::~Context()
 
 void Context::setupStateComponents(gef::Platform& platform)
 {
-	sprite_renderer_ = gef::SpriteRenderer::Create(platform);
-	renderer_3d_ = gef::Renderer3D::Create(platform);
+	spriteRenderer = gef::SpriteRenderer::Create(platform);
+	renderer3D = gef::Renderer3D::Create(platform);
 
-	primitive_builder_ = new PrimitiveBuilder(platform);
+	primitiveBuilder = new PrimitiveBuilder(platform);
 	gameInput = GameInput::create(platform);
 	gameAudio = GameAudio::create(platform);
 	textureManager = TextureManager::create(platform);
 	meshManager = MeshManager::create(platform);
 
-	font_ = new gef::Font(platform);
-	font_->Load("comic_sans");
+	font = new gef::Font(platform);
+	font->Load("comic_sans");
 }
 
 void Context::setActiveState(StateLabel stateName)
 {
+	//Changes the active state and passes a reference to the same instance of the context class
 	if (activeState)
 	{
 		activeState->onExit();
@@ -82,22 +86,22 @@ State* Context::getActiveState()
 
 gef::SpriteRenderer* Context::getSpriteRenderer()
 {
-	return sprite_renderer_;
+	return spriteRenderer;
 }
 
 gef::Renderer3D* Context::getRenderer3D()
 {
-	return renderer_3d_;
+	return renderer3D;
 }
 
 gef::Font* Context::getFont()
 {
-	return font_;
+	return font;
 }
 
 PrimitiveBuilder* Context::getPrimitiveBuilder()
 {
-	return primitive_builder_;
+	return primitiveBuilder;
 }
 
 GameInput* Context::getGameInput()
@@ -120,9 +124,9 @@ MeshManager* Context::getMeshManager()
 	return meshManager;
 }
 
-void Context::setPlayerScore(int playerScore_)
+void Context::setPlayerScore(int score)
 {
-	playerScore = playerScore_;
+	playerScore = score;
 }
 
 int Context::getPlayerScore()
@@ -130,9 +134,9 @@ int Context::getPlayerScore()
 	return playerScore;
 }
 
-void Context::setPlayerSpeed(float playerSpeed_)
+void Context::setPlayerSpeed(float speed)
 {
-	playerSpeed = playerSpeed_;
+	playerSpeed = speed;
 }
 
 float Context::getPlayerSpeed()
@@ -140,9 +144,9 @@ float Context::getPlayerSpeed()
 	return playerSpeed;
 }
 
-void Context::setPlayerJumpForce(float playerJumpForce_)
+void Context::setPlayerJumpForce(float force)
 {
-	playerJumpForce = playerJumpForce_;
+	playerJumpForce = force;
 }
 
 float Context::getPlayerJumpForce()
@@ -160,9 +164,9 @@ float Context::getMaxPlayerJumpForce()
 	return maxPlayerJumpForce;
 }
 
-void Context::setGameWon(bool gameWon_)
+void Context::setGameWon(bool won)
 {
-	gameWon = gameWon_;
+	gameWon = won;
 }
 
 bool Context::getGameWon()
@@ -170,9 +174,9 @@ bool Context::getGameWon()
 	return gameWon;
 }
 
-void Context::setGamePlaying(bool gamePlaying_)
+void Context::setGamePlaying(bool playing)
 {
-	gamePlaying = gamePlaying_;
+	gamePlaying = playing;
 }
 
 bool Context::getGamePlaying()

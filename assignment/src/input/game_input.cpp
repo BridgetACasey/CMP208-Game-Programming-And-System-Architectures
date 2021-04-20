@@ -18,10 +18,10 @@ GameInput::GameInput(gef::Platform& platform)
 	controller = new Controller();
 	mouse = new Mouse();
 	
-	key_space = new Key();
-	key_a = new Key();
-	key_d = new Key();
-	key_l_shift = new Key();
+	keyJump = new Key();
+	keyMoveLeft = new Key();
+	keyMoveRight = new Key();
+	keySprint = new Key();
 
 	bindKeys();
 }
@@ -44,7 +44,7 @@ void GameInput::update()
 
 		if (controller)
 		{
-			if (getSonyController()->buttons_pressed())
+			if (getSonyController()->buttons_pressed())	//If any buttons have been pressed, assume the controller is the active input device
 			{
 				controller->active = true;
 			}
@@ -71,6 +71,9 @@ void GameInput::processGameObjectCommands(GameObject* gameObject)
 {
 	Key* key = assignKeys();
 
+	//Commands are executed upon a GameObject, rather than being bound to the Player class, for example
+	//This means it would be easy to switch between controlling a Player and controlling another GameObject
+
 	if (key)
 	{
 		key->command->executeObjectCommand(gameObject);
@@ -79,15 +82,23 @@ void GameInput::processGameObjectCommands(GameObject* gameObject)
 
 void GameInput::bindKeys()
 {
-	key_space->command = &jump;
-	key_a->command = &left;
-	key_d->command = &right;
-	key_l_shift->command = &sprint;
+	/*
+	* Assigning keys to their respective commands.
+	* Setting up input this way means it is easier to alter which buttons or keyboard keys execute which commands.
+	* This system would also make it easier to change key bindings at run time.
+	*/
+
+	keyJump->command = &jump;
+	keyMoveLeft->command = &left;
+	keyMoveRight->command = &right;
+	keySprint->command = &sprint;
 }
 
 ControllerCode GameInput::processControllerCodes(gef::Vector2& position)
 {
 	ControllerCode code = ControllerCode::NONE;
+
+	//Checks if analog sticks are being moved, and assigns the corresponding direction
 
 	if (position.x <= -0.9f)
 	{
@@ -120,6 +131,10 @@ void GameInput::processMouseButtonInput(Int32 touchID, gef::TouchType type)
 {
 	MouseCode button;
 
+	//Translates TouchType enum values to MouseCode values
+	//Not entirely necessary, but is more readable when utilising the mouse
+	//Also sets the mouse to the active input device
+
 	switch (type)
 	{
 		case gef::TouchType::TT_NEW:
@@ -141,6 +156,7 @@ void GameInput::processMouseButtonInput(Int32 touchID, gef::TouchType type)
 			button = MouseCode::NONE;
 	}
 
+	//Determines which mouse button has been pressed
 	if (touchID == 0)
 	{
 		mouse->left = button;
@@ -154,24 +170,26 @@ void GameInput::processMouseButtonInput(Int32 touchID, gef::TouchType type)
 
 Key* GameInput::assignKeys()
 {
+	//Returns the respective command key based on what button or key has been pressed
+
 	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_SPACE) || getSonyController()->buttons_down() == gef_SONY_CTRL_CROSS)
 	{
-		return key_space;
+		return keyJump;
 	}
 
 	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_A) || controller->leftStick == ControllerCode::LEFT)
 	{
-		return key_a;
+		return keyMoveLeft;
 	}
 
 	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_D) || controller->leftStick == ControllerCode::RIGHT)
 	{
-		return key_d;
+		return keyMoveRight;
 	}
 
 	if (inputManager->keyboard()->IsKeyDown(gef::Keyboard::KeyCode::KC_LSHIFT) || getSonyController()->buttons_down() == gef_SONY_CTRL_CIRCLE)
 	{
-		return key_l_shift;
+		return keySprint;
 	}
 
 	return nullptr;
